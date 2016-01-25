@@ -10,9 +10,6 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     cssmin = require('gulp-cssmin'),
     gutil = require('gulp-util'),
-    shell = require('gulp-shell'),
-    glob = require('glob'),
-    livereload = require('gulp-livereload'),
     less = require('gulp-less'),
     htmlreplace = require('gulp-html-replace');
 
@@ -21,7 +18,7 @@ var gulp = require('gulp'),
 var dependencies = [
     'react',
     'react-dom',
-    'react/addons',
+    'react-router',
     'react-tap-event-plugin'
 ];
 
@@ -51,7 +48,6 @@ function browserifyTask(options) {
             .pipe(source('main.js'))
             .pipe(gulpif(!options.development, streamify(uglify())))
             .pipe(gulp.dest(options.dest))
-            .pipe(gulpif(options.development, livereload()))
             .pipe(notify(function () {
                 console.log('APP bundle built in ' + (Date.now() - start) + ' ms');
             }));

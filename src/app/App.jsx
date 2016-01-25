@@ -1,9 +1,13 @@
 import React from 'react';
+import Header from './components/partials/Header.jsx';
 
 class App extends React.Component {
     render() {
         return (
-            <h1>hello</h1>
+            <div>
+                <Header/>
+                {this.props.children}
+            </div>
         )
     }
 }
