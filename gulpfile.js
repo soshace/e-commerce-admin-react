@@ -26,8 +26,15 @@ var themeJS = [
     './bower_components/jquery/dist/jquery.js',
     './bower_components/bootstrap/dist/js/bootstrap.min.js',
     './bower_components/Waves/dist/waves.min.js',
-    //'./src/www/scripts/app.min.js'
-
+    //'./src/www/scripts/app.min.js',
+    './src/www/scripts/ui-load.js',
+    './src/www/scripts/ui-jp.config.js',
+    './src/www/scripts/ui-jp.js',
+    './src/www/scripts/ui-nav.js',
+    './src/www/scripts/ui-toggle.js',
+    './src/www/scripts/ui-form.js',
+    './src/www/scripts/ui-waves.js',
+    './src/www/scripts/ui-client.js'
 ];
 
 var staticFiles = [
@@ -42,9 +49,45 @@ var cssVendors = [
     './bower_components/animate.css/animate.min.css'
 ];
 
+var lazyLoadFiles = [
+    './bower_components/**/jquery.easypiechart.fill.js',
+    './bower_components/**/jquery.sparkline.retina.js',
+    './bower_components/**/jquery.flot.js',
+    './bower_components/**/jquery.flot.resize.js',
+    './bower_components/**/jquery.flot.pie.js',
+    './bower_components/**/jquery.flot.tooltip.min.js',
+    './bower_components/**/jquery.flot.spline.min.js',
+    './bower_components/**/jquery.flot.orderBars.js',
+    './bower_components/**/jquery-jvectormap-1.2.2.min.js',
+    './bower_components/**/jquery-jvectormap-1.2.2.css',
+    './bower_components/**/jquery-jvectormap-world-mill-en.js',
+    './bower_components/**/jquery-jvectormap-us-aea-en.js',
+    './bower_components/**/jquery.dataTables.min.js',
+    './bower_components/**/dataTables.bootstrap.js',
+    './bower_components/**/dataTables.bootstrap.css',
+    './bower_components/**/footable.all.min.js',
+    './bower_components/**/footable.core.css'
+];
+
 function copyStatic() {
-    gulp.src(staticFiles)
-        .pipe(gulp.dest('./build'));
+    var copy = function () {
+        console.log('coping static...');
+        gulp.src(staticFiles)
+            .pipe(gulp.dest('./build'));
+    };
+    copy();
+
+    gulp.watch(staticFiles, copy);
+
+    gulp.src(lazyLoadFiles)
+        .pipe(gulp.dest('./build/libs'));
+
+    copyAwesomeFonts();
+}
+
+function copyAwesomeFonts() {
+    gulp.src('./bower_components/font-awesome/fonts/*.*')
+        .pipe(gulp.dest('./build/fonts'));
 }
 
 function copyCssVendors() {
