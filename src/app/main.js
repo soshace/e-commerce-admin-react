@@ -3,4 +3,4 @@ import {render} from 'react-dom';
 import App from './App.jsx';
 import Routes from './config/Routes.jsx';
 
-render(Routes, document.getElementById('root'));
+render(Routes, document.getElementById('app'));
