@@ -22,10 +22,42 @@ var dependencies = [
     'react-tap-event-plugin'
 ];
 
-var indexRoute = './src/index.html';
+var themeJS = [
+    './bower_components/jquery/dist/jquery.js',
+    './bower_components/bootstrap/dist/js/bootstrap.min.js',
+    './bower_components/Waves/dist/waves.min.js',
+    //'./src/www/scripts/app.min.js'
+
+];
+
+var staticFiles = [
+    '!./src/www/less/**/*.less',
+    './src/www/**/*',
+    './src/index.html'
+];
+
+var cssVendors = [
+    './bower_components/bootstrap/dist/css/bootstrap.min.css',
+    './bower_components/font-awesome/css/font-awesome.min.css',
+    './bower_components/animate.css/animate.min.css'
+];
 
 function copyStatic() {
-    gulp.src(indexRoute)
+    gulp.src(staticFiles)
+        .pipe(gulp.dest('./build'));
+}
+
+function copyCssVendors() {
+    gulp.src(cssVendors)
+        .pipe(concat('vendors.css'))
+        //.pipe(less())
+        .pipe(gulp.dest('./build'));
+}
+
+function buildThemeJS() {
+    gulp.src(themeJS)
+        .pipe(concat('libs.js'))
+        //.pipe(less())
         .pipe(gulp.dest('./build'));
 }
 
@@ -36,8 +68,6 @@ function browserifyTask(options) {
         debug: options.development,
         cache: {}, packageCache: {}, fullPaths: options.development
     });
-
-    copyStatic();
     appBundler.external(options.development ? dependencies : []);
 
     var rebundle = function () {
@@ -114,6 +144,10 @@ function cssTask(options) {
 // Starts our development workflow
 gulp.task('default', function () {
 
+    copyStatic();
+    copyCssVendors();
+    buildThemeJS();
+
     browserifyTask({
         development: true,
         src: './src/app/main.js',
@@ -122,7 +156,7 @@ gulp.task('default', function () {
 
     cssTask({
         development: true,
-        src: './src/www/css/**/*.less',
+        src: './src/www/less/app.less',
         dest: './build'
     });
 
