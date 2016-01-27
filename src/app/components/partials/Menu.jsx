@@ -57,7 +57,7 @@ class Header extends React.Component {
                                         </a>
                                     </div>
                                     <div id="nav" className={navClass}>
-                                        <nav ui-nav="">
+                                        <nav>
                                             <ul className="nav">
                                                 <li className="nav-header m-v-sm hidden-folded">Cool Project</li>
 
