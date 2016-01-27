@@ -9,7 +9,9 @@ class App extends React.Component {
 
         this.state = {
             searchShown: false
-        }
+        };
+
+        this._initWaves();
     }
 
     render() {
@@ -153,6 +155,12 @@ class App extends React.Component {
                 </div>
       
         )
+    }
+
+    _initWaves() {
+        Waves.attach('.btn');
+        Waves.attach('[md-ink-ripple]');
+        Waves.init();
     }
 
     _toggleSearch() {
