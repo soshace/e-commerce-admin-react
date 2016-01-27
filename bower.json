@@ -12,18 +12,9 @@
     "bootstrap": "~3.3.6",
     "animate.css": "~3.5.1",
     "Waves": "waves#~0.7.4",
-    "Flot": "flot#~0.8.3",
     "font-awesome": "~4.5.0",
-    "footable": "~2.0.3",
     "datatables": "~1.10.10",
     "oclazyload": "~1.0.9",
-    "bower-jvectormap": "~1.2.2",
-    "moment": "~2.11.1",
-    "jquery.easy-pie-chart": "~2.1.6",
-    "jquery.sparkline": "~2.1.2",
-    "flot.tooltip": "~0.8.5",
-    "flot.orderbars": "*",
-    "plugins": "datatables/plugins#~1.0.1",
-    "flot-spline": "~0.0.1"
+    "moment": "~2.11.1"
   }
 }

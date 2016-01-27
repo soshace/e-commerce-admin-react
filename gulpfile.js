@@ -25,14 +25,7 @@ var dependencies = [
 var themeJS = [
     './bower_components/jquery/dist/jquery.js',
     './bower_components/bootstrap/dist/js/bootstrap.min.js',
-    './bower_components/Waves/dist/waves.min.js',
-    './src/www/scripts/ui-load.js',
-    './src/www/scripts/ui-jp.config.js',
-    './src/www/scripts/ui-jp.js',
-    './src/www/scripts/ui-nav.js',
-    './src/www/scripts/ui-form.js',
-    './src/www/scripts/ui-waves.js',
-    './src/www/scripts/ui-client.js'
+    './bower_components/Waves/dist/waves.min.js'
 ];
 
 var staticFiles = [

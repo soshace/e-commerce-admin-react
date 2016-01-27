@@ -53,7 +53,7 @@ class App extends React.Component {
                                     </ul>
                                 </li>
                             </ul>
-                            <div className="pull-right" ui-view="navbar@"></div>
+                            <div className="pull-right"></div>
 
                             <div id="search" className={searchClass}>
                                 <div className="box">
