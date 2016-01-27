@@ -1,6 +1,5 @@
 import React from 'react';
 import classnames from 'classnames';
-import { Link } from 'react-router';
 import Menu from './../Menu.jsx';
 import MenuItem from './../MenuItem.jsx';
 import ProfileInfo from './../ProfileInfo.jsx';
