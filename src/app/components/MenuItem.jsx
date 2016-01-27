@@ -1,13 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router'
+import { Link } from 'react-router';
+import classnames from 'classnames';
 
 class Header extends React.Component {
 
     render() {
+        var iconClass = classnames('icon i-20', this.props.iconClass);
         return (
             <li>
                 <Link to={this.props.link} md-ink-ripple="" className=" waves-effect">
-                    <i className="icon mdi-action-settings-input-svideo i-20"></i>
+                    <i className={iconClass}></i>
                     <span className="font-normal">{this.props.name}</span>
                 </Link>
             </li>

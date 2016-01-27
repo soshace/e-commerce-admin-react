@@ -1,7 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import Header from './components/partials/Header.jsx';
-import Menu from './components/partials/Menu.jsx';
+import Aside from './components/partials/Aside.jsx';
 
 class App extends React.Component {
     constructor(props) {
@@ -19,7 +18,7 @@ class App extends React.Component {
 
         return (
             <div>
-                <Menu />
+                <Aside />
 
                 <div id="content" className="app-content" role="main">
                     <div className="box">
