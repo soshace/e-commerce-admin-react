@@ -1,7 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router';
+import ReactMixin from 'react-mixin';
 
-class Login extends React.Component {
+export default class Login extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            user: '',
+            password: ''
+        }
+    }
+
+    login(e) {
+        e.preventDefault();
+        Auth
+            .login(this.state.user, this.state.password)
+            .catch(function (err) {
+                console.error(err);
+            })
+    }
 
     render() {
         return (
@@ -18,21 +35,26 @@ class Login extends React.Component {
                     </div>
                     <form name="form">
                         <div className="md-form-group float-label">
-                            <input type="email" className="md-input" ng-model="user.email" required/>
+                            <input type="email" className="md-input" valueLink={this.linkState('user')} required/>
                             <label>Email</label>
                         </div>
 
                         <div className="md-form-group float-label">
-                            <input type="password" className="md-input" ng-model="user.password" required/>
+                            <input type="password" className="md-input" valueLink={this.linkState('password')} required/>
                             <label>Password</label>
                         </div>
 
                         <div className="m-b-md">
                             <label className="md-check">
-                                <input type="checkbox"/><i className="indigo"></i> Keep me signed in
+                                <input type="checkbox"/>
+                                <i className="indigo"></i>
+                                Keep me signed in
                             </label>
                         </div>
-                        <button md-ink-ripple type="submit" className="md-btn md-raised pink btn-block p-h-md">
+                        <button data-md-ink-ripple
+                                type="submit"
+                                className="md-btn md-raised pink btn-block p-h-md"
+                                onClick={this.login.bind(this)}>
                             Sign in
                         </button>
                     </form>
@@ -49,4 +71,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login
+ReactMixin(Login.prototype, React.addons.LinkedStateMixin);
