@@ -1,12 +1,27 @@
 import React from 'react';
+import classnames from 'classnames';
 import { Link } from 'react-router';
 import MenuItem from './MenuItem.jsx';
 
+
 class Header extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            navItemsShown: true,
+            asideFolded: true
+        }
+    }
 
     render() {
+        var navClass = classnames({hide: !this.state.navItemsShown}),
+            accountClass = classnames('m-v-xs', {hide: this.state.navItemsShown}),
+            asideClass = classnames('app-aside modal fade', {folded: this.state.asideFolded});
+
+
         return (
-            <aside id="aside" className="app-aside modal fade folded" role="menu">
+            <aside id="aside" className={asideClass} role="menu">
                 <div className="left">
                     <div className="box bg-white">
                         <div className="navbar md-whiteframe-z1 no-radius blue">
@@ -32,8 +47,7 @@ class Header extends React.Component {
                                         <div className="rounded w-64 bg-white inline pos-rlt">
                                             <img src="images/a0.jpg" className="img-responsive rounded"/>
                                         </div>
-                                        <a className="block m-t-sm" ui-toggle-className="hide, show"
-                                           target="#nav, #account">
+                                        <a className="block m-t-sm" onClick={this._toggleNav.bind(this)}>
                                             <span className="block font-bold">John Smith</span>
                                             <span className="pull-right auto">
                                             <i className="fa inline fa-caret-down"></i>
@@ -42,7 +56,7 @@ class Header extends React.Component {
                                             john.smith@gmail.com
                                         </a>
                                     </div>
-                                    <div id="nav">
+                                    <div id="nav" className={navClass}>
                                         <nav ui-nav="">
                                             <ul className="nav">
                                                 <li className="nav-header m-v-sm hidden-folded">Cool Project</li>
@@ -59,7 +73,7 @@ class Header extends React.Component {
                                             </ul>
                                         </nav>
                                     </div>
-                                    <div id="account" className="hide m-v-xs">
+                                    <div id="account" className={accountClass}>
                                         <nav>
                                             <ul className="nav">
                                                 <li>
@@ -85,10 +99,9 @@ class Header extends React.Component {
                                                 </li>
                                                 <li className="m-v-sm b-b b"></li>
                                                 <li>
-                                                    <div className="nav-item" ui-toggle-className="folded"
-                                                         target="#aside">
+                                                    <div className="nav-item">
                                                         <label className="md-check">
-                                                            <input type="checkbox"/>
+                                                            <input type="checkbox" onChange={this._foldAside.bind(this)}/>
                                                             <i className="purple no-icon"></i>
                                                             <span
                                                                 className="hidden-folded">Folded aside</span>
@@ -116,6 +129,14 @@ class Header extends React.Component {
                 </div>
             </aside>
         )
+    }
+
+    _toggleNav() {
+        this.setState({navItemsShown: !this.state.navItemsShown});
+    }
+
+    _foldAside() {
+        this.setState({asideFolded: !this.state.asideFolded});
     }
 }
 

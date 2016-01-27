@@ -1,9 +1,20 @@
 import React from 'react';
+import classnames from 'classnames';
 import Header from './components/partials/Header.jsx';
 import Menu from './components/partials/Menu.jsx';
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            searchShown: false
+        }
+    }
+
     render() {
+        var searchClass = classnames('pos-abt w-full h-full blue', {hide: !this.state.searchShown});
+
         return (
             <div>
                 <Menu />
@@ -18,7 +29,7 @@ class App extends React.Component {
                             <div className="navbar-item pull-left h4">Dashboard</div>
                             <ul className="nav nav-sm navbar-tool pull-right">
                                 <li>
-                                    <a md-ink-ripple ui-toggle-className="show" target="#search">
+                                    <a md-ink-ripple onClick={this._toggleSearch.bind(this)}>
                                         <i className="mdi-action-search i-24"></i>
                                     </a>
                                 </li>
@@ -42,13 +53,13 @@ class App extends React.Component {
                             </ul>
                             <div className="pull-right" ui-view="navbar@"></div>
 
-                            <div id="search" className="pos-abt w-full h-full blue hide">
+                            <div id="search" className={searchClass}>
                                 <div className="box">
                                     <div className="box-col w-56 text-center">
 
-                                        <a md-ink-ripple className="navbar-item inline" ui-toggle-className="show"
-                                           target="#search"><i
-                                            className="mdi-navigation-arrow-back i-24"></i></a>
+                                        <a md-ink-ripple className="navbar-item inline" onClick={this._toggleSearch.bind(this)}>
+                                            <i className="mdi-navigation-arrow-back i-24"></i>
+                                        </a>
                                     </div>
                                     <div className="box-col v-m">
 
@@ -142,6 +153,10 @@ class App extends React.Component {
                 </div>
       
         )
+    }
+
+    _toggleSearch() {
+        this.setState({searchShown: !this.state.searchShown});
     }
 }
 
