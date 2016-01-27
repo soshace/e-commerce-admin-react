@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames';
 
-class Header extends React.Component {
+class MenuItem extends React.Component {
 
     render() {
         var iconClass = classnames('icon i-20', this.props.iconClass);
@@ -17,4 +17,4 @@ class Header extends React.Component {
     }
 }
 
-export default Header
+export default MenuItem

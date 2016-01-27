@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import MenuItem from './MenuItem.jsx';
 
 
-class Header extends React.Component {
+class Menu extends React.Component {
     constructor(props) {
         super(props);
 
@@ -44,4 +44,4 @@ class Header extends React.Component {
     }
 }
 
-export default Header;
+export default Menu;
