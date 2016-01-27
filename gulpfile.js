@@ -37,7 +37,8 @@ var staticFiles = [
 var cssVendors = [
     './bower_components/bootstrap/dist/css/bootstrap.min.css',
     './bower_components/font-awesome/css/font-awesome.min.css',
-    './bower_components/animate.css/animate.min.css'
+    './bower_components/animate.css/animate.min.css',
+    './bower_components/Waves/dist/waves.min.css'
 ];
 
 var lazyLoadFiles = [

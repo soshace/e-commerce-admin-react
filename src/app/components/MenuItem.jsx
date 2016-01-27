@@ -8,7 +8,7 @@ class MenuItem extends React.Component {
         var iconClass = classnames('icon i-20', this.props.iconClass);
         return (
             <li>
-                <Link to={this.props.link} md-ink-ripple="" className=" waves-effect">
+                <Link to={this.props.link} data-md-ink-ripple="" className=" waves-effect">
                     <i className={iconClass}></i>
                     <span className="font-normal">{this.props.name}</span>
                 </Link>

@@ -75,7 +75,7 @@ class Aside extends React.Component {
                         <nav>
                             <Menu className="nav b-t b">
                                 <li>
-                                    <a href="http://google.com" target="_blank" md-ink-ripple="" className=" waves-effect">
+                                    <a href="http://google.com" target="_blank" data-md-ink-ripple="" className=" waves-effect">
                                         <i className="icon mdi-action-help i-20"></i>
                                         <span>Help &amp; Feedback</span>
                                     </a>

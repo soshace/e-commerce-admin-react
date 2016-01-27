@@ -9,7 +9,9 @@ class App extends React.Component {
         this.state = {
             searchShown: false
         };
+    }
 
+    componentDidMount() {
         this._initWaves();
     }
 
@@ -24,23 +26,23 @@ class App extends React.Component {
                     <div className="box">
 
                         <div className="navbar md-whiteframe-z1 no-radius blue">
-                            <a md-ink-ripple data-toggle="modal" data-target="#aside"
+                            <a data-md-ink-ripple data-toggle="modal" data-target="#aside"
                                className="navbar-item pull-left visible-xs visible-sm"><i
                                 className="mdi-navigation-menu i-24"></i></a>
                             <div className="navbar-item pull-left h4">Dashboard</div>
                             <ul className="nav nav-sm navbar-tool pull-right">
                                 <li>
-                                    <a md-ink-ripple onClick={this._toggleSearch.bind(this)}>
+                                    <a data-md-ink-ripple onClick={this._toggleSearch.bind(this)}>
                                         <i className="mdi-action-search i-24"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a md-ink-ripple data-toggle="modal" data-target="#user">
+                                    <a data-md-ink-ripple data-toggle="modal" data-target="#user">
                                         <i className="mdi-social-person-outline i-24"></i>
                                     </a>
                                 </li>
                                 <li className="dropdown">
-                                    <a md-ink-ripple data-toggle="dropdown">
+                                    <a data-md-ink-ripple data-toggle="dropdown">
                                         <i className="mdi-navigation-more-vert i-24"></i>
                                     </a>
                                     <ul className="dropdown-menu dropdown-menu-scale pull-right pull-up text-color">
@@ -58,7 +60,7 @@ class App extends React.Component {
                                 <div className="box">
                                     <div className="box-col w-56 text-center">
 
-                                        <a md-ink-ripple className="navbar-item inline" onClick={this._toggleSearch.bind(this)}>
+                                        <a data-md-ink-ripple className="navbar-item inline" onClick={this._toggleSearch.bind(this)}>
                                             <i className="mdi-navigation-arrow-back i-24"></i>
                                         </a>
                                     </div>
@@ -68,13 +70,12 @@ class App extends React.Component {
                                         </div>
 
                                         <div className="box-col w-56 text-center">
-                                            <a md-ink-ripple className="navbar-item inline"><i className="mdi-av-mic i-24"></i></a>
+                                            <a data-md-ink-ripple className="navbar-item inline"><i className="mdi-av-mic i-24"></i></a>
                                         </div>
                                     </div>
                                 </div>
 
                             </div>
-
                             <div className="box-row">
                                 <div className="box-cell">
                                     <div className="box-inner padding">
@@ -152,13 +153,13 @@ class App extends React.Component {
                         </div>
                     </div>
                 </div>
-      
+
         )
     }
 
     _initWaves() {
         Waves.attach('.btn');
-        Waves.attach('[md-ink-ripple]');
+        Waves.attach('[data-md-ink-ripple]');
         Waves.init();
     }
 
