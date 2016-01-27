@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { Link } from 'react-router';
 import Menu from './../Menu.jsx';
 import MenuItem from './../MenuItem.jsx';
+import ProfileInfo from './../ProfileInfo.jsx';
 
 
 class Aside extends React.Component {
@@ -34,20 +35,13 @@ class Aside extends React.Component {
                         <div className="box-row">
                             <div className="box-cell scrollable hover">
                                 <div className="box-inner">
-                                    <div className="p hidden-folded blue-50"
-                                         style={{backgroundImage: "url(images/bg.png)",  backgroundSize: "cover"}}>
-                                        <div className="rounded w-64 bg-white inline pos-rlt">
-                                            <img src="images/a0.jpg" className="img-responsive rounded"/>
-                                        </div>
-                                        <a className="block m-t-sm" onClick={this._toggleNav.bind(this)}>
-                                            <span className="block font-bold">John Smith</span>
-                                            <span className="pull-right auto">
-                                            <i className="fa inline fa-caret-down"></i>
-                                            <i className="fa none fa-caret-up"></i>
-                                            </span>
-                                            john.smith@gmail.com
-                                        </a>
-                                    </div>
+
+                                    <ProfileInfo
+                                        onClick={this._toggleNav.bind(this)}
+                                        avatarSrc="images/a0.jpg"
+                                        name="John Smith"
+                                        email="cowboy@gmail.com" />
+
                                     <Menu header="Cool Project" className={navClass}>
                                         <MenuItem link="/companyname/dashboard" name="Dashboard" iconClass="mdi-action-perm-contact-cal" />
                                         <MenuItem link="/companyname/products" name="Products" iconClass="mdi-action-perm-contact-cal" />
