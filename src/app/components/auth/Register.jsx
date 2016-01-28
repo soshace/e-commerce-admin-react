@@ -1,7 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
+import ReactMixin from 'react-mixin';
+import AuthActions from './../../actions/AuthActions.js';
 
 class Register extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            name: '',
+            email: '',
+            password: ''
+        }
+    }
+
+    register(e) {
+        e.preventDefault();
+        AuthActions.register(this.state.email, this.state.password, this.state.name);
+    }
 
     render() {
         return (
@@ -18,28 +34,25 @@ class Register extends React.Component {
                     </div>
                     <form name="form">
                         <div className="md-form-group">
-                            <input type="text" className="md-input" ng-model="user.name" required/>
+                            <input type="text" className="md-input" valueLink={this.linkState('name')} required/>
                             <label>Name</label>
                         </div>
 
                         <div className="md-form-group">
-                            <input type="email" className="md-input" ng-model="user.email" required/>
+                            <input type="email" className="md-input" valueLink={this.linkState('email')} required/>
                             <label>Email</label>
                         </div>
 
                         <div className="md-form-group">
-                            <input type="password" className="md-input" ng-model="user.password" required/>
+                            <input type="password" className="md-input" valueLink={this.linkState('password')} required/>
                             <label>Password</label>
                         </div>
 
-                        <div className="m-b-md">
-                            <label className="md-check">
-                                <input type="checkbox" ng-model="agree" required/><i className="indigo"></i>
-                                Agree the <a href>terms and policy</a>
-                            </label>
-                        </div>
-                        <button md-ink-ripple type="submit"
-                                className="md-btn md-raised pink btn-block p-h-md">Sign up
+                        <button data-md-ink-ripple
+                                type="submit"
+                                onClick={this.register.bind(this)}
+                                className="md-btn md-raised pink btn-block p-h-md">
+                            Sign up
                         </button>
                     </form>
                 </div>
@@ -51,5 +64,7 @@ class Register extends React.Component {
         )
     }
 }
+
+ReactMixin(Register.prototype, LinkedStateMixin);
 
 export default Register

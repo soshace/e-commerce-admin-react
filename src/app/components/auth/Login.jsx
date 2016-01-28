@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
 import ReactMixin from 'react-mixin';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
-export default class Login extends React.Component {
+class Login extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -71,4 +72,6 @@ export default class Login extends React.Component {
     }
 }
 
-ReactMixin(Login.prototype, React.addons.LinkedStateMixin);
+ReactMixin(Login.prototype, LinkedStateMixin);
+
+export default Login
