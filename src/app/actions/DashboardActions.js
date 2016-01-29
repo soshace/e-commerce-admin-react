@@ -6,5 +6,10 @@ export default {
         AppDispatcher.dispatch({
             actionType: DashboardConstants.GET_PROFILE
         });
+    },
+    getProjects: () => {
+        AppDispatcher.dispatch({
+            actionType: DashboardConstants.GET_PROJECTS
+        });
     }
 }

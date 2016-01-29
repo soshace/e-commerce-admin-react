@@ -26,7 +26,6 @@ class Register extends React.Component {
 
     register(e) {
         e.preventDefault();
-        //AuthActions.logout();
         AuthActions.register(this.state.email, this.state.password, this.state.name);
     }
 

@@ -25,7 +25,6 @@ class Login extends React.Component {
 
     login(e) {
         e.preventDefault();
-        //AuthActions.logout();
         AuthActions.login(this.state.email, this.state.password);
     }
 
@@ -89,6 +88,5 @@ Login.contextTypes = {
 };
 
 ReactMixin(Login.prototype, LinkedStateMixin);
-//ReactMixin(Login.prototype, Router.Navigation);
 
 export default Login

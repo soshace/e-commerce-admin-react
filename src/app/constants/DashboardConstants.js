@@ -3,5 +3,6 @@ export default {
     BASE_URL: BASE_URL,
     PROFILE_URL: BASE_URL + 'dashboard/profile',
 
-    GET_PROFILE: 'GET_PROFILE'
+    GET_PROFILE: 'GET_PROFILE',
+    GET_PROJECTS: 'GET_PROJECTS'
 }

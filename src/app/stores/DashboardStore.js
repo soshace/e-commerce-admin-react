@@ -25,11 +25,32 @@ function getProfile() {
     });
 }
 
+function getProjects() {
+    //$.ajax({
+    //    method: 'GET',
+    //    url: DashboardConstants.PROJECTS_URL,
+    //    contentType: 'application/json; charset=utf-8',
+    //    dataType: 'json',
+    //    xhrFields: {
+    //        withCredentials: true
+    //    },
+    //    success: function (data) {
+    //        DashboardStore.projects = data.projects;
+    //        DashboardStore.emitChange();
+    //    },
+    //    error: function (err) {
+    //        console.error(err);
+    //    }
+    //});
+    DashboardStore.projects = [1,2];
+    DashboardStore.emitChange();
+}
+
 var DashboardStore = Object.assign({}, EventEmitter.prototype, {
     profile: {},
 
     // TODO: make a request to a server, if no projects exists, show Registration-Step2 - Create Project Form
-    projects: [],
+    projects: null,
 
     emitChange() {
         this.emit(CHANGE_EVENT);
@@ -50,7 +71,10 @@ AppDispatcher.register(function (action) {
         case DashboardConstants.GET_PROFILE:
             getProfile();
             break;
-    }
+        case DashboardConstants.GET_PROJECTS:
+            getProjects();
+            break;
+        }
 });
 
 export default DashboardStore

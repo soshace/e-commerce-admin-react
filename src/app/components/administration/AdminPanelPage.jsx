@@ -18,6 +18,8 @@ class AdminPanelPage extends React.Component {
 
     componentDidMount() {
         DashboardActions.getProfile();
+        DashboardActions.getProjects();
+
         DashboardStore.addChangeListener(this._onChange.bind(this));
     }
 
@@ -26,7 +28,16 @@ class AdminPanelPage extends React.Component {
     }
 
     _onChange() {
+        var projects = DashboardStore.projects;
         this.setState({profile: DashboardStore.profile});
+
+        if (projects) {
+            if (projects.length) {
+            //    Go to existing project
+            } else {
+                this.context.router.push('companyname/new-project');
+            }
+        }
     }
 
     render() {
@@ -98,7 +109,6 @@ class AdminPanelPage extends React.Component {
                                             {this.props.children}
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -112,6 +122,11 @@ class AdminPanelPage extends React.Component {
     _toggleSearch() {
         this.setState({searchShown: !this.state.searchShown});
     }
+
 }
+
+AdminPanelPage.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 export default AdminPanelPage
