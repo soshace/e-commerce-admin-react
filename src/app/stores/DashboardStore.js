@@ -42,7 +42,7 @@ function getProjects() {
     //        console.error(err);
     //    }
     //});
-    DashboardStore.projects = [1,2];
+    DashboardStore.projects = [];
     DashboardStore.emitChange();
 }
 
