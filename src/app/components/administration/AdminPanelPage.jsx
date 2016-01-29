@@ -1,14 +1,32 @@
 import React from 'react';
 import classnames from 'classnames';
 import Aside from './Aside.jsx';
+import API from './../../constants/DashboardConstants.js';
+import DashboardStore from './../../stores/DashboardStore.js';
+import DashboardActions from './../../actions/DashboardActions.js';
+
 
 class AdminPanelPage extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            searchShown: false
+            searchShown: false,
+            profile: {}
         };
+    }
+
+    componentDidMount() {
+        DashboardActions.getProfile();
+        DashboardStore.addChangeListener(this._onChange.bind(this));
+    }
+
+    componentWillUnmount() {
+        DashboardStore.removeChangeListener(this._onChange.bind(this));
+    }
+
+    _onChange() {
+        this.setState({profile: DashboardStore.profile});
     }
 
     render() {
@@ -16,7 +34,7 @@ class AdminPanelPage extends React.Component {
 
         return (
             <div>
-                <Aside />
+                <Aside profile={this.state.profile} />
 
                 <div id="content" className="app-content" role="main">
                     <div className="box">
@@ -77,68 +95,6 @@ class AdminPanelPage extends React.Component {
                                 <div className="box-inner padding">
                                     <div className="row">
                                         <div className="col-lg-12 col-md-12 col-sm-12">
-                                            <div className="panel panel-default">
-                                                <div className="panel-heading bg-white">
-                                                    <span className="label pull-right m-t-xs amber">4 left</span>
-                                                    <span className="h4">Tasks</span>
-                                                </div>
-                                                <table className="table m-b-none">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Progress</th>
-                                                        <th>Item</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <div
-                                                                className="progress progress-xs progress-striped active no-margin m-v-sm">
-                                                                <div className="progress-bar bg-success"
-                                                                     data-toggle="tooltip"
-                                                                     data-original-title="80%"
-                                                                     style={{width: "80%"}}></div>
-                                                            </div>
-                                                        </td>
-                                                        <td>App prototype design</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div className="progress progress-xs no-margin m-v-sm">
-                                                                <div className="progress-bar bg-info"
-                                                                     data-toggle="tooltip"
-                                                                     data-original-title="40%"
-                                                                     style={{width: "40%"}}></div>
-                                                            </div>
-                                                        </td>
-                                                        <td>Design documents</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div className="progress progress-xs no-margin m-v-sm">
-                                                                <div className="progress-bar bg-warning"
-                                                                     data-toggle="tooltip"
-                                                                     data-original-title="20%"
-                                                                     style={{width: "20%"}}></div>
-                                                            </div>
-                                                        </td>
-                                                        <td>UI toolkit</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div className="progress progress-xs no-margin m-v-sm">
-                                                                <div className="progress-bar bg-danger"
-                                                                     data-toggle="tooltip"
-                                                                     data-original-title="15%"
-                                                                     style={{width: "15%"}}></div>
-                                                            </div>
-                                                        </td>
-                                                        <td>Testing</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-
                                             {this.props.children}
                                         </div>
                                     </div>

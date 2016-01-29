@@ -26,6 +26,7 @@ var AuthStore = Object.assign({}, EventEmitter.prototype, {
         this.authRequest({
             url: AuthConstants.REGISTER_URL,
             data: data,
+            type: 'POST',
             success: self._successLogin.bind(self)
         });
     },
@@ -35,19 +36,23 @@ var AuthStore = Object.assign({}, EventEmitter.prototype, {
         this.authRequest({
             url: AuthConstants.LOGIN_URL,
             data: data,
+            type: 'POST',
             success: self._successLogin.bind(self)
         });
     },
 
-    logout(data) {
+    logout(cb) {
         this.authRequest({
             url: AuthConstants.LOGOUT_URL,
-            data: data
+            type: 'GET',
+            success: cb,
+            error: cb
         });
+        localStorage.setItem('loggedIn', false);
     },
 
     _successLogin(res, status, xhr) {
-        if (res.message === AuthConstants.LOGIN_SUCCESS_MESSAGE || res.email) {
+        if (res.code === AuthConstants.LOGIN_SUCCESS_CODE || res.email) {
             localStorage.setItem('loggedIn', true);
             this.user.email = res.email;
             this.user.name = res.name;
@@ -63,8 +68,11 @@ var AuthStore = Object.assign({}, EventEmitter.prototype, {
     authRequest(props) {
         $.ajax({
             url: props.url,
-            type: 'POST',
+            type: props.type,
             contentType: 'application/json',
+            xhrFields: {
+                withCredentials: true
+            },
             data: JSON.stringify(props.data),
             success: props.success,
             error: props.error
@@ -76,10 +84,14 @@ var AuthStore = Object.assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case AuthConstants.REGISTER_USER:
-            AuthStore.register(action.data);
+            AuthStore.logout(function () {
+                AuthStore.register(action.data);
+            });
             break;
         case AuthConstants.LOGIN_USER:
-            AuthStore.login(action.data);
+            AuthStore.logout(function () {
+                AuthStore.login(action.data);
+            });
             break;
         case AuthConstants.LOGOUT_USER:
             AuthStore.logout();

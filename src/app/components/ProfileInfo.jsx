@@ -6,6 +6,11 @@ class ProfileInfo extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            name: '',
+            email: ''
+        };
+
         this.props = {
             onClick: function () {
             },
@@ -13,6 +18,10 @@ class ProfileInfo extends React.Component {
             email: '',
             name: ''
         }
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.setState({name: newProps.name, email: newProps.email});
     }
 
     render() {
@@ -24,12 +33,12 @@ class ProfileInfo extends React.Component {
                     <img src={this.props.avatarSrc} className="img-responsive rounded"/>
                 </div>
                 <a className="block m-t-sm" onClick={handleClick}>
-                    <span className="block font-bold">{this.props.name}</span>
+                    <span className="block font-bold">{this.state.name}</span>
                     <span className="pull-right auto">
                         <i className="fa inline fa-caret-down"></i>
                         <i className="fa none fa-caret-up"></i>
                     </span>
-                    {this.props.email}
+                    {this.state.email}
                 </a>
             </div>
         )

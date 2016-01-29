@@ -76,7 +76,6 @@ class Register extends React.Component {
     }
 
     _onLogin() {
-        console.log(AuthStore.user);
         this.context.router.push('/projectname');
     }
 }

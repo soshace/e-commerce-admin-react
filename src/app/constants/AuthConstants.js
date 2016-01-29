@@ -7,5 +7,5 @@ export default {
     LOGIN_USER: 'LOGIN_USER',
     LOGOUT_USER: 'LOGOUT_USER',
     REGISTER_USER: 'REGISTER_USER',
-    LOGIN_SUCCESS_MESSAGE: 'login successful'
+    LOGIN_SUCCESS_CODE: 'login.successful'
 }

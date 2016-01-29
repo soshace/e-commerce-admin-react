@@ -11,8 +11,17 @@ class Aside extends React.Component {
 
         this.state = {
             navItemsShown: true,
-            asideFolded: true
-        }
+            asideFolded: true,
+            profile: {
+                name: '',
+                email: ''
+            }
+        };
+
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.setState({profile: newProps.profile});
     }
 
     render() {
@@ -38,8 +47,8 @@ class Aside extends React.Component {
                                     <ProfileInfo
                                         onClick={this._toggleNav.bind(this)}
                                         avatarSrc="images/a0.jpg"
-                                        name="John Smith"
-                                        email="cowboy@gmail.com" />
+                                        name={this.state.profile.name}
+                                        email={this.state.profile.email} />
 
                                     <Menu header="Cool Project" className={navClass}>
                                         <MenuItem link="/companyname/dashboard" name="Dashboard" iconClass="mdi-action-perm-contact-cal" />
