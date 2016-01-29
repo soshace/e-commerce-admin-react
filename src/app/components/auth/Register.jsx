@@ -1,21 +1,32 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Router, Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import ReactMixin from 'react-mixin';
 import AuthActions from './../../actions/AuthActions.js';
+import AuthStore from './../../stores/AuthStore.js';
 
 class Register extends React.Component {
-    constructor() {
-        super();
+    constructor(props, context) {
+        super(props, context);
         this.state = {
             name: '',
             email: '',
             password: ''
-        }
+        };
+
+    }
+
+    componentDidMount() {
+        AuthStore.addLoginListener(this._onLogin.bind(this));
+    }
+
+    componentWillUnmount() {
+        AuthStore.removeLoginListener(this._onLogin.bind(this));
     }
 
     register(e) {
         e.preventDefault();
+        //AuthActions.logout();
         AuthActions.register(this.state.email, this.state.password, this.state.name);
     }
 
@@ -63,7 +74,16 @@ class Register extends React.Component {
             </div>
         )
     }
+
+    _onLogin() {
+        console.log(AuthStore.user);
+        this.context.router.push('/projectname');
+    }
 }
+
+Register.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 ReactMixin(Register.prototype, LinkedStateMixin);
 

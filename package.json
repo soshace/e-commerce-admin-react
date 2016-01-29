@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.3",
+    "express": "^4.13.4",
     "flux": "^2.1.1",
     "jquery": "^2.2.0",
     "jwt-decode": "^1.5.1",

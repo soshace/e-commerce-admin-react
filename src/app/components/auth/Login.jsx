@@ -2,23 +2,31 @@ import React from 'react';
 import { Link } from 'react-router';
 import ReactMixin from 'react-mixin';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
+import AuthActions from './../../actions/AuthActions.js';
+import AuthStore from './../../stores/AuthStore.js';
+
 
 class Login extends React.Component {
-    constructor() {
-        super();
+    constructor(props, context) {
+        super(props, context);
         this.state = {
             user: '',
             password: ''
         }
     }
 
+    componentDidMount() {
+        AuthStore.addLoginListener(this._onLogin.bind(this));
+    }
+
+    componentWillUnmount() {
+        AuthStore.removeLoginListener(this._onLogin.bind(this));
+    }
+
     login(e) {
         e.preventDefault();
-        Auth
-            .login(this.state.user, this.state.password)
-            .catch(function (err) {
-                console.error(err);
-            })
+        //AuthActions.logout();
+        AuthActions.login(this.state.email, this.state.password);
     }
 
     render() {
@@ -36,7 +44,7 @@ class Login extends React.Component {
                     </div>
                     <form name="form">
                         <div className="md-form-group float-label">
-                            <input type="email" className="md-input" valueLink={this.linkState('user')} required/>
+                            <input type="email" className="md-input" valueLink={this.linkState('email')} required/>
                             <label>Email</label>
                         </div>
 
@@ -70,8 +78,18 @@ class Login extends React.Component {
             </div>
         )
     }
+
+    _onLogin() {
+        console.log(AuthStore.user);
+        this.context.router.push('/projectname');
+    }
 }
 
+Login.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
+
 ReactMixin(Login.prototype, LinkedStateMixin);
+//ReactMixin(Login.prototype, Router.Navigation);
 
 export default Login

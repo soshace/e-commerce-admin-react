@@ -3,12 +3,16 @@ import AuthConstants from './../constants/AuthConstants.js';
 
 export default {
     login: (email, password) => {
-        //localStorage.setItem('jwt', jwt);
-        //
-        //AppDispatcher.dispatch({
-        //    actionType: LOGIN_USER,
-        //    jwt: jwt
-        //});
+        AppDispatcher.dispatch({
+            actionType: AuthConstants.LOGIN_USER,
+            data: {email, password}
+        });
+    },
+
+    logout: () => {
+        AppDispatcher.dispatch({
+            actionType: AuthConstants.LOGOUT_USER
+        });
     },
 
     register: (email, password, name) => {
