@@ -7,5 +7,7 @@ export default {
     LOGIN_USER: 'LOGIN_USER',
     LOGOUT_USER: 'LOGOUT_USER',
     REGISTER_USER: 'REGISTER_USER',
-    LOGIN_SUCCESS_CODE: 'login.successful'
+    LOGIN_SUCCESS_CODE: 'login.successful',
+    LOGIN_FAIL_CODE: 'login.failed',
+    EMAIL_ALREADY_EXISTS: 'EMAIL_ALREADY_EXISTS'
 }

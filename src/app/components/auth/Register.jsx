@@ -1,9 +1,14 @@
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
 import { Router, Link } from 'react-router';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import ReactMixin from 'react-mixin';
 import AuthActions from './../../actions/AuthActions.js';
 import AuthStore from './../../stores/AuthStore.js';
+import Validators from './../../constants/Validators.js';
+import strategy from 'joi-validation-strategy';
+import validation from 'react-validation-mixin';
+import classnames from 'classnames';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
+
 
 class Register extends React.Component {
     constructor(props, context) {
@@ -11,21 +16,42 @@ class Register extends React.Component {
         this.state = {
             name: '',
             email: '',
-            password: ''
+            password: '',
+            errorMessage: '',
+            errors: {}
         };
 
+        this.validatorTypes = {
+            name: Validators.NAME,
+            email: Validators.EMAIL,
+            password: Validators.PASSWORD
+        };
+
+        this.getValidatorData = this.getValidatorData.bind(this);
+        this.renderHelpText = this.renderHelpText.bind(this);
+        this.getClasses = this.getClasses.bind(this);
+        this._onSubmit = this._onSubmit.bind(this);
+        this._onRegisterSuccess = this._onRegisterSuccess.bind(this);
+        this._onRegisterFail = this._onRegisterFail.bind(this);
+    }
+
+    getValidatorData() {
+        return {
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password
+        }
     }
 
     componentDidMount() {
-        AuthStore.addLoginListener(this._onLogin.bind(this));
+        AuthStore.addListener(this._onRegisterSuccess, this._onRegisterFail);
     }
 
     componentWillUnmount() {
-        AuthStore.removeLoginListener(this._onLogin.bind(this));
+        //AuthStore.removeListener(this._onRegisterSuccess, this._onRegisterFail);
     }
 
-    register(e) {
-        e.preventDefault();
+    register() {
         AuthActions.register(this.state.email, this.state.password, this.state.name);
     }
 
@@ -42,25 +68,44 @@ class Register extends React.Component {
                     <div className="m-b text-sm">
                         Sign up to your Freeway Account
                     </div>
-                    <form name="form">
-                        <div className="md-form-group">
-                            <input type="text" className="md-input" valueLink={this.linkState('name')} required/>
+
+                    <div className="m-b text-sm">
+                        <label>{this.state.errorMessage}</label>
+                    </div>
+
+                    <form name="form" onSubmit={this._onSubmit}>
+                        <div className={this.getClasses('name')}>
+                            <input type="text"
+                                   className="md-input form-control"
+                                   onChange={this._onChange('name')}
+                                   onBlur={this.props.handleValidation('name')}
+                                />
                             <label>Name</label>
+                            <span className='help-block'>{this.renderHelpText('name')}</span>
                         </div>
 
-                        <div className="md-form-group">
-                            <input type="email" className="md-input" valueLink={this.linkState('email')} required/>
+                        <div className={this.getClasses('email')}>
+                            <input type="email"
+                                   className="md-input form-control"
+                                   onChange={this._onChange('email')}
+                                   onBlur={this.props.handleValidation('email')}
+                                />
                             <label>Email</label>
+                            <span className='help-block'>{this.renderHelpText('email')}</span>
                         </div>
 
-                        <div className="md-form-group">
-                            <input type="password" className="md-input" valueLink={this.linkState('password')} required/>
+                        <div className={this.getClasses('password')}>
+                            <input type="password"
+                                   className="md-input form-control"
+                                   onChange={this._onChange('password')}
+                                   onBlur={this.props.handleValidation('password')}
+                                />
                             <label>Password</label>
+                            <span className='help-block'>{this.renderHelpText('password')}</span>
                         </div>
 
                         <button data-md-ink-ripple
                                 type="submit"
-                                onClick={this.register.bind(this)}
                                 className="md-btn md-raised pink btn-block p-h-md">
                             Sign up
                         </button>
@@ -74,8 +119,46 @@ class Register extends React.Component {
         )
     }
 
-    _onLogin() {
+    getClasses(field) {
+        return classnames("md-form-group float-label form-group", {
+            'has-error': !this.props.isValid(field)
+        });
+    }
+
+    renderHelpText(field) {
+        return this.state.errors[field] || this.props.getValidationMessages(field);
+    }
+
+    _onSubmit(e) {
+        e.preventDefault();
+        const onValidate = (error) => {
+            if (error) {
+                //    react on wrong  values
+            } else {
+                this.register();
+            }
+        };
+        this.props.validate(onValidate);
+    }
+
+    _onChange(field) {
+        return e => {
+            this.setState({[field]: e.target.value, errors: {}});
+        };
+    }
+
+    _onRegisterSuccess() {
         this.context.router.push('/projectname');
+    }
+
+    _onRegisterFail() {
+        var self = this;
+        AuthStore.user.validationErrors.forEach(function (err) {
+            if (err === 'email') {
+                self.setState({errors: {email: 'Such email already exists'}});
+            }
+        });
+
     }
 }
 
@@ -83,6 +166,15 @@ Register.contextTypes = {
     router: React.PropTypes.object.isRequired
 };
 
-ReactMixin(Register.prototype, LinkedStateMixin);
+Register.propTypes = {
+    email: PropTypes.string,
+    password: PropTypes.string,
+    errors: PropTypes.object,
+    validate: PropTypes.func,
+    isValid: PropTypes.func,
+    getValidationMessages: PropTypes.func,
+    handleValidation: PropTypes.func,
+    clearValidations: PropTypes.func
+};
 
-export default Register
+export default validation(strategy)(Register);

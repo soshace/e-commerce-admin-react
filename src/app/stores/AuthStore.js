@@ -3,22 +3,27 @@ import AppDispatcher from './../AppDispatcher.js';
 import $ from 'jquery';
 
 var EventEmitter = require('events').EventEmitter;
-var CHANGE_EVENT = 'login';
+var LOGIN_SUCCESS = 'login_success';
+var LOGIN_ERROR = 'login_error';
 
 
 var AuthStore = Object.assign({}, EventEmitter.prototype, {
-    user: {},
-
-    emitChange() {
-        this.emit(CHANGE_EVENT);
+    user: {
+        validationErrors: []
     },
 
-    addLoginListener(callback) {
-        this.on(CHANGE_EVENT, callback);
+    emitChange(msg) {
+        this.emit(msg);
     },
 
-    removeLoginListener(callback) {
-        this.removeListener(CHANGE_EVENT, callback);
+    addListener(successCb, errorCb) {
+        this.on(LOGIN_SUCCESS, successCb);
+        this.on(LOGIN_ERROR, errorCb);
+    },
+
+    removeListener(successCb, errorCb) {
+        this.removeListener(LOGIN_SUCCESS, successCb);
+        this.removeListener(LOGIN_ERROR, errorCb);
     },
 
     register(data) {
@@ -27,7 +32,8 @@ var AuthStore = Object.assign({}, EventEmitter.prototype, {
             url: AuthConstants.REGISTER_URL,
             data: data,
             type: 'POST',
-            success: self._successLogin.bind(self)
+            success: self._onRegisterSuccess.bind(self, data),
+            error: self._onRegisterFail.bind(self)
         });
     },
 
@@ -37,7 +43,7 @@ var AuthStore = Object.assign({}, EventEmitter.prototype, {
             url: AuthConstants.LOGIN_URL,
             data: data,
             type: 'POST',
-            success: self._successLogin.bind(self)
+            success: self._onLogin.bind(self)
         });
     },
 
@@ -51,13 +57,24 @@ var AuthStore = Object.assign({}, EventEmitter.prototype, {
         localStorage.setItem('loggedIn', false);
     },
 
-    _successLogin(res, status, xhr) {
-        if (res.code === AuthConstants.LOGIN_SUCCESS_CODE || res.email) {
+    _onRegisterSuccess(data) {
+        this.login(data);
+    },
+
+    _onRegisterFail(res) {
+        var invalidAttrs = res.responseJSON.invalidAttributes;
+        if (invalidAttrs && invalidAttrs.email) {
+            this.user.validationErrors.push('email');
+        }
+        this.emitChange(LOGIN_ERROR);
+    },
+
+    _onLogin(res) {
+        if (res.code === AuthConstants.LOGIN_SUCCESS_CODE) {
             localStorage.setItem('loggedIn', true);
-            this.user.email = res.email;
-            this.user.name = res.name;
-            this.user.id = res.id;
-            this.emitChange();
+            this.emitChange(LOGIN_SUCCESS);
+        } else if (res.code === AuthConstants.LOGIN_FAIL_CODE) {
+            this.emitChange(LOGIN_ERROR);
         }
     },
 
@@ -66,6 +83,7 @@ var AuthStore = Object.assign({}, EventEmitter.prototype, {
     },
 
     authRequest(props) {
+        this.user.validationErrors = [];
         $.ajax({
             url: props.url,
             type: props.type,

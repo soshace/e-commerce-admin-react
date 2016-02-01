@@ -1,30 +1,53 @@
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
 import { Link } from 'react-router';
 import ReactMixin from 'react-mixin';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import AuthActions from './../../actions/AuthActions.js';
 import AuthStore from './../../stores/AuthStore.js';
+import Validators from './../../constants/Validators.js';
+import strategy from 'joi-validation-strategy';
+import validation from 'react-validation-mixin';
+import classnames from 'classnames';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 
-class Login extends React.Component {
+class Login extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            user: '',
-            password: ''
+            email: '',
+            password: '',
+            errors: {}
+        };
+
+        this.validatorTypes = {
+            email: Validators.EMAIL,
+            password: Validators.PASSWORD
+        };
+
+        this.getValidatorData = this.getValidatorData.bind(this);
+        this.renderHelpText = this.renderHelpText.bind(this);
+        this.getClasses = this.getClasses.bind(this);
+        this._onSubmit = this._onSubmit.bind(this);
+        this._onLoginSuccess = this._onLoginSuccess.bind(this);
+        this._onLoginFail = this._onLoginFail.bind(this);
+    }
+
+    getValidatorData() {
+        return {
+            email: this.state.email,
+            password: this.state.password
         }
     }
 
     componentDidMount() {
-        AuthStore.addLoginListener(this._onLogin.bind(this));
+        AuthStore.addListener(this._onLoginSuccess, this._onLoginFail);
     }
 
     componentWillUnmount() {
-        AuthStore.removeLoginListener(this._onLogin.bind(this));
+        //AuthStore.removeListener(this._onLoginSuccess, this._onLoginFail);
     }
 
-    login(e) {
-        e.preventDefault();
+    login() {
         AuthActions.login(this.state.email, this.state.password);
     }
 
@@ -41,28 +64,31 @@ class Login extends React.Component {
                     <div className="m-b text-sm">
                         Sign in with your Freeway Account
                     </div>
-                    <form name="form">
-                        <div className="md-form-group float-label">
-                            <input type="email" className="md-input" valueLink={this.linkState('email')} required/>
+
+                    <form onSubmit={this._onSubmit}>
+                        <div className={this.getClasses('email')}>
+                            <input type="email"
+                                   className="md-input form-control"
+                                   onChange={this._onChange('email')}
+                                   onBlur={this.props.handleValidation('email')}
+                                   />
                             <label>Email</label>
+                            <span className='help-block'>{this.renderHelpText('email')}</span>
                         </div>
 
-                        <div className="md-form-group float-label">
-                            <input type="password" className="md-input" valueLink={this.linkState('password')} required/>
+                        <div className={this.getClasses('password')}>
+                            <input type="password"
+                                   className="md-input form-control"
+                                   onChange={this._onChange('password')}
+                                   onBlur={this.props.handleValidation('password')}
+                                   />
                             <label>Password</label>
+                            <span className='help-block'>{this.renderHelpText('password')}</span>
                         </div>
 
-                        <div className="m-b-md">
-                            <label className="md-check">
-                                <input type="checkbox"/>
-                                <i className="indigo"></i>
-                                Keep me signed in
-                            </label>
-                        </div>
                         <button data-md-ink-ripple
                                 type="submit"
-                                className="md-btn md-raised pink btn-block p-h-md"
-                                onClick={this.login.bind(this)}>
+                                className="md-btn md-raised pink btn-block p-h-md">
                             Sign in
                         </button>
                     </form>
@@ -78,8 +104,41 @@ class Login extends React.Component {
         )
     }
 
-    _onLogin() {
+    getClasses(field) {
+        return classnames("md-form-group float-label form-group", {
+            'has-error': !this.props.isValid(field)
+        });
+    }
+
+    renderHelpText(field) {
+        return this.state.errors[field] || this.props.getValidationMessages(field);
+    }
+
+    _onSubmit(e) {
+        e.preventDefault();
+        const onValidate = (error) => {
+            if (error) {
+            //    react on wrong  values
+            } else {
+                this.login();
+            }
+        };
+        this.props.validate(onValidate);
+    }
+
+    _onChange(field) {
+        return e => {
+            this.setState({[field]: e.target.value, errors: {}});
+        };
+    }
+
+    _onLoginSuccess() {
         this.context.router.push('/projectname');
+    }
+
+    _onLoginFail() {
+        var self = this;
+        self.setState({errors: {email: 'wrong email/password'}});
     }
 }
 
@@ -87,6 +146,15 @@ Login.contextTypes = {
     router: React.PropTypes.object.isRequired
 };
 
-ReactMixin(Login.prototype, LinkedStateMixin);
+Login.propTypes = {
+    email: PropTypes.string,
+    password: PropTypes.string,
+    errors: PropTypes.object,
+    validate: PropTypes.func,
+    isValid: PropTypes.func,
+    getValidationMessages: PropTypes.func,
+    handleValidation: PropTypes.func,
+    clearValidations: PropTypes.func
+};
 
-export default Login
+export default validation(strategy)(Login);
