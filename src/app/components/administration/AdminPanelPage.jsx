@@ -11,14 +11,12 @@ class AdminPanelPage extends React.Component {
         super(props);
 
         this.state = {
-            searchShown: false,
             profile: {}
         };
     }
 
     componentDidMount() {
         ProjectActions.getProfile();
-        ProjectActions.getProjects();
 
         ProjectStore.addChangeListener(this._onChange.bind(this));
     }
@@ -27,80 +25,15 @@ class AdminPanelPage extends React.Component {
         ProjectStore.removeChangeListener(this._onChange.bind(this));
     }
 
-    _onChange() {
-        var projects = ProjectStore.projects;
-        this.setState({profile: ProjectStore.profile});
-
-        if (projects) {
-            if (projects.length) {
-            //    Go to existing project
-            } else {
-                this.context.router.push('companyname/new-project');
-            }
-        }
-    }
-
     render() {
-        var searchClass = classnames('pos-abt w-full h-full blue', {hide: !this.state.searchShown});
-
         return (
             <div>
-                <Aside profile={this.state.profile} />
+                <Aside profile={this.state.profile}/>
 
                 <div id="content" className="app-content" role="main">
                     <div className="box">
 
-                        <div className="navbar md-whiteframe-z1 no-radius blue">
-                            <a data-md-ink-ripple data-toggle="modal" data-target="#aside"
-                               className="navbar-item pull-left visible-xs visible-sm"><i
-                                className="mdi-navigation-menu i-24"></i></a>
-                            <div className="navbar-item pull-left h4">Dashboard</div>
-                            <ul className="nav nav-sm navbar-tool pull-right">
-                                <li>
-                                    <a data-md-ink-ripple onClick={this._toggleSearch.bind(this)}>
-                                        <i className="mdi-action-search i-24"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a data-md-ink-ripple data-toggle="modal" data-target="#user">
-                                        <i className="mdi-social-person-outline i-24"></i>
-                                    </a>
-                                </li>
-                                <li className="dropdown">
-                                    <a data-md-ink-ripple data-toggle="dropdown">
-                                        <i className="mdi-navigation-more-vert i-24"></i>
-                                    </a>
-                                    <ul className="dropdown-menu dropdown-menu-scale pull-right pull-up text-color">
-                                        <li><a href>Single-column view</a></li>
-                                        <li><a href>Sort by date</a></li>
-                                        <li><a href>Sort by name</a></li>
-                                        <li className="divider"></li>
-                                        <li><a href>Help &amp; feedback</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <div className="pull-right"></div>
 
-                            <div id="search" className={searchClass}>
-                                <div className="box">
-                                    <div className="box-col w-56 text-center">
-
-                                        <a data-md-ink-ripple className="navbar-item inline" onClick={this._toggleSearch.bind(this)}>
-                                            <i className="mdi-navigation-arrow-back i-24"></i>
-                                        </a>
-                                    </div>
-                                    <div className="box-col v-m">
-
-                                        <input className="form-control input-lg no-bg no-border" placeholder="Search" />
-                                    </div>
-
-                                    <div className="box-col w-56 text-center">
-                                        <a data-md-ink-ripple className="navbar-item inline"><i className="mdi-av-mic i-24"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
                         <div className="box-row">
                             <div className="box-cell">
                                 <div className="box-inner padding">
@@ -119,9 +52,24 @@ class AdminPanelPage extends React.Component {
         )
     }
 
-    _toggleSearch() {
-        this.setState({searchShown: !this.state.searchShown});
+    _onChange() {
+        var projects = ProjectStore.projects,
+            profile = ProjectStore.profile;
+        this.setState({profile: profile});
+
+        if (profile) {
+            if (projects) {
+                if (projects.length) {
+                    //    Go to existing project
+                } else {
+                    //this.context.router.push('companyname/new-project');
+                }
+            } else {
+                ProjectActions.getProjects();
+            }
+        }
     }
+
 
 }
 
