@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import ReactMixin from 'react-mixin';
 import AuthActions from './../../actions/AuthActions.js';
 import AuthStore from './../../stores/AuthStore.js';
+import ProjectStore from './../../stores/ProjectStore.js';
+import ProjectActions from './../../actions/ProjectActions.js';
 import Validators from './../../constants/Validators.js';
 import strategy from 'joi-validation-strategy';
 import validation from 'react-validation-mixin';
@@ -16,7 +18,8 @@ class Login extends Component {
         this.state = {
             email: '',
             password: '',
-            errors: {}
+            errors: {},
+            projects: []
         };
 
         this.validatorTypes = {
@@ -41,10 +44,12 @@ class Login extends Component {
 
     componentDidMount() {
         AuthStore.addListener(this._onLoginSuccess, this._onLoginFail);
+        ProjectStore.addChangeListener(this._onProfilesGet.bind(this));
     }
 
     componentWillUnmount() {
         //AuthStore.removeListener(this._onLoginSuccess, this._onLoginFail);
+        //ProjectStore.removeListener(this._onProjectsGet.bind(this));
     }
 
     login() {
@@ -71,7 +76,7 @@ class Login extends Component {
                                    className="md-input form-control"
                                    onChange={this._onChange('email')}
                                    onBlur={this.props.handleValidation('email')}
-                                   />
+                                />
                             <label>Email</label>
                             <span className='help-block'>{this.renderHelpText('email')}</span>
                         </div>
@@ -81,7 +86,7 @@ class Login extends Component {
                                    className="md-input form-control"
                                    onChange={this._onChange('password')}
                                    onBlur={this.props.handleValidation('password')}
-                                   />
+                                />
                             <label>Password</label>
                             <span className='help-block'>{this.renderHelpText('password')}</span>
                         </div>
@@ -118,7 +123,7 @@ class Login extends Component {
         e.preventDefault();
         const onValidate = (error) => {
             if (error) {
-            //    react on wrong  values
+                //    react on wrong  values
             } else {
                 this.login();
             }
@@ -133,12 +138,29 @@ class Login extends Component {
     }
 
     _onLoginSuccess() {
-        this.context.router.push('/projectname');
+        ProjectActions.getProfile();
     }
 
     _onLoginFail() {
         var self = this;
         self.setState({errors: {email: 'wrong email/password'}});
+    }
+
+    _onProfilesGet() {
+        var profile = ProjectStore.profile,
+            projects = ProjectStore.projects,
+            slug;
+        if (!projects) {
+            ProjectActions.getProjects();
+        } else {
+            projects = ProjectStore.projects;
+            if (projects.length) {
+                slug = projects[0].slug;
+                this.context.router.push(slug + '/dashboard');
+            } else {
+                this.context.router.push('/new_project');
+            }
+        }
     }
 }
 

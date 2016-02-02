@@ -48,6 +48,7 @@ var AuthStore = Object.assign({}, EventEmitter.prototype, {
     },
 
     logout(cb) {
+        localStorage.clear();
         this.authRequest({
             url: AuthConstants.LOGOUT_URL,
             type: 'GET',

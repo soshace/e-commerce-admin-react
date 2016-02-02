@@ -3,6 +3,8 @@ import { Router, Link } from 'react-router';
 import ReactMixin from 'react-mixin';
 import AuthActions from './../../actions/AuthActions.js';
 import AuthStore from './../../stores/AuthStore.js';
+import ProjectStore from './../../stores/ProjectStore.js';
+import ProjectActions from './../../actions/ProjectActions.js';
 import Validators from './../../constants/Validators.js';
 import strategy from 'joi-validation-strategy';
 import validation from 'react-validation-mixin';
@@ -18,7 +20,8 @@ class Register extends React.Component {
             email: '',
             password: '',
             errorMessage: '',
-            errors: {}
+            errors: {},
+            projects: []
         };
 
         this.validatorTypes = {
@@ -45,6 +48,7 @@ class Register extends React.Component {
 
     componentDidMount() {
         AuthStore.addListener(this._onRegisterSuccess, this._onRegisterFail);
+        ProjectStore.addChangeListener(this._onProfilesGet.bind(this));
     }
 
     componentWillUnmount() {
@@ -148,7 +152,24 @@ class Register extends React.Component {
     }
 
     _onRegisterSuccess() {
-        this.context.router.push('/projectname');
+        ProjectActions.getProfile();
+    }
+
+    _onProfilesGet() {
+        var profile = ProjectStore.profile,
+            projects = ProjectStore.projects,
+            slug;
+        if (!projects) {
+            ProjectActions.getProjects();
+        } else {
+            projects = ProjectStore.projects;
+            if (projects.length) {
+                slug = projects[0].slug;
+                this.context.router.push(slug + '/dashboard');
+            } else {
+                this.context.router.push('/new_project');
+            }
+        }
     }
 
     _onRegisterFail() {
