@@ -24,8 +24,8 @@ var Routes = (
         <Route path="/" component={App}>
             <Route path="signin" component={Login}/>
             <Route path="signup" component={Register}/>
+            <Route path="new_project" component={NewProject}/>
             <Route path=":projectName" component={AdminPanelPage} onEnter={requireAuth}>
-                <Route path="new-project" component={NewProject}/>
                 <Route path="dashboard" component={Dashboard}/>
                 <Route path="products" component={Products}/>
             </Route>

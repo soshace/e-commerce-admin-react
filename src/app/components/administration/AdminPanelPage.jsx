@@ -32,8 +32,6 @@ class AdminPanelPage extends React.Component {
 
                 <div id="content" className="app-content" role="main">
                     <div className="box">
-
-
                         <div className="box-row">
                             <div className="box-cell">
                                 <div className="box-inner padding">
@@ -48,7 +46,6 @@ class AdminPanelPage extends React.Component {
                     </div>
                 </div>
             </div>
-
         )
     }
 
@@ -59,10 +56,8 @@ class AdminPanelPage extends React.Component {
 
         if (profile) {
             if (projects) {
-                if (projects.length) {
-                    //    Go to existing project
-                } else {
-                    //this.context.router.push('companyname/new-project');
+                if (!projects.length) {
+                    this.context.router.push('new_project');
                 }
             } else {
                 ProjectActions.getProjects();

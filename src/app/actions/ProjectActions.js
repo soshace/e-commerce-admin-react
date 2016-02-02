@@ -11,5 +11,11 @@ export default {
         AppDispatcher.dispatch({
             actionType: ProjectConstants.GET_PROJECTS
         });
+    },
+    addProject: (name, slug, currency, language) => {
+        AppDispatcher.dispatch({
+            actionType: ProjectConstants.ADD_PROJECT,
+            data: {name, slug, currency, language}
+        });
     }
 }

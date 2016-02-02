@@ -5,18 +5,21 @@ export default {
 
     GET_PROFILE: 'GET_PROFILE',
     GET_PROJECTS: 'GET_PROJECTS',
-    PROJECT_CURRENCIES: {
-        'usd': 'USD',
-        'eur': 'EUR',
-        'gbr': 'GBR',
-        'inr': 'INR'
-    },
-    PROJECT_LANGUAGES: {
-        'en': 'English',
-        'fr': 'French',
-        'de': 'German',
-        'ja': 'Japanese',
-        'zh': 'Chinese'
-    },
-    PROJECTS_URL: 'user/:user_id/projects'
+    ADD_PROJECT: 'ADD_PROJECT',
+    PROJECT_CURRENCIES: [
+        { key: 'USD', text: 'USD'},
+        { key: 'EUR', text: 'EUR'},
+        { key: 'GBR', text: 'GBR'},
+        { key: 'INR', text: 'INR'}
+    ],
+
+    PROJECT_LANGUAGES: [
+        { key: 'en', text: 'English'},
+        { key: 'fr', text: 'French'},
+        { key: 'de', text: 'German'},
+        { key: 'ja', text: 'Japanese'},
+        { key: 'zh', text: 'Chinese'}
+    ],
+
+    PROJECTS_URL: BASE_URL + 'user/:user_id/projects'
 }

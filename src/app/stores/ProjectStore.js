@@ -17,6 +17,7 @@ function getProfile() {
         },
         success: function (data) {
             ProjectStore.profile = data.profile;
+            localStorage.setItem('profile_id', data.profile.id);
             ProjectStore.emitChange();
         },
         error: function (err) {
@@ -25,17 +26,27 @@ function getProfile() {
     });
 }
 
+function getProfileId() {
+    var id;
+    if (ProjectStore.profile && ProjectStore.profile.id) {
+        id = ProjectStore.profile.id;
+    } else {
+        id = localStorage.getItem('profile_id');
+    }
+    return id
+}
+
 function getProjects() {
     $.ajax({
         method: 'GET',
-        url: ProjectConstants.PROJECTS_URL,
+        url: ProjectConstants.PROJECTS_URL.replace(':user_id', getProfileId()),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         xhrFields: {
             withCredentials: true
         },
         success: function (data) {
-            ProjectStore.projects = data.projects;
+            ProjectStore.projects = data;
             ProjectStore.emitChange();
         },
         error: function (err) {
@@ -45,12 +56,13 @@ function getProjects() {
 
 }
 
-function addProject() {
+function addProject(data) {
     $.ajax({
         method: 'POST',
-        url: ProjectConstants.PROJECTS_URL,
+        url: ProjectConstants.PROJECTS_URL.replace(':user_id', getProfileId()),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
+        data: JSON.stringify(data),
         xhrFields: {
             withCredentials: true
         },
@@ -65,9 +77,7 @@ function addProject() {
 }
 
 var ProjectStore = Object.assign({}, EventEmitter.prototype, {
-    profile: {},
-
-    // TODO: make a request to a server, if no projects exists, show Registration-Step2 - Create Project Form
+    profile: null,
     projects: null,
 
     emitChange() {
@@ -91,6 +101,9 @@ AppDispatcher.register(function (action) {
             break;
         case ProjectConstants.GET_PROJECTS:
             getProjects();
+            break;
+        case ProjectConstants.ADD_PROJECT:
+            addProject(action.data);
             break;
         }
 });
