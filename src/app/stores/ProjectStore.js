@@ -90,6 +90,10 @@ var ProjectStore = Object.assign({}, EventEmitter.prototype, {
 
     removeChangeListener(callback) {
         this.removeListener(CHANGE_EVENT, callback);
+    },
+
+    setProfile(newProfile) {
+        this.profile = newProfile;
     }
 
 });

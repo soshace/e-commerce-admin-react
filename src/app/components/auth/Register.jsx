@@ -152,24 +152,20 @@ class Register extends React.Component {
     }
 
     _onRegisterSuccess() {
-        ProjectActions.getProfile();
+        ProjectActions.getProjects();
     }
 
     _onProfilesGet() {
-        var profile = ProjectStore.profile,
-            projects = ProjectStore.projects,
+        var projects = ProjectStore.projects,
             slug;
-        if (!projects) {
-            ProjectActions.getProjects();
+
+        if (projects.length) {
+            slug = projects[0].slug;
+            this.context.router.push(slug + '/dashboard');
         } else {
-            projects = ProjectStore.projects;
-            if (projects.length) {
-                slug = projects[0].slug;
-                this.context.router.push(slug + '/dashboard');
-            } else {
-                this.context.router.push('/new_project');
-            }
+            this.context.router.push('/new_project');
         }
+
     }
 
     _onRegisterFail() {

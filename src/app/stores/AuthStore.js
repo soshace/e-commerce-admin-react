@@ -1,5 +1,6 @@
 import AuthConstants from './../constants/AuthConstants.js';
 import AppDispatcher from './../AppDispatcher.js';
+import ProjectStore from './ProjectStore.js';
 import $ from 'jquery';
 
 var EventEmitter = require('events').EventEmitter;
@@ -73,6 +74,7 @@ var AuthStore = Object.assign({}, EventEmitter.prototype, {
     _onLogin(res) {
         if (res.code === AuthConstants.LOGIN_SUCCESS_CODE) {
             localStorage.setItem('loggedIn', true);
+            ProjectStore.setProfile(res.user);
             this.emitChange(LOGIN_SUCCESS);
         } else if (res.code === AuthConstants.LOGIN_FAIL_CODE) {
             this.emitChange(LOGIN_ERROR);
