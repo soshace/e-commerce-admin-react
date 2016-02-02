@@ -8,7 +8,8 @@ import Register from './../components/auth/Register.jsx';
 import Products  from './../components/administration/Products.jsx';
 import Dashboard  from './../components/administration/Dashboard.jsx';
 import AdminPanelPage  from './../components/administration/AdminPanelPage.jsx';
-import NewProject from './../components/administration/NewProject.jsx';
+import NewProject from './../components/settings/NewProject.jsx';
+import Settings from './../components/settings/Settings.jsx';
 
 function requireAuth(nextState, replace) {
     if (!AuthStore.loggedIn()) {
@@ -24,7 +25,9 @@ var Routes = (
         <Route path="/" component={App}>
             <Route path="signin" component={Login}/>
             <Route path="signup" component={Register}/>
-            <Route path="new_project" component={NewProject}/>
+            <Route path="settings" component={Settings}>
+                <Route path="manage-projects" component={NewProject}/>
+            </Route>
             <Route path=":projectName" component={AdminPanelPage} onEnter={requireAuth}>
                 <Route path="dashboard" component={Dashboard}/>
                 <Route path="products" component={Products}/>
