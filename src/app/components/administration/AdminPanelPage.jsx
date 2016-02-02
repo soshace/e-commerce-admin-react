@@ -1,9 +1,9 @@
 import React from 'react';
 import classnames from 'classnames';
 import Aside from './Aside.jsx';
-import API from './../../constants/DashboardConstants.js';
-import DashboardStore from './../../stores/DashboardStore.js';
-import DashboardActions from './../../actions/DashboardActions.js';
+import API from './../../constants/ProjectConstants.js';
+import ProjectStore from './../../stores/ProjectStore.js';
+import ProjectActions from './../../actions/ProjectActions.js';
 
 
 class AdminPanelPage extends React.Component {
@@ -17,19 +17,19 @@ class AdminPanelPage extends React.Component {
     }
 
     componentDidMount() {
-        DashboardActions.getProfile();
-        DashboardActions.getProjects();
+        ProjectActions.getProfile();
+        ProjectActions.getProjects();
 
-        DashboardStore.addChangeListener(this._onChange.bind(this));
+        ProjectStore.addChangeListener(this._onChange.bind(this));
     }
 
     componentWillUnmount() {
-        DashboardStore.removeChangeListener(this._onChange.bind(this));
+        ProjectStore.removeChangeListener(this._onChange.bind(this));
     }
 
     _onChange() {
-        var projects = DashboardStore.projects;
-        this.setState({profile: DashboardStore.profile});
+        var projects = ProjectStore.projects;
+        this.setState({profile: ProjectStore.profile});
 
         if (projects) {
             if (projects.length) {

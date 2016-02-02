@@ -1,15 +1,15 @@
 import AppDispatcher from './../AppDispatcher.js';
-import DashboardConstants from './../constants/DashboardConstants.js';
+import ProjectConstants from './../constants/ProjectConstants.js';
 
 export default {
     getProfile: () => {
         AppDispatcher.dispatch({
-            actionType: DashboardConstants.GET_PROFILE
+            actionType: ProjectConstants.GET_PROFILE
         });
     },
     getProjects: () => {
         AppDispatcher.dispatch({
-            actionType: DashboardConstants.GET_PROJECTS
+            actionType: ProjectConstants.GET_PROJECTS
         });
     }
 }
