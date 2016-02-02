@@ -26,21 +26,15 @@ class MenuItem extends React.Component {
                             <i className="mdi-action-search i-24"></i>
                         </a>
                     </li>
-                    <li>
-                        <a data-md-ink-ripple data-toggle="modal" data-target="#user">
-                            <i className="mdi-social-person-outline i-24"></i>
-                        </a>
-                    </li>
                     <li className="dropdown">
                         <a data-md-ink-ripple data-toggle="dropdown">
                             <i className="mdi-navigation-more-vert i-24"></i>
                         </a>
                         <ul className="dropdown-menu dropdown-menu-scale pull-right pull-up text-color">
-                            <li><a href>Single-column view</a></li>
-                            <li><a href>Sort by date</a></li>
-                            <li><a href>Sort by name</a></li>
+                            <li><Link to="/settings">Settings</Link></li>
+                            <li><Link to="/logout">Logout</Link></li>
                             <li className="divider"></li>
-                            <li><a href>Help &amp; feedback</a></li>
+                            <li><Link to="/help">Help &amp; feedback</Link></li>
                         </ul>
                     </li>
                 </ul>
