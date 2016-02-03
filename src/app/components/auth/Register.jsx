@@ -10,6 +10,8 @@ import strategy from 'joi-validation-strategy';
 import validation from 'react-validation-mixin';
 import classnames from 'classnames';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
+import CompanyStore from './../../stores/CompanyStore.js';
+import CompanyActions from './../../actions/CompanyActions.js';
 
 
 class Register extends React.Component {
@@ -21,7 +23,8 @@ class Register extends React.Component {
             password: '',
             errorMessage: '',
             errors: {},
-            projects: []
+            projects: [],
+            companies: []
         };
 
         this.validatorTypes = {
@@ -36,6 +39,8 @@ class Register extends React.Component {
         this._onSubmit = this._onSubmit.bind(this);
         this._onRegisterSuccess = this._onRegisterSuccess.bind(this);
         this._onRegisterFail = this._onRegisterFail.bind(this);
+        this._onProjectsGet = this._onProjectsGet.bind(this);
+        this._onCompaniesGet = this._onCompaniesGet.bind(this);
     }
 
     getValidatorData() {
@@ -48,7 +53,7 @@ class Register extends React.Component {
 
     componentDidMount() {
         AuthStore.addListener(this._onRegisterSuccess, this._onRegisterFail);
-        ProjectStore.addChangeListener(this._onProjectsGet.bind(this));
+        ProjectStore.addChangeListener(this._onProjectsGet);
     }
 
     componentWillUnmount() {
@@ -152,20 +157,40 @@ class Register extends React.Component {
     }
 
     _onRegisterSuccess() {
-        ProjectActions.getProjects();
+        var companies = CompanyStore.companies;
+
+        if (companies) {
+            this.setState({companies: companies});
+            this._onCompaniesGet();
+        } else {
+            CompanyActions.getCompanies();
+        }
+    }
+
+    _onCompaniesGet() {
+        var projects = ProjectStore.projects,
+            companies = CompanyStore.companies;
+        this.setState({companies: companies});
+
+        if (projects) {
+            this.setState({projects: projects});
+            this._onProjectsGet();
+        } else {
+            ProjectActions.getProjects();
+        }
     }
 
     _onProjectsGet() {
         var projects = ProjectStore.projects,
+            companies = this.state.companies,
             slug;
 
         if (projects.length) {
             slug = projects[0].slug;
-            this.context.router.push(slug + '/dashboard');
+            this.context.router.push(`${slug}/dashboard`);
         } else {
-            this.context.router.push('/new_project');
+            this.context.router.push(`companies/${companies[0].id}/projects`);
         }
-
     }
 
     _onRegisterFail() {

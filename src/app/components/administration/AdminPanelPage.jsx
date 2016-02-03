@@ -6,6 +6,7 @@ import ProjectStore from './../../stores/ProjectStore.js';
 import CompanyStore from './../../stores/CompanyStore.js';
 import ProjectActions from './../../actions/ProjectActions.js';
 import CompanyActions from './../../actions/CompanyActions.js';
+import Navbar from './../Navbar.jsx';
 
 
 class AdminPanelPage extends React.Component {
@@ -43,6 +44,7 @@ class AdminPanelPage extends React.Component {
     render() {
         return (
             <div>
+                <Navbar/>
                 <Aside profile={this.state.profile}/>
 
                 <div id="content" className="app-content" role="main">

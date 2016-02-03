@@ -10,6 +10,8 @@ import strategy from 'joi-validation-strategy';
 import validation from 'react-validation-mixin';
 import classnames from 'classnames';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
+import CompanyStore from './../../stores/CompanyStore.js';
+import CompanyActions from './../../actions/CompanyActions.js';
 
 
 class Login extends Component {
@@ -19,7 +21,8 @@ class Login extends Component {
             email: '',
             password: '',
             errors: {},
-            projects: []
+            projects: [],
+            companies: []
         };
 
         this.validatorTypes = {
@@ -33,6 +36,8 @@ class Login extends Component {
         this._onSubmit = this._onSubmit.bind(this);
         this._onLoginSuccess = this._onLoginSuccess.bind(this);
         this._onLoginFail = this._onLoginFail.bind(this);
+        this._onProjectsGet = this._onProjectsGet.bind(this);
+        this._onCompaniesGet = this._onCompaniesGet.bind(this);
     }
 
     getValidatorData() {
@@ -44,12 +49,14 @@ class Login extends Component {
 
     componentDidMount() {
         AuthStore.addListener(this._onLoginSuccess, this._onLoginFail);
-        ProjectStore.addChangeListener(this._onProjectsGet.bind(this));
+        CompanyStore.addChangeListener(this._onCompaniesGet);
+        ProjectStore.addChangeListener(this._onProjectsGet);
     }
 
     componentWillUnmount() {
         //AuthStore.removeListener(this._onLoginSuccess, this._onLoginFail);
         //ProjectStore.removeListener(this._onProjectsGet.bind(this));
+        //CompanyStore.removeChangeListener(this._onCompaniesGet);
     }
 
     login() {
@@ -138,24 +145,45 @@ class Login extends Component {
     }
 
     _onLoginSuccess() {
-        ProjectActions.getProjects();
+        var companies = CompanyStore.companies;
+
+        if (companies) {
+            this.setState({companies: companies});
+            this._onCompaniesGet();
+        } else {
+            CompanyActions.getCompanies();
+        }
+    }
+
+    _onCompaniesGet() {
+        var projects = ProjectStore.projects,
+            companies = CompanyStore.companies;
+        this.setState({companies: companies});
+
+        if (projects) {
+            this.setState({projects: projects});
+            this._onProjectsGet();
+        } else {
+            ProjectActions.getProjects();
+        }
+    }
+
+    _onProjectsGet() {
+        var projects = ProjectStore.projects,
+            companies = this.state.companies,
+            slug;
+
+        if (projects.length) {
+            slug = projects[0].slug;
+            this.context.router.push(`${slug}/dashboard`);
+        } else {
+            this.context.router.push(`companies/${companies[0].id}/projects`);
+        }
     }
 
     _onLoginFail() {
         var self = this;
         self.setState({errors: {email: 'wrong email/password'}});
-    }
-
-    _onProjectsGet() {
-        var projects = ProjectStore.projects,
-            slug;
-
-        if (projects.length) {
-            slug = projects[0].slug;
-            this.context.router.push(slug + '/dashboard');
-        } else {
-            this.context.router.push('/new_project');
-        }
     }
 }
 

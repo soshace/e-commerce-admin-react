@@ -1,7 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
 import AuthStore from './stores/AuthStore.js';
-import Navbar from './components/Navbar.jsx';
 
 class App extends React.Component {
     constructor(props) {
@@ -15,7 +14,6 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Navbar/>
                 {this.props.children}
             </div>
 
