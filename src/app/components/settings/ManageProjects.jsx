@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import ProjectStore from './../../stores/ProjectStore.js';
 import ProjectActions from './../../actions/ProjectActions.js';
 import ProjectConstants from './../../constants/ProjectConstants.js';
@@ -11,23 +12,37 @@ class ManageProjects extends React.Component {
             slug: '',
             name: '',
             language: ProjectConstants.PROJECT_LANGUAGES[0].key,
-            currency: ProjectConstants.PROJECT_CURRENCIES[0].key
+            currency: ProjectConstants.PROJECT_CURRENCIES[0].key,
+            projects: []
         };
 
-        this._onChange = this._onChange.bind(this);
+        this._onProjectsGet = this._onProjectsGet.bind(this);
         this._onSubmit = this._onSubmit.bind(this);
         this._onFieldUpdate = this._onFieldUpdate.bind(this);
+        this._onNameKeyPress = this._onNameKeyPress.bind(this);
     }
 
     componentDidMount() {
-        ProjectStore.addChangeListener(this._onChange);
+        ProjectStore.addChangeListener(this._onProjectsGet);
+
+        var projects = ProjectStore.projects;
+
+        if (projects) {
+            this.setState({projects: projects});
+            this._onProjectsGet();
+        } else {
+            ProjectActions.getProjects();
+        }
     }
 
     componentWillUnmount() {
-        ProjectStore.removeChangeListener(this._onChange);
+        ProjectStore.removeChangeListener(this._onProjectsGet);
     }
 
     render() {
+        var projects = this.state.projects,
+            self = this;
+
         return (
             <div className="col-md-9 b-l bg-white bg-auto">
                 <div className="panel panel-default">
@@ -37,6 +52,34 @@ class ManageProjects extends React.Component {
                             There would be some interesting text
                         </small>
                     </div>
+
+                    <table className="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Key</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {projects && projects.map(function (project, index) {
+                            return (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            defaultValue={project.name}
+                                            onKeyPress={self._onNameKeyPress.bind(self, project.id)}
+                                            placeholder="Project name"/>
+                                    </td>
+                                    <td><Link to={`${project.slug}/dashboard`}>{project.slug}</Link></td>
+                                </tr>
+                            )
+                        })}
+                        </tbody>
+                    </table>
 
                     <div className="panel-body">
                         <form className="form-horizontal p-h-xsform-horizontal p-h-xs"
@@ -89,6 +132,15 @@ class ManageProjects extends React.Component {
         )
     }
 
+    _onNameKeyPress(id, e) {
+        if (e.key == 'Enter') {
+            let data = {
+                name: e.target.value
+            };
+            ProjectActions.updateProject(id, data);
+        }
+    }
+
     _onSubmit(e) {
         var {name, slug, currency, language} = this.state;
         e.preventDefault();
@@ -112,9 +164,11 @@ class ManageProjects extends React.Component {
         };
     }
 
-    _onChange() {
-        var projectSlug = ProjectStore.projects[0].slug;
-        this.context.router.push(`${projectSlug}/dashboard`);
+    _onProjectsGet() {
+        var projects = ProjectStore.projects;
+        this.setState({projects: projects});
+        //var projectSlug = ProjectStore.projects[0].slug;
+        //this.context.router.push(`${projectSlug}/dashboard`);
     }
 }
 

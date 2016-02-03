@@ -75,6 +75,25 @@ function addProject(data) {
     });
 }
 
+function updateProject(id, data) {
+    $.ajax({
+        method: 'PUT',
+        url: ProjectConstants.PROJECT_UPDATE_URL.replace(':project_id', id),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (data) {
+            getProjects();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
 var ProjectStore = Object.assign({}, EventEmitter.prototype, {
     profile: null,
     projects: null,
@@ -115,6 +134,9 @@ AppDispatcher.register(function (action) {
             break;
         case ProjectConstants.ADD_PROJECT:
             addProject(action.data);
+            break;
+        case ProjectConstants.UPDATE_PROJECT:
+            updateProject(action.data.id, action.data.data);
             break;
         }
 });

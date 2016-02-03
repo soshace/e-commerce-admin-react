@@ -17,5 +17,11 @@ export default {
             actionType: ProjectConstants.ADD_PROJECT,
             data: {name, slug, currency, language}
         });
+    },
+    updateProject: (id, data) => {
+        AppDispatcher.dispatch({
+            actionType: ProjectConstants.UPDATE_PROJECT,
+            data: {id, data}
+        });
     }
 }
