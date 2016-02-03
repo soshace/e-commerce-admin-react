@@ -16,13 +16,14 @@ class Company extends React.Component {
 
 
     render() {
+        var id = this.props.params.id;
         return (
             <div className="app-content">
                 <div className="p-h-md p-v bg-white box-shadow pos-rlt">
                     <h3 className="no-margin">Company Settings</h3>
                 </div>
                 <div className="box">
-                    <CompanyMenu />
+                    <CompanyMenu id={id} />
 
                     {this.props.children}
                 </div>
