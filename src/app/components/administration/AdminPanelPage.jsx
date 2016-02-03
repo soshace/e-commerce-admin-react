@@ -16,7 +16,12 @@ class AdminPanelPage extends React.Component {
     }
 
     componentDidMount() {
-        ProjectActions.getProfile();
+        var profile = ProjectStore.profile;
+        if (profile) {
+            this.setState({profile: profile});
+        } else {
+            ProjectActions.getProfile();
+        }
 
         ProjectStore.addChangeListener(this._onChange.bind(this));
     }

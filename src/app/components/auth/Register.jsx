@@ -48,7 +48,7 @@ class Register extends React.Component {
 
     componentDidMount() {
         AuthStore.addListener(this._onRegisterSuccess, this._onRegisterFail);
-        ProjectStore.addChangeListener(this._onProfilesGet.bind(this));
+        ProjectStore.addChangeListener(this._onProjectsGet.bind(this));
     }
 
     componentWillUnmount() {
@@ -155,7 +155,7 @@ class Register extends React.Component {
         ProjectActions.getProjects();
     }
 
-    _onProfilesGet() {
+    _onProjectsGet() {
         var projects = ProjectStore.projects,
             slug;
 

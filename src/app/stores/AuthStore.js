@@ -57,6 +57,7 @@ var AuthStore = Object.assign({}, EventEmitter.prototype, {
             error: cb
         });
         localStorage.setItem('loggedIn', false);
+        ProjectStore.clearProfile();
     },
 
     _onRegisterSuccess(data) {

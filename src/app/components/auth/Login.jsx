@@ -44,7 +44,7 @@ class Login extends Component {
 
     componentDidMount() {
         AuthStore.addListener(this._onLoginSuccess, this._onLoginFail);
-        ProjectStore.addChangeListener(this._onProfilesGet.bind(this));
+        ProjectStore.addChangeListener(this._onProjectsGet.bind(this));
     }
 
     componentWillUnmount() {
@@ -146,7 +146,7 @@ class Login extends Component {
         self.setState({errors: {email: 'wrong email/password'}});
     }
 
-    _onProfilesGet() {
+    _onProjectsGet() {
         var projects = ProjectStore.projects,
             slug;
 

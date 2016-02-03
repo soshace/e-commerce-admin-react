@@ -94,6 +94,10 @@ var ProjectStore = Object.assign({}, EventEmitter.prototype, {
 
     setProfile(newProfile) {
         this.profile = newProfile;
+    },
+
+    clearProfile() {
+        this.profile = null;
     }
 
 });

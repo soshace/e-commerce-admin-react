@@ -1,7 +1,7 @@
 import {BASE_URL} from './AuthConstants.js';
 export default {
     BASE_URL: BASE_URL,
-    PROFILE_URL: BASE_URL + 'profile',
+    PROFILE_URL: BASE_URL + 'users/profile',
 
     GET_PROFILE: 'GET_PROFILE',
     GET_PROJECTS: 'GET_PROJECTS',
@@ -21,5 +21,5 @@ export default {
         { key: 'zh', text: 'Chinese'}
     ],
 
-    PROJECTS_URL: BASE_URL + 'user/:user_id/projects'
+    PROJECTS_URL: BASE_URL + 'users/:user_id/projects'
 }
