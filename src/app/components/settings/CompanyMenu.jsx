@@ -13,21 +13,16 @@ class App extends React.Component {
             <div className="col-md-3">
                 <ul className="nav nav-lists b-t" ui-nav>
                     <li className="active">
-                        <Link to="profile">Your profile</Link>
-                    </li>
-                    <li >
-                        <Link to="manage-projects">Manage Projects</Link>
+                        <Link to="company/profile">Company account</Link>
                     </li>
                     <li>
-                        <Link to="manage-teams">Manage Teams</Link>
+                        <Link to="company/projects">Manage Projects</Link>
                     </li>
                     <li>
-                        <Link to="manage-company">Manage Company</Link>
+                        <Link to="company/teams">Manage Teams</Link>
                     </li>
-
                 </ul>
             </div>
-
         )
     }
 }

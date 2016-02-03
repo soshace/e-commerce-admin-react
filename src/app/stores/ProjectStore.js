@@ -53,7 +53,6 @@ function getProjects() {
             console.error(err);
         }
     });
-
 }
 
 function addProject(data) {
@@ -98,6 +97,10 @@ var ProjectStore = Object.assign({}, EventEmitter.prototype, {
 
     clearProfile() {
         this.profile = null;
+    },
+
+    getProfileId() {
+        return getProfileId();
     }
 
 });
