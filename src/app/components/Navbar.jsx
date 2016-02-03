@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import classnames from 'classnames';
 import CompanyActions from './../actions/CompanyActions.js';
 import CompanyStore from './../stores/CompanyStore.js';
+import ProjectActions from './../actions/ProjectActions.js';
+import ProjectStore from './../stores/ProjectStore.js';
 
 
 class MenuItem extends React.Component {
@@ -14,22 +16,24 @@ class MenuItem extends React.Component {
             companies: []
         };
 
-        this._onChange = this._onChange.bind(this);
+        this._onCompaniesGet = this._onCompaniesGet.bind(this);
+        this._onProfileGet = this._onProfileGet.bind(this);
     }
 
     componentDidMount() {
-        var companies = CompanyStore.companies;
-        CompanyStore.addChangeListener(this._onChange);
-
-        if (companies) {
-            this.setState({companies: companies});
+        var profile = ProjectStore.profile;
+        if (profile) {
+            this._onProfileGet();
         } else {
-            CompanyActions.getCompanies();
+            ProjectActions.getProfile();
         }
+
+        CompanyStore.addChangeListener(this._onCompaniesGet);
+        ProjectStore.addChangeListener(this._onProfileGet);
     }
 
     componentWillUnmount() {
-        CompanyStore.removeChangeListener(this._onChange);
+        CompanyStore.removeChangeListener(this._onCompaniesGet);
     }
 
     render() {
@@ -48,8 +52,7 @@ class MenuItem extends React.Component {
                             <i className="mdi-navigation-more-vert i-24"></i>
                         </a>
                         <ul className="dropdown-menu dropdown-menu-scale pull-right pull-up text-color">
-                            <li><Link to="/company">Profile Settings</Link></li>
-                            <li><Link to="/company">Company Settings</Link></li>
+                            <li><Link to="/profile">Profile Settings</Link></li>
                             {companies.map(function (c) {
                                 return <li key={c.id}><Link to={`companies/${c.id}`}>{c.name}</Link></li>
                             })}
@@ -64,8 +67,18 @@ class MenuItem extends React.Component {
         )
     }
 
-    _onChange() {
+    _onCompaniesGet() {
         this.setState({companies: CompanyStore.companies});
+    }
+
+    _onProfileGet() {
+        var companies = CompanyStore.companies;
+
+        if (companies) {
+            this.setState({companies: companies});
+        } else {
+            CompanyActions.getCompanies();
+        }
     }
 }
 

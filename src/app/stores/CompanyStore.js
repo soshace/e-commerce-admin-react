@@ -1,4 +1,3 @@
-import ProjectConstants from './../constants/ProjectConstants.js';
 import AppDispatcher from './../AppDispatcher.js';
 import ProjectStore from './ProjectStore.js';
 import CompanyConstants from './../constants/CompanyConstants.js';
@@ -11,7 +10,7 @@ var CHANGE_EVENT = 'change';
 function getCompanies() {
     $.ajax({
         method: 'GET',
-        url: CompanyConstants.COMPANIES_URL,
+        url: CompanyConstants.COMPANIES_URL.replace(':user_id', ProjectStore.getProfileId()),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         xhrFields: {
