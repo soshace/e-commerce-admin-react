@@ -114,7 +114,7 @@ class ManageProjects extends React.Component {
 
     _onChange() {
         var projectSlug = ProjectStore.projects[0].slug;
-        this.context.router.push(projectSlug + '/dashboard');
+        this.context.router.push(`${projectSlug}/dashboard`);
     }
 }
 

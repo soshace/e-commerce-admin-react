@@ -18,9 +18,14 @@ class MenuItem extends React.Component {
     }
 
     componentDidMount() {
+        var companies = CompanyStore.companies;
         CompanyStore.addChangeListener(this._onChange);
 
-        CompanyActions.getCompanies();
+        if (companies) {
+            this.setState({companies: companies});
+        } else {
+            CompanyActions.getCompanies();
+        }
     }
 
     componentWillUnmount() {
@@ -28,8 +33,7 @@ class MenuItem extends React.Component {
     }
 
     render() {
-        var searchClass = classnames('pos-abt w-full h-full blue', {hide: !this.state.searchShown}),
-            companies = this.state.companies;
+        var companies = this.state.companies;
 
         return (
             <div className="navbar md-whiteframe-z1 no-radius blue">

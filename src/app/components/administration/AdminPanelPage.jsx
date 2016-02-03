@@ -3,7 +3,9 @@ import classnames from 'classnames';
 import Aside from './Aside.jsx';
 import API from './../../constants/ProjectConstants.js';
 import ProjectStore from './../../stores/ProjectStore.js';
+import CompanyStore from './../../stores/CompanyStore.js';
 import ProjectActions from './../../actions/ProjectActions.js';
+import CompanyActions from './../../actions/CompanyActions.js';
 
 
 class AdminPanelPage extends React.Component {
@@ -11,23 +13,31 @@ class AdminPanelPage extends React.Component {
         super(props);
 
         this.state = {
-            profile: {}
+            profile: {},
+            companies: []
         };
+
+        this._onChange = this._onChange.bind(this);
+        this._onCompaniesGet = this._onCompaniesGet.bind(this);
     }
 
     componentDidMount() {
-        var profile = ProjectStore.profile;
-        if (profile) {
-            this.setState({profile: profile});
+        var companies = CompanyStore.companies;
+
+        if (companies) {
+            this.setState({companies: companies});
+            this._onCompaniesGet();
         } else {
-            ProjectActions.getProfile();
+            CompanyActions.getCompanies();
         }
 
-        ProjectStore.addChangeListener(this._onChange.bind(this));
+        ProjectStore.addChangeListener(this._onChange);
+        CompanyStore.addChangeListener(this._onCompaniesGet);
     }
 
     componentWillUnmount() {
-        ProjectStore.removeChangeListener(this._onChange.bind(this));
+        ProjectStore.removeChangeListener(this._onChange);
+        CompanyStore.removeChangeListener(this._onCompaniesGet);
     }
 
     render() {
@@ -56,13 +66,14 @@ class AdminPanelPage extends React.Component {
 
     _onChange() {
         var projects = ProjectStore.projects,
-            profile = ProjectStore.profile;
+            profile = ProjectStore.profile,
+            companies = this.state.companies;
         this.setState({profile: profile});
 
         if (profile) {
             if (projects) {
                 if (!projects.length) {
-                    this.context.router.push('new_project');
+                    this.context.router.push(`companies/${companies[0].id}/projects`);
                 }
             } else {
                 ProjectActions.getProjects();
@@ -71,6 +82,17 @@ class AdminPanelPage extends React.Component {
     }
 
 
+    _onCompaniesGet() {
+        var profile = ProjectStore.profile,
+            companies = CompanyStore.companies;
+        this.setState({companies: companies});
+
+        if (profile) {
+            this.setState({profile: profile});
+        } else {
+            ProjectActions.getProfile();
+        }
+    }
 }
 
 AdminPanelPage.contextTypes = {
