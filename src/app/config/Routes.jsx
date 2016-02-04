@@ -8,11 +8,11 @@ import Register from './../components/auth/Register.jsx';
 import Products  from './../components/administration/Products.jsx';
 import Dashboard  from './../components/administration/Dashboard.jsx';
 import AdminPanelPage  from './../components/administration/AdminPanelPage.jsx';
-import ManageProjects from './../components/settings/ManageProjects.jsx';
-import ManageTeams from './../components/settings/ManageTeams.jsx';
-import CompanyProfile from './../components/settings/CompanyProfile.jsx';
-import Company from './../components/settings/Company.jsx';
-import NewCompany from './../components/settings/NewCompany.jsx';
+import ManageProjects from './../components/company/ManageProjects.jsx';
+import ManageTeams from './../components/company/ManageTeams.jsx';
+import CompanyProfile from './../components/company/CompanyProfile.jsx';
+import Company from './../components/company/Company.jsx';
+import NewCompany from './../components/company/NewCompany.jsx';
 
 function requireAuth(nextState, replace) {
     if (!AuthStore.loggedIn()) {
