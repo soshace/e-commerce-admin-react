@@ -38,7 +38,7 @@ class NewCompany extends React.Component {
                 <div className="app-content">
                     <div className="box">
                         <div className="box-cell">
-                            <div className="box-inner padding col-md-12">
+                            <div className="box-inner padding col-md-6 col-md-offset-3">
                                 <div className="panel panel-default">
                                     <div className="panel-heading bg-white">
                                         New Company<br/>
