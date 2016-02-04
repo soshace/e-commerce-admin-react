@@ -28,8 +28,8 @@ var Routes = (
         <Route path="/" component={App}>
             <Route path="signin" component={Login}/>
             <Route path="signup" component={Register}/>
-            <Route path="companies/new" component={NewCompany}/>
-            <Route path="companies/:id" component={Company}>
+            <Route path="companies/new" component={NewCompany}  onEnter={requireAuth}/>
+            <Route path="companies/:id" component={Company}  onEnter={requireAuth}>
                 <IndexRedirect to="profile" />
                 <Route path="projects" component={ManageProjects}/>
                 <Route path="teams" component={ManageTeams}/>
