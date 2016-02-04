@@ -134,7 +134,7 @@ class ManageProjects extends React.Component {
 
     _onNameKeyPress(id, e) {
         if (e.key == 'Enter') {
-            let data = {
+            var data = {
                 name: e.target.value
             };
             ProjectActions.updateProject(id, data);

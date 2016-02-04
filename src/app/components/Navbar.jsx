@@ -52,13 +52,13 @@ class MenuItem extends React.Component {
                             <i className="mdi-navigation-more-vert i-24"></i>
                         </a>
                         <ul className="dropdown-menu dropdown-menu-scale pull-right pull-up text-color">
-                            <li><Link to="/profile">Profile Settings</Link></li>
+                            <li><Link to="companies/new">Add Company</Link></li>
                             {companies.map(function (c) {
                                 return <li key={c.id}><Link to={`companies/${c.id}`}>{c.name}</Link></li>
                             })}
-                            <li><Link to="/logout">Logout</Link></li>
                             <li className="divider"></li>
-                            <li><Link to="/help">Help &amp; feedback</Link></li>
+                            <li><Link to="/profile">Profile Settings</Link></li>
+                            <li><Link to="/logout">Logout</Link></li>
                         </ul>
                     </li>
                 </ul>

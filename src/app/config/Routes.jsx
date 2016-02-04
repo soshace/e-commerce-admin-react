@@ -12,6 +12,7 @@ import ManageProjects from './../components/settings/ManageProjects.jsx';
 import ManageTeams from './../components/settings/ManageTeams.jsx';
 import CompanyProfile from './../components/settings/CompanyProfile.jsx';
 import Company from './../components/settings/Company.jsx';
+import NewCompany from './../components/settings/NewCompany.jsx';
 
 function requireAuth(nextState, replace) {
     if (!AuthStore.loggedIn()) {
@@ -27,6 +28,7 @@ var Routes = (
         <Route path="/" component={App}>
             <Route path="signin" component={Login}/>
             <Route path="signup" component={Register}/>
+            <Route path="companies/new" component={NewCompany}/>
             <Route path="companies/:id" component={Company}>
                 <IndexRedirect to="profile" />
                 <Route path="projects" component={ManageProjects}/>

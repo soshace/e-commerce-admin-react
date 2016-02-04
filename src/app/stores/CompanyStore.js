@@ -27,6 +27,25 @@ function getCompanies() {
     });
 }
 
+function createCompany(data) {
+    $.ajax({
+        method: 'POST',
+        url: CompanyConstants.COMPANIES_URL.replace(':user_id', ProjectStore.getProfileId()),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function () {
+            getCompanies();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
 function updateCompany(id, data) {
     $.ajax({
         method: 'PUT',
@@ -64,6 +83,12 @@ var CompanyStore = Object.assign({}, EventEmitter.prototype, {
 
     getCompanyById(id) {
         return _.findWhere(this.companies, {id: id});
+    },
+
+    getLastCompany() {
+        return _.max(this.companies, function (company) {
+            return (new Date(company.createdAt)).getTime();
+        })
     }
 
 });
@@ -76,7 +101,10 @@ AppDispatcher.register(function (action) {
         case CompanyConstants.UPDATE_COMPANY:
             updateCompany(action.id, action.data);
             break;
-    }
+        case CompanyConstants.CREATE_COMPANY:
+            createCompany(action.data);
+            break;
+        }
 });
 
 export default CompanyStore

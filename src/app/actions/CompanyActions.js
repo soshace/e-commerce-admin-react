@@ -7,6 +7,12 @@ export default {
             actionType: CompanyConstants.GET_COMPANIES
         });
     },
+    createCompany: (data) => {
+        AppDispatcher.dispatch({
+            actionType: CompanyConstants.CREATE_COMPANY,
+            data: data
+        })
+    },
     updateCompany: (id, data) => {
         AppDispatcher.dispatch({
             actionType: CompanyConstants.UPDATE_COMPANY,
