@@ -6,5 +6,12 @@ export default {
         AppDispatcher.dispatch({
             actionType: CompanyConstants.GET_COMPANIES
         });
+    },
+    updateCompany: (id, data) => {
+        AppDispatcher.dispatch({
+            actionType: CompanyConstants.UPDATE_COMPANY,
+            data: data,
+            id: id
+        })
     }
 }

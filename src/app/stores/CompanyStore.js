@@ -2,6 +2,7 @@ import AppDispatcher from './../AppDispatcher.js';
 import ProjectStore from './ProjectStore.js';
 import CompanyConstants from './../constants/CompanyConstants.js';
 import $ from 'jquery';
+import _ from 'underscore';
 
 var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
@@ -24,7 +25,25 @@ function getCompanies() {
             console.error(err);
         }
     });
+}
 
+function updateCompany(id, data) {
+    $.ajax({
+        method: 'PUT',
+        url: CompanyConstants.COMPANY_URL.replace(':company_id', id),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function () {
+            getCompanies();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
 }
 
 
@@ -41,6 +60,10 @@ var CompanyStore = Object.assign({}, EventEmitter.prototype, {
 
     removeChangeListener(callback) {
         this.removeListener(CHANGE_EVENT, callback);
+    },
+
+    getCompanyById(id) {
+        return _.findWhere(this.companies, {id: id});
     }
 
 });
@@ -49,6 +72,9 @@ AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case CompanyConstants.GET_COMPANIES:
             getCompanies();
+            break;
+        case CompanyConstants.UPDATE_COMPANY:
+            updateCompany(action.id, action.data);
             break;
     }
 });
