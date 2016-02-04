@@ -13,6 +13,7 @@ import ManageTeams from './../components/company/ManageTeams.jsx';
 import CompanyProfile from './../components/company/CompanyProfile.jsx';
 import Company from './../components/company/Company.jsx';
 import NewCompany from './../components/company/NewCompany.jsx';
+import { Account, AccountSettings, AccountCompanies } from './../components';
 
 function requireAuth(nextState, replace) {
     if (!AuthStore.loggedIn()) {
@@ -28,6 +29,11 @@ var Routes = (
         <Route path="/" component={App}>
             <Route path="signin" component={Login}/>
             <Route path="signup" component={Register}/>
+            <Route path="account" component={Account} onEnter={requireAuth}>
+                <IndexRedirect to="profile" />
+                <Route path="profile" component={AccountSettings}/>
+                <Route path="companies" component={AccountCompanies}/>
+            </Route>
             <Route path="companies/new" component={NewCompany}  onEnter={requireAuth}/>
             <Route path="companies/:id" component={Company}  onEnter={requireAuth}>
                 <IndexRedirect to="profile" />

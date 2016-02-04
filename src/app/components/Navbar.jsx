@@ -7,7 +7,7 @@ import ProjectActions from './../actions/ProjectActions.js';
 import ProjectStore from './../stores/ProjectStore.js';
 
 
-class MenuItem extends React.Component {
+class Navbar extends React.Component {
     constructor(props) {
         super(props);
 
@@ -57,7 +57,7 @@ class MenuItem extends React.Component {
                                 return <li key={c.id}><Link to={`companies/${c.id}`}>{c.name}</Link></li>
                             })}
                             <li className="divider"></li>
-                            <li><Link to="/profile">Profile Settings</Link></li>
+                            <li><Link to="/account">Profile Settings</Link></li>
                             <li><Link to="/logout">Logout</Link></li>
                         </ul>
                     </li>
@@ -82,4 +82,4 @@ class MenuItem extends React.Component {
     }
 }
 
-export default MenuItem
+export default Navbar
