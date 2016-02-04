@@ -33,8 +33,8 @@ class CompanyProfile extends React.Component {
         CompanyStore.removeChangeListener(this._onCompanyGet);
     }
 
-    componentWillReceiveProps() {
-        this._onCompanyGet();
+    componentWillReceiveProps(newProps) {
+        this._onCompanyGet(newProps);
     }
 
     render() {
@@ -73,9 +73,16 @@ class CompanyProfile extends React.Component {
         CompanyActions.updateCompany(companyId, this.state.company);
     }
 
-    _onCompanyGet() {
-        var companyId = this.props.params.id,
-            company = CompanyStore.getCompanyById(companyId);
+    _onCompanyGet(newProps) {
+        var companyId,
+            company;
+        if (newProps) {
+            companyId = newProps.params.id;
+        } else {
+            companyId = this.props.params.id;
+        }
+        company = CompanyStore.getCompanyById(companyId);
+
         this.setState({company: company});
     }
 }
