@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import classnames from 'classnames';
 
 
-class App extends React.Component {
+class CompanyMenu extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -28,4 +28,4 @@ class App extends React.Component {
     }
 }
 
-export default App
+export default CompanyMenu
