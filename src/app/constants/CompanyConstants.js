@@ -1,4 +1,4 @@
-import {BASE_URL} from './AuthConstants.js';
+import {BASE_URL} from './UserConstants.js';
 
 export default {
     BASE_URL: BASE_URL,

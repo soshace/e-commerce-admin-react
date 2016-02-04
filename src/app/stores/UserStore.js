@@ -1,4 +1,4 @@
-import AuthConstants from './../constants/AuthConstants.js';
+import UserConstants from './../constants/UserConstants.js';
 import AppDispatcher from './../AppDispatcher.js';
 import ProjectStore from './ProjectStore.js';
 import $ from 'jquery';
@@ -30,7 +30,7 @@ var UserStore = Object.assign({}, EventEmitter.prototype, {
     register(data) {
         var self = this;
         this.authRequest({
-            url: AuthConstants.REGISTER_URL,
+            url: UserConstants.REGISTER_URL,
             data: data,
             type: 'POST',
             success: self._onRegisterSuccess.bind(self, data),
@@ -41,7 +41,7 @@ var UserStore = Object.assign({}, EventEmitter.prototype, {
     login(data) {
         var self = this;
         this.authRequest({
-            url: AuthConstants.LOGIN_URL,
+            url: UserConstants.LOGIN_URL,
             data: data,
             type: 'POST',
             success: self._onLogin.bind(self)
@@ -51,7 +51,7 @@ var UserStore = Object.assign({}, EventEmitter.prototype, {
     logout(cb) {
         localStorage.clear();
         this.authRequest({
-            url: AuthConstants.LOGOUT_URL,
+            url: UserConstants.LOGOUT_URL,
             type: 'GET',
             success: cb,
             error: cb
@@ -73,11 +73,11 @@ var UserStore = Object.assign({}, EventEmitter.prototype, {
     },
 
     _onLogin(res) {
-        if (res.code === AuthConstants.LOGIN_SUCCESS_CODE) {
+        if (res.code === UserConstants.LOGIN_SUCCESS_CODE) {
             localStorage.setItem('loggedIn', true);
             ProjectStore.setProfile(res.user);
             this.emitChange(LOGIN_SUCCESS);
-        } else if (res.code === AuthConstants.LOGIN_FAIL_CODE) {
+        } else if (res.code === UserConstants.LOGIN_FAIL_CODE) {
             this.emitChange(LOGIN_ERROR);
         }
     },
@@ -105,17 +105,17 @@ var UserStore = Object.assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
-        case AuthConstants.REGISTER_USER:
+        case UserConstants.REGISTER_USER:
             UserStore.logout(function () {
                 UserStore.register(action.data);
             });
             break;
-        case AuthConstants.LOGIN_USER:
+        case UserConstants.LOGIN_USER:
             UserStore.logout(function () {
                 UserStore.login(action.data);
             });
             break;
-        case AuthConstants.LOGOUT_USER:
+        case UserConstants.LOGOUT_USER:
             UserStore.logout();
             break;
     }
