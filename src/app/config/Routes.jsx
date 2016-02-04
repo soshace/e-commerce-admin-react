@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Route, IndexRoute, hashHistory, IndexRedirect  } from 'react-router';
 import App  from './../App.jsx';
-import AuthStore from './../stores/AuthStore.js';
+import UserStore from './../stores/UserStore.js';
 import NotFound  from './../components/NotFound.jsx';
 import Login from './../components/auth/Login.jsx';
 import Register from './../components/auth/Register.jsx';
@@ -16,7 +16,7 @@ import NewCompany from './../components/company/NewCompany.jsx';
 import { Account, AccountSettings, AccountCompanies } from './../components';
 
 function requireAuth(nextState, replace) {
-    if (!AuthStore.loggedIn()) {
+    if (!UserStore.loggedIn()) {
         replace({
             pathname: '/signin',
             state: { nextPathname: nextState.location.pathname }

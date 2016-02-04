@@ -8,7 +8,7 @@ var LOGIN_SUCCESS = 'login_success';
 var LOGIN_ERROR = 'login_error';
 
 
-var AuthStore = Object.assign({}, EventEmitter.prototype, {
+var UserStore = Object.assign({}, EventEmitter.prototype, {
     user: {
         validationErrors: []
     },
@@ -106,19 +106,19 @@ var AuthStore = Object.assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case AuthConstants.REGISTER_USER:
-            AuthStore.logout(function () {
-                AuthStore.register(action.data);
+            UserStore.logout(function () {
+                UserStore.register(action.data);
             });
             break;
         case AuthConstants.LOGIN_USER:
-            AuthStore.logout(function () {
-                AuthStore.login(action.data);
+            UserStore.logout(function () {
+                UserStore.login(action.data);
             });
             break;
         case AuthConstants.LOGOUT_USER:
-            AuthStore.logout();
+            UserStore.logout();
             break;
     }
 });
 
-export default AuthStore
+export default UserStore

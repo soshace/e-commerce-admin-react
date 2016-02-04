@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import { Router, Link } from 'react-router';
 import ReactMixin from 'react-mixin';
 import AuthActions from './../../actions/AuthActions.js';
-import AuthStore from './../../stores/AuthStore.js';
+import UserStore from './../../stores/UserStore.js';
 import ProjectStore from './../../stores/ProjectStore.js';
 import ProjectActions from './../../actions/ProjectActions.js';
 import Validators from './../../constants/Validators.js';
@@ -52,12 +52,12 @@ class Register extends React.Component {
     }
 
     componentDidMount() {
-        AuthStore.addListener(this._onRegisterSuccess, this._onRegisterFail);
+        UserStore.addListener(this._onRegisterSuccess, this._onRegisterFail);
         ProjectStore.addChangeListener(this._onProjectsGet);
     }
 
     componentWillUnmount() {
-        //AuthStore.removeListener(this._onRegisterSuccess, this._onRegisterFail);
+        //UserStore.removeListener(this._onRegisterSuccess, this._onRegisterFail);
     }
 
     register() {
@@ -195,7 +195,7 @@ class Register extends React.Component {
 
     _onRegisterFail() {
         var self = this;
-        AuthStore.user.validationErrors.forEach(function (err) {
+        UserStore.user.validationErrors.forEach(function (err) {
             if (err === 'email') {
                 self.setState({errors: {email: 'Such email already exists'}});
             }

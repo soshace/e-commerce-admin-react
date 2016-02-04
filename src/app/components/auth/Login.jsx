@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import { Link } from 'react-router';
 import ReactMixin from 'react-mixin';
 import AuthActions from './../../actions/AuthActions.js';
-import AuthStore from './../../stores/AuthStore.js';
+import UserStore from './../../stores/UserStore.js';
 import ProjectStore from './../../stores/ProjectStore.js';
 import ProjectActions from './../../actions/ProjectActions.js';
 import Validators from './../../constants/Validators.js';
@@ -48,13 +48,13 @@ class Login extends Component {
     }
 
     componentDidMount() {
-        AuthStore.addListener(this._onLoginSuccess, this._onLoginFail);
+        UserStore.addListener(this._onLoginSuccess, this._onLoginFail);
         CompanyStore.addChangeListener(this._onCompaniesGet);
         ProjectStore.addChangeListener(this._onProjectsGet);
     }
 
     componentWillUnmount() {
-        //AuthStore.removeListener(this._onLoginSuccess, this._onLoginFail);
+        //UserStore.removeListener(this._onLoginSuccess, this._onLoginFail);
         //ProjectStore.removeListener(this._onProjectsGet.bind(this));
         //CompanyStore.removeChangeListener(this._onCompaniesGet);
     }
