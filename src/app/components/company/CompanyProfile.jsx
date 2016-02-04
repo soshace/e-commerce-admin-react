@@ -21,12 +21,7 @@ class CompanyProfile extends React.Component {
 
     componentDidMount() {
         CompanyStore.addChangeListener(this._onCompanyGet);
-        var companies = CompanyStore.companies;
-        if (companies) {
-            this._onCompanyGet();
-        } else {
-            CompanyActions.getCompanies();
-        }
+        CompanyActions.getCompanies();
     }
 
     componentWillUnmount() {

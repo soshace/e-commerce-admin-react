@@ -5,6 +5,7 @@ import CompanyActions from './../actions/CompanyActions.js';
 import CompanyStore from './../stores/CompanyStore.js';
 import ProjectActions from './../actions/ProjectActions.js';
 import ProjectStore from './../stores/ProjectStore.js';
+import UserStore from './../stores/UserStore.js';
 
 
 class Navbar extends React.Component {
@@ -17,19 +18,18 @@ class Navbar extends React.Component {
         };
 
         this._onCompaniesGet = this._onCompaniesGet.bind(this);
-        this._onProfileGet = this._onProfileGet.bind(this);
     }
 
     componentDidMount() {
-        var profile = ProjectStore.profile;
-        if (profile) {
-            this._onProfileGet();
+        var companies = CompanyStore.companies;
+
+        if (companies) {
+            this.setState({companies: companies});
         } else {
-            ProjectActions.getProfile();
+            CompanyActions.getCompanies();
         }
 
         CompanyStore.addChangeListener(this._onCompaniesGet);
-        ProjectStore.addChangeListener(this._onProfileGet);
     }
 
     componentWillUnmount() {
@@ -69,16 +69,6 @@ class Navbar extends React.Component {
 
     _onCompaniesGet() {
         this.setState({companies: CompanyStore.companies});
-    }
-
-    _onProfileGet() {
-        var companies = CompanyStore.companies;
-
-        if (companies) {
-            this.setState({companies: companies});
-        } else {
-            CompanyActions.getCompanies();
-        }
     }
 }
 

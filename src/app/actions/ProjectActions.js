@@ -2,20 +2,15 @@ import AppDispatcher from './../AppDispatcher.js';
 import ProjectConstants from './../constants/ProjectConstants.js';
 
 export default {
-    getProfile: () => {
-        AppDispatcher.dispatch({
-            actionType: ProjectConstants.GET_PROFILE
-        });
-    },
     getProjects: () => {
         AppDispatcher.dispatch({
             actionType: ProjectConstants.GET_PROJECTS
         });
     },
-    addProject: (name, slug, currency, language) => {
+    createProject: (name, slug, currency, language, company) => {
         AppDispatcher.dispatch({
             actionType: ProjectConstants.ADD_PROJECT,
-            data: {name, slug, currency, language}
+            data: {name, slug, currency, language, company}
         });
     },
     updateProject: (id, data) => {

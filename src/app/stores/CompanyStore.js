@@ -1,6 +1,7 @@
 import AppDispatcher from './../AppDispatcher.js';
 import ProjectStore from './ProjectStore.js';
 import CompanyConstants from './../constants/CompanyConstants.js';
+import api from './../constants/APIRoutes.js';
 import $ from 'jquery';
 import _ from 'underscore';
 
@@ -9,36 +10,42 @@ var CHANGE_EVENT = 'change';
 
 
 function getCompanies() {
-    $.ajax({
-        method: 'GET',
-        url: CompanyConstants.COMPANIES_URL.replace(':user_id', ProjectStore.getProfileId()),
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        xhrFields: {
-            withCredentials: true
-        },
-        success: function (data) {
-            CompanyStore.companies = data;
-            CompanyStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
-        }
-    });
+    if (CompanyStore.companies) {
+        CompanyStore.emitChange();
+    } else {
+        $.ajax({
+            method: 'GET',
+            url: api.COMPANIES,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (res) {
+                CompanyStore.companies = res.companies;
+                CompanyStore.emitChange();
+            },
+            error: function (err) {
+                console.error(err);
+            }
+        });
+    }
 }
 
 function createCompany(data) {
     $.ajax({
         method: 'POST',
-        url: CompanyConstants.COMPANIES_URL.replace(':user_id', ProjectStore.getProfileId()),
+        url: api.COMPANIES,
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         data: JSON.stringify(data),
         xhrFields: {
             withCredentials: true
         },
-        success: function () {
-            getCompanies();
+        success: function (res) {
+            CompanyStore.companies.push(res.company);
+            CompanyStore.lastCreatedCompany = res.company;
+            CompanyStore.emitChange();
         },
         error: function (err) {
             console.error(err);
@@ -49,15 +56,17 @@ function createCompany(data) {
 function updateCompany(id, data) {
     $.ajax({
         method: 'PUT',
-        url: CompanyConstants.COMPANY_URL.replace(':company_id', id),
+        url: `${api.COMPANIES}/${id}`,
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         data: JSON.stringify(data),
         xhrFields: {
             withCredentials: true
         },
-        success: function () {
-            getCompanies();
+        success: function (res) {
+            var company = _.findWhere({id: res.company.id});
+            Object.assign(company, res.company);
+            CompanyStore.emitChange();
         },
         error: function (err) {
             console.error(err);
@@ -68,6 +77,7 @@ function updateCompany(id, data) {
 
 var CompanyStore = Object.assign({}, EventEmitter.prototype, {
     companies: null,
+    lastCreatedCompany: null,
 
     emitChange() {
         this.emit(CHANGE_EVENT);
@@ -83,14 +93,7 @@ var CompanyStore = Object.assign({}, EventEmitter.prototype, {
 
     getCompanyById(id) {
         return _.findWhere(this.companies, {id: id});
-    },
-
-    getLastCompany() {
-        return _.max(this.companies, function (company) {
-            return (new Date(company.createdAt)).getTime();
-        })
     }
-
 });
 
 AppDispatcher.register(function (action) {

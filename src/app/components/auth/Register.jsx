@@ -52,12 +52,15 @@ class Register extends React.Component {
     }
 
     componentDidMount() {
-        UserStore.addListener(this._onRegisterSuccess, this._onRegisterFail);
+        UserStore.addChangeListener(this._onRegisterSuccess, this._onRegisterFail);
         ProjectStore.addChangeListener(this._onProjectsGet);
+        CompanyStore.addChangeListener(this._onCompaniesGet);
     }
 
     componentWillUnmount() {
         //UserStore.removeListener(this._onRegisterSuccess, this._onRegisterFail);
+        //ProjectStore.removeListener(this._onProjectsGet);
+        //CompanyStore.removeListener(this._onCompaniesGet);
     }
 
     register() {
@@ -157,27 +160,13 @@ class Register extends React.Component {
     }
 
     _onRegisterSuccess() {
-        var companies = CompanyStore.companies;
-
-        if (companies) {
-            this.setState({companies: companies});
-            this._onCompaniesGet();
-        } else {
-            CompanyActions.getCompanies();
-        }
+        CompanyActions.getCompanies();
     }
 
     _onCompaniesGet() {
-        var projects = ProjectStore.projects,
-            companies = CompanyStore.companies;
+        var companies = CompanyStore.companies;
         this.setState({companies: companies});
-
-        if (projects) {
-            this.setState({projects: projects});
-            this._onProjectsGet();
-        } else {
-            ProjectActions.getProjects();
-        }
+        ProjectActions.getProjects();
     }
 
     _onProjectsGet() {

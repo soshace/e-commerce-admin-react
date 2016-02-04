@@ -14,13 +14,13 @@ class CompanyMenu extends React.Component {
             <div className="col-md-3">
                 <ul className="nav nav-lists b-t" ui-nav>
                     <li className="active">
-                        <Link to={`companies/${id}/profile`}>Company account</Link>
+                        <Link to={`/companies/${id}/profile`}>Company account</Link>
                     </li>
                     <li>
-                        <Link to={`companies/${id}/projects`}>Manage Projects</Link>
+                        <Link to={`/companies/${id}/projects`}>Manage Projects</Link>
                     </li>
                     <li>
-                        <Link to={`companies/${id}/teams`}>Manage Teams</Link>
+                        <Link to={`/companies/${id}/teams`}>Manage Teams</Link>
                     </li>
                 </ul>
             </div>

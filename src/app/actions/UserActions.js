@@ -20,5 +20,10 @@ export default {
             actionType: UserConstants.REGISTER_USER,
             data: {email, password, name}
         });
-    }
+    },
+    getUser: () => {
+        AppDispatcher.dispatch({
+            actionType: UserConstants.GET_USER
+        });
+    },
 }

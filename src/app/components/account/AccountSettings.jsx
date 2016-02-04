@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames';
-import ProjectStore from './../../stores/ProjectStore.js';
-import ProjectActions from './../../actions/ProjectActions.js';
+import UserStore from './../../stores/UserStore.js';
+import UserActions from './../../actions/UserActions.js';
 
 
 class AccountSettings extends React.Component {
@@ -10,30 +10,25 @@ class AccountSettings extends React.Component {
         super(props);
 
         this.state = {
-            profile: {}
+            user: {}
         };
 
-        this._onProfileGet = this._onProfileGet.bind(this);
+        this._onUserGet = this._onUserGet.bind(this);
         this._onChange = this._onChange.bind(this);
         this._onSubmit = this._onSubmit.bind(this);
     }
 
     componentDidMount() {
-        ProjectStore.addChangeListener(this._onProfileGet);
-        var profile = ProjectStore.profile;
-        if (profile) {
-            this._onProfileGet();
-        } else {
-            ProjectActions.getProfile();
-        }
+        UserStore.addChangeListener(this._onUserGet);
+        UserActions.getUser();
     }
 
     componentWillUnmount() {
-        ProjectStore.removeChangeListener(this._onProfileGet);
+        UserStore.removeChangeListener(this._onUserGet);
     }
 
     render() {
-        var profile = this.state.profile;
+        var user = this.state.user;
         return (
             <div className="col-md-9 b-l bg-white bg-auto">
                 <form role="form" className="form-horizontal p-md col-md-6" onSubmit={this._onSubmit}>
@@ -42,8 +37,8 @@ class AccountSettings extends React.Component {
                         <div className="col-sm-10">
                             <input
                                 type="text"
-                                defaultValue={profile.name}
-                                value={profile.name}
+                                defaultValue={user.name}
+                                value={user.name}
                                 onChange={this._onChange('name')}
                                 className="form-control"/>
                         </div>
@@ -53,7 +48,7 @@ class AccountSettings extends React.Component {
                         <div className="col-sm-10">
                             <input
                                 type="text"
-                                value={profile.email}
+                                value={user.email}
                                 className="form-control"
                                 disabled />
                         </div>
@@ -64,17 +59,17 @@ class AccountSettings extends React.Component {
         )
     }
 
-    _onProfileGet() {
-        var profile = ProjectStore.profile;
-        this.setState({profile: profile});
+    _onUserGet() {
+        var user = ProjectStore.user;
+        this.setState({user: user});
     }
 
     _onChange(field) {
         var self = this;
         return (e) => {
-            var profile = this.state.profile;
-            profile[field] = e.target.value;
-            self.setState({profile: profile});
+            var user = this.state.user;
+            user[field] = e.target.value;
+            self.setState({user: user});
         }
     }
 

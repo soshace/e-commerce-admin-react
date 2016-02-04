@@ -1,6 +1,7 @@
 import UserConstants from './../constants/UserConstants.js';
 import AppDispatcher from './../AppDispatcher.js';
 import ProjectStore from './ProjectStore.js';
+import api from './../constants/APIRoutes.js';
 import $ from 'jquery';
 
 var EventEmitter = require('events').EventEmitter;
@@ -8,115 +9,131 @@ var LOGIN_SUCCESS = 'login_success';
 var LOGIN_ERROR = 'login_error';
 
 
+function register(data) {
+    authRequest({
+        url: api.USER,
+        data: data,
+        type: 'POST',
+        success: onLogin.bind(self),
+        error: onRegisterFail.bind(self)
+    });
+}
+
+function login(data) {
+    authRequest({
+        url: api.LOGIN,
+        data: data,
+        type: 'POST',
+        success: onLogin.bind(self)
+    });
+}
+
+function logout(cb) {
+    authRequest({
+        url: api.LOGOUT,
+        type: 'GET',
+        success: cb,
+        error: cb
+    });
+    UserStore.user = {};
+}
+
+function getUser() {
+    if (UserStore.user.id) {
+        UserStore.emitChange();
+    } else {
+        $.ajax({
+            method: 'GET',
+            url: api.PROFILE,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (res) {
+                UserStore.user = res.profile;
+                UserStore.emitChange();
+            },
+            error: function (err) {
+                console.error(err);
+            }
+        });
+    }
+}
+
+function onRegisterFail(res) {
+    var invalidAttrs = res.responseJSON.invalidAttributes;
+    if (invalidAttrs && invalidAttrs.email) {
+        UserStore.user.validationErrors = UserStore.user.validationErrors || [];
+        UserStore.user.validationErrors.push('email');
+    }
+    UserStore.emitChange(LOGIN_ERROR);
+}
+
+function onLogin(res) {
+    if (res.code === UserConstants.LOGIN_SUCCESS_CODE) {
+        localStorage.setItem('loggedIn', true);
+        Object.assign(UserStore.user, res.user);
+        UserStore.emitChange(LOGIN_SUCCESS);
+    } else if (res.code === UserConstants.LOGIN_FAIL_CODE) {
+        UserStore.emitChange(LOGIN_ERROR);
+    }
+}
+
+function authRequest(props) {
+    UserStore.user.validationErrors = [];
+    $.ajax({
+        url: props.url,
+        type: props.type,
+        contentType: 'application/json',
+        xhrFields: {
+            withCredentials: true
+        },
+        data: JSON.stringify(props.data),
+        success: props.success,
+        error: props.error
+    });
+}
+
 var UserStore = Object.assign({}, EventEmitter.prototype, {
-    user: {
-        validationErrors: []
-    },
+    user: {},
 
     emitChange(msg) {
         this.emit(msg);
     },
 
-    addListener(successCb, errorCb) {
+    addChangeListener(successCb, errorCb) {
         this.on(LOGIN_SUCCESS, successCb);
         this.on(LOGIN_ERROR, errorCb);
     },
 
-    removeListener(successCb, errorCb) {
+    removeChangeListener(successCb, errorCb) {
         this.removeListener(LOGIN_SUCCESS, successCb);
         this.removeListener(LOGIN_ERROR, errorCb);
     },
 
-    register(data) {
-        var self = this;
-        this.authRequest({
-            url: UserConstants.REGISTER_URL,
-            data: data,
-            type: 'POST',
-            success: self._onRegisterSuccess.bind(self, data),
-            error: self._onRegisterFail.bind(self)
-        });
-    },
-
-    login(data) {
-        var self = this;
-        this.authRequest({
-            url: UserConstants.LOGIN_URL,
-            data: data,
-            type: 'POST',
-            success: self._onLogin.bind(self)
-        });
-    },
-
-    logout(cb) {
-        localStorage.clear();
-        this.authRequest({
-            url: UserConstants.LOGOUT_URL,
-            type: 'GET',
-            success: cb,
-            error: cb
-        });
-        localStorage.setItem('loggedIn', false);
-        ProjectStore.clearProfile();
-    },
-
-    _onRegisterSuccess(data) {
-        this.login(data);
-    },
-
-    _onRegisterFail(res) {
-        var invalidAttrs = res.responseJSON.invalidAttributes;
-        if (invalidAttrs && invalidAttrs.email) {
-            this.user.validationErrors.push('email');
-        }
-        this.emitChange(LOGIN_ERROR);
-    },
-
-    _onLogin(res) {
-        if (res.code === UserConstants.LOGIN_SUCCESS_CODE) {
-            localStorage.setItem('loggedIn', true);
-            ProjectStore.setProfile(res.user);
-            this.emitChange(LOGIN_SUCCESS);
-        } else if (res.code === UserConstants.LOGIN_FAIL_CODE) {
-            this.emitChange(LOGIN_ERROR);
-        }
-    },
-
     loggedIn() {
-        return localStorage.getItem('loggedIn');
-    },
-
-    authRequest(props) {
-        this.user.validationErrors = [];
-        $.ajax({
-            url: props.url,
-            type: props.type,
-            contentType: 'application/json',
-            xhrFields: {
-                withCredentials: true
-            },
-            data: JSON.stringify(props.data),
-            success: props.success,
-            error: props.error
-        });
+        return true;
     }
-
 });
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case UserConstants.REGISTER_USER:
-            UserStore.logout(function () {
-                UserStore.register(action.data);
+            logout(function () {
+                register(action.data);
             });
             break;
         case UserConstants.LOGIN_USER:
-            UserStore.logout(function () {
-                UserStore.login(action.data);
+            logout(function () {
+                login(action.data);
             });
             break;
         case UserConstants.LOGOUT_USER:
-            UserStore.logout();
+            logout();
+            break;
+        case UserConstants.GET_USER:
+            getUser();
             break;
     }
 });

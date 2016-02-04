@@ -48,7 +48,7 @@ class Login extends Component {
     }
 
     componentDidMount() {
-        UserStore.addListener(this._onLoginSuccess, this._onLoginFail);
+        UserStore.addChangeListener(this._onLoginSuccess, this._onLoginFail);
         CompanyStore.addChangeListener(this._onCompaniesGet);
         ProjectStore.addChangeListener(this._onProjectsGet);
     }

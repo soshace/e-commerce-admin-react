@@ -24,15 +24,8 @@ class ManageProjects extends React.Component {
 
     componentDidMount() {
         ProjectStore.addChangeListener(this._onProjectsGet);
+        ProjectActions.getProjects();
 
-        var projects = ProjectStore.projects;
-
-        if (projects) {
-            this.setState({projects: projects});
-            this._onProjectsGet();
-        } else {
-            ProjectActions.getProjects();
-        }
     }
 
     componentWillUnmount() {
@@ -142,9 +135,10 @@ class ManageProjects extends React.Component {
     }
 
     _onSubmit(e) {
+        var companyId = this.props.params.id;
         var {name, slug, currency, language} = this.state;
         e.preventDefault();
-        ProjectActions.addProject(name, slug, currency, language);
+        ProjectActions.createProject(name, slug, currency, language, companyId);
     }
 
     _generateSelect(options, name) {

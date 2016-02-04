@@ -4,6 +4,9 @@ import Menu from './../Menu.jsx';
 import MenuItem from './../MenuItem.jsx';
 import ProfileInfo from './../ProfileInfo.jsx';
 
+import UserStore from './../../stores/UserStore.js';
+import UserActions from './../../actions/UserActions.js';
+
 
 class Aside extends React.Component {
     constructor(props) {
@@ -12,22 +15,29 @@ class Aside extends React.Component {
         this.state = {
             navItemsShown: true,
             asideFolded: true,
-            profile: {
+            user: {
                 name: '',
                 email: ''
             }
         };
 
+        this._onUserGet = this._onUserGet.bind(this);
     }
 
-    componentWillReceiveProps(newProps) {
-        this.setState({profile: newProps.profile});
+    componentDidMount() {
+        UserActions.getUser();
+        UserStore.addChangeListener(this._onUserGet, this._onUserGet);
+    }
+
+    componentWillUnmount() {
+        UserStore.removeChangeListener(this._onUserGet, this._onUserGet);
     }
 
     render() {
         var navClass = classnames({hide: !this.state.navItemsShown}),
             accountClass = classnames('m-v-xs', {hide: this.state.navItemsShown}),
-            asideClass = classnames('app-aside modal fade', {folded: this.state.asideFolded});
+            asideClass = classnames('app-aside modal fade', {folded: this.state.asideFolded}),
+            user = this.state.user;
 
 
         return (
@@ -47,8 +57,8 @@ class Aside extends React.Component {
                                     <ProfileInfo
                                         onClick={this._toggleNav.bind(this)}
                                         avatarSrc="images/a0.jpg"
-                                        name={this.state.profile.name}
-                                        email={this.state.profile.email} />
+                                        name={user.name}
+                                        email={user.email} />
 
                                     <Menu header="Cool Project" className={navClass}>
                                         <MenuItem link="/companyname/dashboard" name="Dashboard" iconClass="mdi-action-perm-contact-cal" />
@@ -94,6 +104,11 @@ class Aside extends React.Component {
                 </div>
             </aside>
         )
+    }
+
+    _onUserGet() {
+        var user = UserStore.user;
+        this.setState({user: user});
     }
 
     _toggleNav() {
