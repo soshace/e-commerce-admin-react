@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import { Router, Link } from 'react-router';
 import ReactMixin from 'react-mixin';
-import AuthActions from './../../actions/AuthActions.js';
+import UserActions from './../../actions/UserActions.js';
 import UserStore from './../../stores/UserStore.js';
 import ProjectStore from './../../stores/ProjectStore.js';
 import ProjectActions from './../../actions/ProjectActions.js';
@@ -61,7 +61,7 @@ class Register extends React.Component {
     }
 
     register() {
-        AuthActions.register(this.state.email, this.state.password, this.state.name);
+        UserActions.register(this.state.email, this.state.password, this.state.name);
     }
 
     render() {
