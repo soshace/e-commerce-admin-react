@@ -23,9 +23,9 @@ class ManageProjects extends React.Component {
     }
 
     componentDidMount() {
+        var companyId = this.props.params.id;
         ProjectStore.addChangeListener(this._onProjectsGet);
-        ProjectActions.getProjects();
-
+        ProjectActions.getCompanyProjects(companyId);
     }
 
     componentWillUnmount() {
@@ -159,7 +159,8 @@ class ManageProjects extends React.Component {
     }
 
     _onProjectsGet() {
-        var projects = ProjectStore.projects;
+        var companyId = this.props.params.id,
+            projects = ProjectStore.companyProjects[companyId];
         this.setState({projects: projects});
         //var projectSlug = ProjectStore.projects[0].slug;
         //this.context.router.push(`${projectSlug}/dashboard`);

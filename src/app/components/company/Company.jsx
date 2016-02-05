@@ -11,20 +11,33 @@ class Company extends React.Component {
         super(props);
 
         this.state = {
-            companies: []
+            company: {
+                name: ''
+            }
         };
+
+        this._onCompaniesGet = this._onCompaniesGet.bind(this);
     }
 
+    componentDidMount() {
+        CompanyStore.addChangeListener(this._onCompaniesGet);
+        CompanyActions.getCompanies();
+    }
+
+    componentWillUnmount() {
+        CompanyStore.removeChangeListener(this._onCompaniesGet);
+    }
 
     render() {
-        var id = this.props.params.id;
+        var id = this.props.params.id,
+            company = this.state.company;
         return (
             <div>
                 <Navbar/>
 
                 <div className="app-content">
                     <div className="p-h-md p-v bg-white box-shadow pos-rlt">
-                        <h3 className="no-margin">Company Settings</h3>
+                        <h3 className="no-margin">Company Settings: {company.name}</h3>
                     </div>
                     <div className="box">
                         <CompanyMenu id={id}/>
@@ -34,6 +47,12 @@ class Company extends React.Component {
                 </div>
             </div>
         )
+    }
+
+    _onCompaniesGet() {
+        var id = this.props.params.id,
+            company = CompanyStore.getCompanyById(id);
+        this.setState({company: company});
     }
 }
 

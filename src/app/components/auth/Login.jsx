@@ -54,9 +54,9 @@ class Login extends Component {
     }
 
     componentWillUnmount() {
-        //UserStore.removeListener(this._onLoginSuccess, this._onLoginFail);
-        //ProjectStore.removeListener(this._onProjectsGet.bind(this));
-        //CompanyStore.removeChangeListener(this._onCompaniesGet);
+        UserStore.removeChangeListener(this._onLoginSuccess, this._onLoginFail);
+        ProjectStore.removeChangeListener(this._onProjectsGet);
+        CompanyStore.removeChangeListener(this._onCompaniesGet);
     }
 
     login() {
@@ -145,27 +145,14 @@ class Login extends Component {
     }
 
     _onLoginSuccess() {
-        var companies = CompanyStore.companies;
-
-        if (companies) {
-            this.setState({companies: companies});
-            this._onCompaniesGet();
-        } else {
-            CompanyActions.getCompanies();
-        }
+        CompanyActions.getCompanies();
     }
 
     _onCompaniesGet() {
-        var projects = ProjectStore.projects,
-            companies = CompanyStore.companies;
+        var companies = CompanyStore.companies;
         this.setState({companies: companies});
 
-        if (projects) {
-            this.setState({projects: projects});
-            this._onProjectsGet();
-        } else {
-            ProjectActions.getProjects();
-        }
+        ProjectActions.getProjects();
     }
 
     _onProjectsGet() {
@@ -175,9 +162,9 @@ class Login extends Component {
 
         if (projects.length) {
             slug = projects[0].slug;
-            this.context.router.push(`${slug}/dashboard`);
+            this.context.router.push(`/${slug}/dashboard`);
         } else {
-            this.context.router.push(`companies/${companies[0].id}/projects`);
+            this.context.router.push(`/companies/${companies[0].id}/projects`);
         }
     }
 

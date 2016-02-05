@@ -41,7 +41,7 @@ var Routes = (
                 <Route path="teams" component={ManageTeams}/>
                 <Route path="profile" component={CompanyProfile}/>
             </Route>
-            <Route path=":projectName" component={AdminPanelPage} onEnter={requireAuth}>
+            <Route path=":projectKey" component={AdminPanelPage} onEnter={requireAuth}>
                 <Route path="dashboard" component={Dashboard}/>
                 <Route path="products" component={Products}/>
             </Route>

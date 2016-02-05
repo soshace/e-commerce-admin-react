@@ -8,7 +8,7 @@ var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
 function getProjects() {
-    if (ProjectStore.companies) {
+    if (ProjectStore.projects) {
         ProjectStore.emitChange();
     } else {
         $.ajax({
@@ -30,6 +30,29 @@ function getProjects() {
     }
 }
 
+function getCompanyProjects(companyId) {
+    if (ProjectStore.companyProjects[companyId]) {
+        ProjectStore.emitChange(CHANGE_EVENT);
+    } else {
+        $.ajax({
+            method: 'GET',
+            url: `${api.COMPANIES}/${companyId}/projects`,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (res) {
+                ProjectStore.companyProjects[companyId] = res.projects;
+                ProjectStore.emitChange(CHANGE_EVENT);
+            },
+            error: function (err) {
+                console.error(err);
+            }
+        });
+    }
+}
+
 function createProject(data) {
     $.ajax({
         method: 'POST',
@@ -41,7 +64,11 @@ function createProject(data) {
             withCredentials: true
         },
         success: function (res) {
-            ProjectStore.projects.push(res.project);
+            var project = res.project;
+            ProjectStore.projects.push(project);
+            ProjectStore.companyProjects[project.company] = ProjectStore.companyProjects[project.company] || [];
+            ProjectStore.companyProjects[project.company].push(project);
+
             ProjectStore.emitChange();
         },
         error: function (err) {
@@ -61,8 +88,11 @@ function updateProject(id, data) {
             withCredentials: true
         },
         success: function (res) {
-            var project = _.findWhere({id: res.project.id});
-            Object.assign(project, res.project);
+            var project = res.project,
+                userProject = _.findWhere(ProjectStore.projects, {id: project.id}),
+                companyProject = _.findWhere(ProjectStore.companyProjects[project.company.id], {id: project.id});
+            Object.assign(userProject, project);
+            Object.assign(companyProject, project);
             ProjectStore.emitChange();
         },
         error: function (err) {
@@ -73,6 +103,7 @@ function updateProject(id, data) {
 
 var ProjectStore = Object.assign({}, EventEmitter.prototype, {
     projects: null,
+    companyProjects: {},
 
     emitChange() {
         this.emit(CHANGE_EVENT);
@@ -84,13 +115,21 @@ var ProjectStore = Object.assign({}, EventEmitter.prototype, {
 
     removeChangeListener(callback) {
         this.removeListener(CHANGE_EVENT, callback);
+    },
+
+    getProjectByKey(key) {
+        var project = _.findWhere(this.projects, {slug: key});
+        return project;
     }
 });
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case ProjectConstants.GET_PROJECTS:
-            getProjects();
+            setTimeout(getProjects, 0);
+            break;
+        case ProjectConstants.GET_COMPANY_PROJECTS:
+            getCompanyProjects(action.id);
             break;
         case ProjectConstants.ADD_PROJECT:
             createProject(action.data);
@@ -98,7 +137,7 @@ AppDispatcher.register(function (action) {
         case ProjectConstants.UPDATE_PROJECT:
             updateProject(action.data.id, action.data.data);
             break;
-        }
+    }
 });
 
 export default ProjectStore

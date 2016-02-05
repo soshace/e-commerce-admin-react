@@ -25,12 +25,12 @@ class Aside extends React.Component {
     }
 
     componentDidMount() {
+        UserStore.addChangeListener(this._onUserGet);
         UserActions.getUser();
-        UserStore.addChangeListener(this._onUserGet, this._onUserGet);
     }
 
     componentWillUnmount() {
-        UserStore.removeChangeListener(this._onUserGet, this._onUserGet);
+        UserStore.removeChangeListener(this._onUserGet);
     }
 
     render() {

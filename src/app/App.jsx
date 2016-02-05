@@ -1,6 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
 import UserStore from './stores/UserStore.js';
+import ProjectStore from './stores/ProjectStore.js';
+import CompanyStore from './stores/CompanyStore.js';
 
 class App extends React.Component {
     constructor(props) {

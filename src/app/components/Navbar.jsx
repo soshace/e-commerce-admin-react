@@ -5,7 +5,6 @@ import CompanyActions from './../actions/CompanyActions.js';
 import CompanyStore from './../stores/CompanyStore.js';
 import ProjectActions from './../actions/ProjectActions.js';
 import ProjectStore from './../stores/ProjectStore.js';
-import UserStore from './../stores/UserStore.js';
 
 
 class Navbar extends React.Component {
@@ -14,26 +13,25 @@ class Navbar extends React.Component {
 
         this.state = {
             searchShown: false,
-            companies: []
+            companies: [],
+            projects: []
         };
 
         this._onCompaniesGet = this._onCompaniesGet.bind(this);
+        this._onProjectsGet = this._onProjectsGet.bind(this);
     }
 
     componentDidMount() {
-        var companies = CompanyStore.companies;
-
-        if (companies) {
-            this.setState({companies: companies});
-        } else {
-            CompanyActions.getCompanies();
-        }
-
         CompanyStore.addChangeListener(this._onCompaniesGet);
+        ProjectStore.addChangeListener(this._onProjectsGet);
+
+        CompanyActions.getCompanies();
+        ProjectActions.getProjects();
     }
 
     componentWillUnmount() {
         CompanyStore.removeChangeListener(this._onCompaniesGet);
+        ProjectStore.removeChangeListener(this._onProjectsGet);
     }
 
     render() {
@@ -69,6 +67,10 @@ class Navbar extends React.Component {
 
     _onCompaniesGet() {
         this.setState({companies: CompanyStore.companies});
+    }
+
+    _onProjectsGet() {
+        this.setState({projects: ProjectStore.projects});
     }
 }
 

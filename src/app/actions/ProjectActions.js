@@ -7,6 +7,12 @@ export default {
             actionType: ProjectConstants.GET_PROJECTS
         });
     },
+    getCompanyProjects: (id) => {
+        AppDispatcher.dispatch({
+            actionType: ProjectConstants.GET_COMPANY_PROJECTS,
+            id: id
+        });
+    },
     createProject: (name, slug, currency, language, company) => {
         AppDispatcher.dispatch({
             actionType: ProjectConstants.ADD_PROJECT,

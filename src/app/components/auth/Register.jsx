@@ -58,9 +58,9 @@ class Register extends React.Component {
     }
 
     componentWillUnmount() {
-        //UserStore.removeListener(this._onRegisterSuccess, this._onRegisterFail);
-        //ProjectStore.removeListener(this._onProjectsGet);
-        //CompanyStore.removeListener(this._onCompaniesGet);
+        UserStore.removeChangeListener(this._onRegisterSuccess, this._onRegisterFail);
+        ProjectStore.removeChangeListener(this._onProjectsGet);
+        CompanyStore.removeChangeListener(this._onCompaniesGet);
     }
 
     register() {

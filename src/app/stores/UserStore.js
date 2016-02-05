@@ -7,6 +7,7 @@ import $ from 'jquery';
 var EventEmitter = require('events').EventEmitter;
 var LOGIN_SUCCESS = 'login_success';
 var LOGIN_ERROR = 'login_error';
+var USER_CHANGE = 'user_change';
 
 
 function register(data) {
@@ -40,7 +41,7 @@ function logout(cb) {
 
 function getUser() {
     if (UserStore.user.id) {
-        UserStore.emitChange();
+        UserStore.emitChange(USER_CHANGE);
     } else {
         $.ajax({
             method: 'GET',
@@ -52,7 +53,7 @@ function getUser() {
             },
             success: function (res) {
                 UserStore.user = res.profile;
-                UserStore.emitChange();
+                UserStore.emitChange(USER_CHANGE);
             },
             error: function (err) {
                 console.error(err);
@@ -103,13 +104,21 @@ var UserStore = Object.assign({}, EventEmitter.prototype, {
     },
 
     addChangeListener(successCb, errorCb) {
-        this.on(LOGIN_SUCCESS, successCb);
-        this.on(LOGIN_ERROR, errorCb);
+        if (errorCb) {
+            this.on(LOGIN_SUCCESS, successCb);
+            this.on(LOGIN_ERROR, errorCb);
+        } else {
+            this.on(USER_CHANGE, successCb);
+        }
     },
 
     removeChangeListener(successCb, errorCb) {
-        this.removeListener(LOGIN_SUCCESS, successCb);
-        this.removeListener(LOGIN_ERROR, errorCb);
+        if (errorCb) {
+            this.removeListener(LOGIN_SUCCESS, successCb);
+            this.removeListener(LOGIN_ERROR, errorCb);
+        } else {
+            this.removeListener(USER_CHANGE, successCb);
+        }
     },
 
     loggedIn() {

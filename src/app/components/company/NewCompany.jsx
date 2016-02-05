@@ -86,7 +86,7 @@ class NewCompany extends React.Component {
     }
 
     _onCompanyCreate() {
-        var company = CompanyStore.getLastCompany(),
+        var company = CompanyStore.lastCreatedCompany,
             created = this.state.created;
         if (created) {
             this.context.router.push(`companies/${company.id}/projects`);

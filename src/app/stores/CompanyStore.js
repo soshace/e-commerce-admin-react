@@ -64,7 +64,7 @@ function updateCompany(id, data) {
             withCredentials: true
         },
         success: function (res) {
-            var company = _.findWhere({id: res.company.id});
+            var company = _.findWhere(CompanyStore.companies, {id: res.company.id});
             Object.assign(company, res.company);
             CompanyStore.emitChange();
         },
@@ -99,7 +99,7 @@ var CompanyStore = Object.assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case CompanyConstants.GET_COMPANIES:
-            getCompanies();
+            setTimeout(getCompanies, 0);
             break;
         case CompanyConstants.UPDATE_COMPANY:
             updateCompany(action.id, action.data);
