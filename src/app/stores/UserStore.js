@@ -62,6 +62,18 @@ function getUser() {
     }
 }
 
+function updateUser(data) {
+    authRequest({
+        url: `${api.USER}/${data.id}`,
+        data: data,
+        type: 'PUT',
+        success: (res) => {
+            UserStore.user = res.user;
+            UserStore.emitChange(USER_CHANGE);
+        }
+    });
+}
+
 function onRegisterFail(res) {
     var invalidAttrs = res.responseJSON.invalidAttributes;
     if (invalidAttrs && invalidAttrs.email) {
@@ -143,6 +155,9 @@ AppDispatcher.register(function (action) {
             break;
         case UserConstants.GET_USER:
             getUser();
+            break;
+        case UserConstants.UPDATE_USER:
+            updateUser(action.user);
             break;
     }
 });

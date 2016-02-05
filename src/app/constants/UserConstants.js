@@ -3,6 +3,7 @@ export default {
     LOGIN_USER: 'LOGIN_USER',
     LOGOUT_USER: 'LOGOUT_USER',
     GET_USER: 'GET_USER',
+    UPDATE_USER: 'UPDATE_USER',
 
     LOGIN_SUCCESS_CODE: 'successful',
     LOGIN_FAIL_CODE: 'error',

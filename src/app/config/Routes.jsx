@@ -42,6 +42,7 @@ var Routes = (
                 <Route path="profile" component={CompanyProfile}/>
             </Route>
             <Route path=":projectKey" component={AdminPanelPage} onEnter={requireAuth}>
+                <IndexRedirect to="dashboard" />
                 <Route path="dashboard" component={Dashboard}/>
                 <Route path="products" component={Products}/>
             </Route>

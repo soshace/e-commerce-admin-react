@@ -60,7 +60,7 @@ class AccountSettings extends React.Component {
     }
 
     _onUserGet() {
-        var user = ProjectStore.user;
+        var user = UserStore.user;
         this.setState({user: user});
     }
 
@@ -73,8 +73,10 @@ class AccountSettings extends React.Component {
         }
     }
 
-    _onSubmit() {
-
+    _onSubmit(e) {
+        var user = this.state.user;
+        e.preventDefault();
+        UserActions.updateUser(user);
     }
 }
 

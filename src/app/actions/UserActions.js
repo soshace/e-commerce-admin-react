@@ -26,4 +26,10 @@ export default {
             actionType: UserConstants.GET_USER
         });
     },
+    updateUser: (user) => {
+        AppDispatcher.dispatch({
+            actionType: UserConstants.UPDATE_USER,
+            user: user
+        });
+    },
 }
