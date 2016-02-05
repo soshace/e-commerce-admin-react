@@ -25,7 +25,8 @@ function login(data) {
         url: api.LOGIN,
         data: data,
         type: 'POST',
-        success: onLogin.bind(self)
+        success: onLogin.bind(self),
+        error: onLogin.bind(self)
     });
 }
 
@@ -75,7 +76,7 @@ function updateUser(data) {
 }
 
 function onRegisterFail(res) {
-    var invalidAttrs = res.responseJSON.invalidAttributes;
+    var invalidAttrs = res.responseJSON.message.invalidAttributes;
     if (invalidAttrs && invalidAttrs.email) {
         UserStore.user.validationErrors = UserStore.user.validationErrors || [];
         UserStore.user.validationErrors.push('email');
@@ -88,7 +89,7 @@ function onLogin(res) {
         localStorage.setItem('loggedIn', true);
         Object.assign(UserStore.user, res.user);
         UserStore.emitChange(LOGIN_SUCCESS);
-    } else if (res.code === UserConstants.LOGIN_FAIL_CODE) {
+    } else {
         UserStore.emitChange(LOGIN_ERROR);
     }
 }
