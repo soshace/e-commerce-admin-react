@@ -5,7 +5,7 @@ import UserStore from './../stores/UserStore.js';
 import NotFound  from './../components/NotFound.jsx';
 import Login from './../components/auth/Login.jsx';
 import Register from './../components/auth/Register.jsx';
-import Products  from './../components/administration/Products.jsx';
+import Products  from './../components/administration/products/Products.jsx';
 import Dashboard  from './../components/administration/Dashboard.jsx';
 import AdminPanelPage  from './../components/administration/AdminPanelPage.jsx';
 import ManageProjects from './../components/company/ManageProjects.jsx';

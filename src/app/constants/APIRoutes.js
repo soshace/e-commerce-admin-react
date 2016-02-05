@@ -7,6 +7,7 @@ export default {
     PROFILE: BASE_URL + 'users/profile',
 
     COMPANIES: BASE_URL + 'companies',
-    PROJECTS: BASE_URL + 'projects'
+    PROJECTS: BASE_URL + 'projects',
 
+    PRODUCTS: BASE_URL + 'products'
 }

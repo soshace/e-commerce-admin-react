@@ -37,7 +37,8 @@ class Aside extends React.Component {
         var navClass = classnames({hide: !this.state.navItemsShown}),
             accountClass = classnames('m-v-xs', {hide: this.state.navItemsShown}),
             asideClass = classnames('app-aside modal fade', {folded: this.state.asideFolded}),
-            user = this.state.user;
+            user = this.state.user,
+            projectKey = this.props.projectKey;
 
 
         return (
@@ -61,8 +62,8 @@ class Aside extends React.Component {
                                         email={user.email} />
 
                                     <Menu header="Cool Project" className={navClass}>
-                                        <MenuItem link="/companyname/dashboard" name="Dashboard" iconClass="mdi-action-perm-contact-cal" />
-                                        <MenuItem link="/companyname/products" name="Products" iconClass="mdi-action-perm-contact-cal" />
+                                        <MenuItem link={`${projectKey}/dashboard`} name="Dashboard" iconClass="mdi-action-perm-contact-cal" />
+                                        <MenuItem link={`${projectKey}/products`} name="Products" iconClass="mdi-action-perm-contact-cal" />
                                         <MenuItem link="/companyname/products" name="Categories" iconClass="mdi-action-perm-contact-cal" />
                                         <MenuItem link="/companyname/products" name="Orders" iconClass="mdi-action-perm-contact-cal" />
                                         <MenuItem link="/companyname/products" name="Orders" iconClass="mdi-action-perm-contact-cal" />
@@ -74,7 +75,7 @@ class Aside extends React.Component {
                                     <Menu header="Cool Project" className={accountClass}>
                                         <MenuItem link="/companyname/dashboard" name="My Profile" iconClass="mdi-action-perm-contact-cal"/>
                                         <MenuItem link="/companyname/products" name="Settings" iconClass="mdi-action-settings" />
-                                        <MenuItem link="/companyname/products" name="Logout" iconClass="mdi-action-exit-to-app" />
+                                        <MenuItem link="/logout" name="Logout" iconClass="mdi-action-exit-to-app" />
                                         <li className="m-v-sm b-b b"></li>
                                         <li>
                                             <div className="nav-item">
@@ -120,4 +121,8 @@ class Aside extends React.Component {
     }
 }
 
-export default Aside;
+Aside.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
+
+export default Aside

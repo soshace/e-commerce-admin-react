@@ -31,7 +31,7 @@ class AdminPanelPage extends React.Component {
         return (
             <div>
                 <Navbar/>
-                <Aside/>
+                <Aside projectKey={this.props.params.projectKey}/>
 
                 <div id="content" className="app-content" role="main">
                     <div className="box">
