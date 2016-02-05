@@ -141,14 +141,10 @@ var UserStore = Object.assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case UserConstants.REGISTER_USER:
-            logout(function () {
-                register(action.data);
-            });
+            register(action.data);
             break;
         case UserConstants.LOGIN_USER:
-            logout(function () {
-                login(action.data);
-            });
+            login(action.data);
             break;
         case UserConstants.LOGOUT_USER:
             logout();
