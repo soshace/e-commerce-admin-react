@@ -28,6 +28,10 @@ class Company extends React.Component {
         CompanyStore.removeChangeListener(this._onCompaniesGet);
     }
 
+    componentWillReceiveProps(newProps) {
+        this._onCompaniesGet(newProps);
+    }
+
     render() {
         var id = this.props.params.id,
             company = this.state.company;
@@ -49,9 +53,15 @@ class Company extends React.Component {
         )
     }
 
-    _onCompaniesGet() {
-        var id = this.props.params.id,
-            company = CompanyStore.getCompanyById(id);
+    _onCompaniesGet(newProps) {
+        var id,
+            company;
+        if (newProps) {
+            id = newProps.params.id;
+        } else {
+            id = this.props.params.id;
+        }
+        company = CompanyStore.getCompanyById(id);
         this.setState({company: company});
     }
 }
