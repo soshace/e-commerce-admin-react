@@ -8,6 +8,12 @@ export default {
             update: update
         });
     },
+    getCategory: (id) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.GET_CATEGORY,
+            categoryId: id
+        });
+    },
     createCategory: (category) => {
         AppDispatcher.dispatch({
             actionType: MainPageConstants.CREATE_CATEGORY,

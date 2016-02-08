@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import CategoryStore from './../../../stores/CategoryStore.js';
 import CategoryActions from './../../../actions/CategoryActions.js';
 
@@ -25,7 +26,8 @@ class CategoryList extends React.Component {
     }
 
     render() {
-        var categories = this.state.categories;
+        var categories = this.state.categories,
+            projectKey = this.props.params.projectKey;
         return (
             <div>
                 <div className="panel-heading">
@@ -33,14 +35,15 @@ class CategoryList extends React.Component {
                 </div>
                 <div className="panel-body b-b b-light">
                     Search: <input id="filter" type="text" className="form-control input-sm w-auto inline m-r"/>
-                    <button className="btn btn-icon btn-default" onClick={this._onAddClick}><i className="fa fa-plus"></i></button>
+                    <button className="btn btn-icon btn-default" onClick={this._onAddClick}><i
+                        className="fa fa-plus"></i></button>
                 </div>
                 <div>
                     <table className="table table-striped">
                         <thead>
                         <tr>
                             <th>
-                                Category
+                                Category name
                             </th>
                         </tr>
                         </thead>
@@ -48,7 +51,9 @@ class CategoryList extends React.Component {
                         {categories.map(function (category) {
                             return (
                                 <tr key={category.id}>
-                                    <td>{category.name}</td>
+                                    <td>
+                                        <Link to={`/${projectKey}/categories/${category.id}`}>{category.name}</Link>
+                                    </td>
                                 </tr>
                             )
                         })}

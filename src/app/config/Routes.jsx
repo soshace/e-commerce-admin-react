@@ -21,6 +21,7 @@ import Products from './../components/administration/products/Products.jsx';
 import NewCategory from './../components/administration/categories/NewCategory.jsx';
 import CategoryList from './../components/administration/categories/CategoryList.jsx';
 import Categories from './../components/administration/categories/Categories.jsx';
+import CategoryDetail from './../components/administration/categories/CategoryDetail.jsx';
 
 
 function requireAuth(nextState, replace) {
@@ -61,6 +62,7 @@ var Routes = (
                     <IndexRedirect to="list"/>
                     <Route path="list" component={CategoryList}/>
                     <Route path="add" component={NewCategory}/>
+                    <Route path=":categoryId" component={CategoryDetail} />
                 </Route>
             </Route>
 

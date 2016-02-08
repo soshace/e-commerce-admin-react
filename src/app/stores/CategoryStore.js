@@ -8,6 +8,25 @@ var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
 
+function getCategory(id) {
+    $.ajax({
+        method: 'GET',
+        url: `${api.CATEGORIES}/${id}`,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (res) {
+            CategoryStore.selected = res.category;
+            CategoryStore.emitChange();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
 function getCategories(update) {
     if (CategoryStore.categories && !update) {
         CategoryStore.emitChange();
@@ -53,6 +72,7 @@ function createCategory(data) {
 
 var CategoryStore = Object.assign({}, EventEmitter.prototype, {
     categories: null,
+    selected: null,
 
     emitChange() {
         this.emit(CHANGE_EVENT);
@@ -71,6 +91,9 @@ AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case MainPageConstants.GET_CATEGORIES:
             setTimeout(getCategories.bind(this, action.update), 0);
+            break;
+        case MainPageConstants.GET_CATEGORY:
+            setTimeout(getCategory.bind(this, action.categoryId), 0);
             break;
         case MainPageConstants.CREATE_CATEGORY:
             setTimeout(createCategory.bind(this, action.data), 0);
