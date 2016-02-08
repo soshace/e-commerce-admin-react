@@ -3,6 +3,7 @@ import MainPageConstants from './../constants/MainPageConstants.js';
 import api from './../constants/APIRoutes.js';
 import $ from 'jquery';
 import _ from 'underscore';
+import BaseStore from './BaseStore.js';
 
 var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
@@ -90,21 +91,9 @@ function createCategory(data) {
 }
 
 
-var CategoryStore = Object.assign({}, EventEmitter.prototype, {
+var CategoryStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
     categories: null,
-    selected: null,
-
-    emitChange() {
-        this.emit(CHANGE_EVENT);
-    },
-
-    addChangeListener(callback) {
-        this.on(CHANGE_EVENT, callback);
-    },
-
-    removeChangeListener(callback) {
-        this.removeListener(CHANGE_EVENT, callback);
-    }
+    selected: null
 });
 
 AppDispatcher.register(function (action) {

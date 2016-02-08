@@ -2,6 +2,7 @@ import AppDispatcher from './../AppDispatcher.js';
 import ProjectStore from './ProjectStore.js';
 import CompanyConstants from './../constants/CompanyConstants.js';
 import api from './../constants/APIRoutes.js';
+import BaseStore from './BaseStore.js';
 import $ from 'jquery';
 import _ from 'underscore';
 
@@ -75,22 +76,9 @@ function updateCompany(id, data) {
 }
 
 
-var CompanyStore = Object.assign({}, EventEmitter.prototype, {
+var CompanyStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
     companies: null,
     lastCreatedCompany: null,
-
-    emitChange() {
-        this.emit(CHANGE_EVENT);
-    },
-
-    addChangeListener(callback) {
-        this.on(CHANGE_EVENT, callback);
-    },
-
-    removeChangeListener(callback) {
-        this.removeListener(CHANGE_EVENT, callback);
-    },
-
     getCompanyById(id) {
         return _.findWhere(this.companies, {id: id});
     }

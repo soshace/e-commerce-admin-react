@@ -1,6 +1,7 @@
 import AppDispatcher from './../AppDispatcher.js';
 import MainPageConstants from './../constants/MainPageConstants.js';
 import api from './../constants/APIRoutes.js';
+import BaseStore from './BaseStore.js';
 import $ from 'jquery';
 import _ from 'underscore';
 
@@ -51,20 +52,8 @@ function createProduct(data) {
 }
 
 
-var ProductStore = Object.assign({}, EventEmitter.prototype, {
-    products: null,
-
-    emitChange() {
-        this.emit(CHANGE_EVENT);
-    },
-
-    addChangeListener(callback) {
-        this.on(CHANGE_EVENT, callback);
-    },
-
-    removeChangeListener(callback) {
-        this.removeListener(CHANGE_EVENT, callback);
-    }
+var ProductStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
+    products: null
 });
 
 AppDispatcher.register(function (action) {

@@ -1,6 +1,7 @@
 import ProjectConstants from './../constants/ProjectConstants.js';
 import AppDispatcher from './../AppDispatcher.js';
 import api from './../constants/APIRoutes.js';
+import BaseStore from './BaseStore.js';
 import $ from 'jquery';
 import _ from 'underscore';
 
@@ -101,21 +102,9 @@ function updateProject(id, data) {
     });
 }
 
-var ProjectStore = Object.assign({}, EventEmitter.prototype, {
+var ProjectStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
     projects: null,
     companyProjects: {},
-
-    emitChange() {
-        this.emit(CHANGE_EVENT);
-    },
-
-    addChangeListener(callback) {
-        this.on(CHANGE_EVENT, callback);
-    },
-
-    removeChangeListener(callback) {
-        this.removeListener(CHANGE_EVENT, callback);
-    },
 
     getProjectByKey(key) {
         var project = _.findWhere(this.projects, {slug: key});
