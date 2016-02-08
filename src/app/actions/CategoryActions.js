@@ -2,9 +2,10 @@ import AppDispatcher from './../AppDispatcher.js';
 import MainPageConstants from './../constants/MainPageConstants.js';
 
 export default {
-    getCategories: () => {
+    getCategories: (update) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.GET_CATEGORIES
+            actionType: MainPageConstants.GET_CATEGORIES,
+            update: update
         });
     },
     createCategory: (category) => {

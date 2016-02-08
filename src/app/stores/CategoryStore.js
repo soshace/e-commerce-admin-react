@@ -8,8 +8,8 @@ var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
 
-function getCategories() {
-    if (CategoryStore.categories) {
+function getCategories(update) {
+    if (CategoryStore.categories && !update) {
         CategoryStore.emitChange();
     } else {
         $.ajax({
@@ -70,7 +70,7 @@ var CategoryStore = Object.assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case MainPageConstants.GET_CATEGORIES:
-            setTimeout(getCategories, 0);
+            setTimeout(getCategories.bind(this, action.update), 0);
             break;
         case MainPageConstants.CREATE_CATEGORY:
             setTimeout(createCategory.bind(this, action.data), 0);

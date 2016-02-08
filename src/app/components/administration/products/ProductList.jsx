@@ -17,7 +17,7 @@ class ProductList extends React.Component {
 
     componentDidMount() {
         ProductStore.addChangeListener(this._onProductsGet);
-        ProductActions.getProducts();
+        ProductActions.getProducts(true);
     }
 
     componentWillUnmount() {

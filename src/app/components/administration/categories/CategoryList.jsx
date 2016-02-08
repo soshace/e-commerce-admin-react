@@ -17,7 +17,7 @@ class CategoryList extends React.Component {
 
     componentDidMount() {
         CategoryStore.addChangeListener(this._onCategoriesGet);
-        CategoryActions.getCategories();
+        CategoryActions.getCategories(true);
     }
 
     componentWillUnmount() {

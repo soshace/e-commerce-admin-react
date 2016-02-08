@@ -8,8 +8,8 @@ var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
 
-function getProducts() {
-    if (ProductStore.products) {
+function getProducts(update) {
+    if (ProductStore.products && !update) {
         ProductStore.emitChange();
     } else {
         $.ajax({
@@ -70,7 +70,7 @@ var ProductStore = Object.assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case MainPageConstants.GET_PRODUCTS:
-            setTimeout(getProducts, 0);
+            setTimeout(getProducts.bind(this, action.update), 0);
             break;
         case MainPageConstants.CREATE_PRODUCT:
             setTimeout(createProduct.bind(this, action.data), 0);

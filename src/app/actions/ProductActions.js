@@ -2,9 +2,10 @@ import AppDispatcher from './../AppDispatcher.js';
 import MainPageConstants from './../constants/MainPageConstants.js';
 
 export default {
-    getProducts: () => {
+    getProducts: (update) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.GET_PRODUCTS
+            actionType: MainPageConstants.GET_PRODUCTS,
+            update: update
         });
     },
     createProduct: (product) => {
