@@ -6,5 +6,11 @@ export default {
         AppDispatcher.dispatch({
             actionType: ProductConstants.GET_PRODUCTS
         });
+    },
+    createProduct: (product) => {
+        AppDispatcher.dispatch({
+            actionType: ProductConstants.CREATE_PRODUCT,
+            data: product
+        });
     }
 }
