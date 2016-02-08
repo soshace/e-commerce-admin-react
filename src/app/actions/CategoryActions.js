@@ -14,6 +14,12 @@ export default {
             categoryId: id
         });
     },
+    updateCategory: (category) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.UPDATE_CATEGORY,
+            category: category
+        });
+    },
     createCategory: (category) => {
         AppDispatcher.dispatch({
             actionType: MainPageConstants.CREATE_CATEGORY,

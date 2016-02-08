@@ -27,6 +27,26 @@ function getCategory(id) {
     });
 }
 
+function updateCategory(category) {
+    $.ajax({
+        method: 'PUT',
+        url: `${api.CATEGORIES}/${category.id}`,
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(category),
+        dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (res) {
+            CategoryStore.selected = res.category;
+            CategoryStore.emitChange();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
 function getCategories(update) {
     if (CategoryStore.categories && !update) {
         CategoryStore.emitChange();
@@ -94,6 +114,9 @@ AppDispatcher.register(function (action) {
             break;
         case MainPageConstants.GET_CATEGORY:
             setTimeout(getCategory.bind(this, action.categoryId), 0);
+            break;
+        case MainPageConstants.UPDATE_CATEGORY:
+            setTimeout(updateCategory.bind(this, action.category), 0);
             break;
         case MainPageConstants.CREATE_CATEGORY:
             setTimeout(createCategory.bind(this, action.data), 0);

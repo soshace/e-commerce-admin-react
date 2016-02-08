@@ -57,7 +57,7 @@ class CategoryDetail extends React.Component {
                         <CategoryOverview category={category}/>
                     </div>
                     <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_2">
-
+                        <CategoryUpdate category={category} />
                     </div>
                     <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_3">
 
@@ -68,7 +68,6 @@ class CategoryDetail extends React.Component {
     }
 
     //<CategoryProducts products={products} />
-    //<CategoryUpdate category={category} />
 
     _onProductsGet() {
         this.setState({products: ProductStore.products});
