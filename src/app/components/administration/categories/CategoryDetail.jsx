@@ -1,8 +1,6 @@
 import React from 'react';
-import ProductStore from './../../../stores/ProductStore.js';
-import ProductActions from './../../../actions/ProductActions.js';
-import CategoryStore from './../../../stores/CategoryStore.js';
-import CategoryActions from './../../../actions/CategoryActions.js';
+import {ProductStore, CategoryStore} from './../../../stores';
+import {ProductActions , CategoryActions} from './../../../actions';
 
 import CategoryProducts from './CategoryProducts.jsx';
 import CategoryUpdate from './CategoryUpdate.jsx';

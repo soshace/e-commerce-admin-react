@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
-import CategoryStore from './../../../stores/CategoryStore.js';
-import CategoryActions from './../../../actions/CategoryActions.js';
+import {CategoryStore} from './../../../stores';
+import {CategoryActions} from './../../../actions';
 
 
 class CategoryList extends React.Component {

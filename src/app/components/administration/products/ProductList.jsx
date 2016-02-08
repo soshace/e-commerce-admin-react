@@ -1,6 +1,6 @@
 import React from 'react';
-import ProductStore from './../../../stores/ProductStore.js';
-import ProductActions from './../../../actions/ProductActions.js';
+import {ProductStore} from './../../../stores';
+import {ProductActions} from './../../../actions';
 
 
 class ProductList extends React.Component {

@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
-import CompanyStore from './../../stores/CompanyStore.js';
-import CompanyActions from './../../actions/CompanyActions.js';
+import {CompanyStore} from './../../stores';
+import {CompanyActions} from './../../actions';
 
 
 class CompanyProfile extends React.Component {

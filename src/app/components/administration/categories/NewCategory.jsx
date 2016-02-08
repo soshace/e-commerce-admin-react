@@ -1,7 +1,6 @@
 import React from 'react';
-import CategoryStore from './../../../stores/CategoryStore.js';
-import ProjectStore from './../../../stores/ProjectStore.js';
-import CategoryActions from './../../../actions/CategoryActions.js';
+import {CategoryStore, ProjectStore} from './../../../stores';
+import {CategoryActions} from './../../../actions';
 
 
 class NewCategory extends React.Component {

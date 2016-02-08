@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames';
-import UserStore from './../../stores/UserStore.js';
-import UserActions from './../../actions/UserActions.js';
+import {UserStore} from './../../stores';
+import {UserActions} from './../../actions';
 
 
 class AccountSettings extends React.Component {

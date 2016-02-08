@@ -1,6 +1,6 @@
 import React from 'react';
-import CategoryStore from './../../../stores/CategoryStore.js';
-import CategoryActions from './../../../actions/CategoryActions.js';
+import {CategoryStore} from './../../../stores';
+import {CategoryActions} from './../../../actions';
 
 
 class CategoryUpdate extends React.Component {

@@ -1,8 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
 import CompanyMenu from './CompanyMenu.jsx';
-import CompanyActions from './../../actions/CompanyActions.js';
-import CompanyStore from './../../stores/CompanyStore.js';
+import {CompanyActions} from './../../actions';
+import {CompanyStore} from './../../stores';
 import Navbar from './../Navbar.jsx';
 
 

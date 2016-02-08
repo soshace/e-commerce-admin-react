@@ -2,10 +2,8 @@ import React from 'react';
 import classnames from 'classnames';
 import Aside from './Aside.jsx';
 import Navbar from './../Navbar.jsx';
-import ProjectActions from './../../actions/ProjectActions.js';
-import ProjectStore from './../../stores/ProjectStore.js';
-import CompanyActions from './../../actions/CompanyActions.js';
-import CompanyStore from './../../stores/CompanyStore.js';
+import {ProjectActions, CompanyActions} from './../../actions';
+import {ProjectStore, CompanyStore} from './../../stores';
 
 
 class AdminPanelPage extends React.Component {

@@ -2,10 +2,10 @@ import React from 'react';
 import classnames from 'classnames';
 import Menu from './../Menu.jsx';
 import MenuItem from './../MenuItem.jsx';
-import ProfileInfo from './../ProfileInfo.jsx';
+import ProfileInfo from './ProfileInfo.jsx';
 
-import UserStore from './../../stores/UserStore.js';
-import UserActions from './../../actions/UserActions.js';
+import {UserStore} from './../../stores';
+import {UserActions} from './../../actions';
 
 
 class Aside extends React.Component {

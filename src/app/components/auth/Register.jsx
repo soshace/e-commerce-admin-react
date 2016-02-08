@@ -1,17 +1,13 @@
 import React, {Component, PropTypes} from 'react';
 import { Router, Link } from 'react-router';
 import ReactMixin from 'react-mixin';
-import UserActions from './../../actions/UserActions.js';
-import UserStore from './../../stores/UserStore.js';
-import ProjectStore from './../../stores/ProjectStore.js';
-import ProjectActions from './../../actions/ProjectActions.js';
 import Validators from './../../constants/Validators.js';
 import strategy from 'joi-validation-strategy';
 import validation from 'react-validation-mixin';
 import classnames from 'classnames';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import CompanyStore from './../../stores/CompanyStore.js';
-import CompanyActions from './../../actions/CompanyActions.js';
+import {CompanyStore, UserStore, ProjectStore} from './../../stores';
+import {CompanyActions, UserActions, ProjectActions} from './../../actions';
 
 
 class Register extends React.Component {

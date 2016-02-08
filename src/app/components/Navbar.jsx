@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames';
-import CompanyActions from './../actions/CompanyActions.js';
-import CompanyStore from './../stores/CompanyStore.js';
-import ProjectActions from './../actions/ProjectActions.js';
-import ProjectStore from './../stores/ProjectStore.js';
+import {CompanyActions, ProjectActions} from './../actions';
+import {CompanyStore, ProjectStore} from './../stores';
 
 
 class Navbar extends React.Component {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-import ProjectStore from './../../stores/ProjectStore.js';
-import ProjectActions from './../../actions/ProjectActions.js';
+import {ProjectStore} from './../../stores';
+import {ProjectActions} from './../../actions';
 import ProjectConstants from './../../constants/ProjectConstants.js';
 
 
