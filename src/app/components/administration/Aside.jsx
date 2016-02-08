@@ -62,10 +62,9 @@ class Aside extends React.Component {
                                         email={user.email} />
 
                                     <Menu header="Cool Project" className={navClass}>
-                                        <MenuItem link={`${projectKey}/dashboard`} name="Dashboard" iconClass="mdi-action-perm-contact-cal" />
-                                        <MenuItem link={`${projectKey}/products`} name="Products" iconClass="mdi-action-perm-contact-cal" />
-                                        <MenuItem link="/companyname/products" name="Categories" iconClass="mdi-action-perm-contact-cal" />
-                                        <MenuItem link="/companyname/products" name="Orders" iconClass="mdi-action-perm-contact-cal" />
+                                        <MenuItem link={`/${projectKey}/dashboard`} name="Dashboard" iconClass="mdi-action-perm-contact-cal" />
+                                        <MenuItem link={`/${projectKey}/products`} name="Products" iconClass="mdi-action-perm-contact-cal" />
+                                        <MenuItem link={`/${projectKey}/categories`} name="Categories" iconClass="mdi-action-perm-contact-cal" />
                                         <MenuItem link="/companyname/products" name="Orders" iconClass="mdi-action-perm-contact-cal" />
                                         <MenuItem link="/companyname/products" name="Customers" iconClass="mdi-action-perm-contact-cal" />
                                         <MenuItem link="/companyname/products" name="Discounts" iconClass="mdi-action-perm-contact-cal" />

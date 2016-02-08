@@ -8,21 +8,21 @@ var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
 
-function getProducts() {
-    if (ProductStore.products) {
-        ProductStore.emitChange();
+function getCategories() {
+    if (CategoryStore.categories) {
+        CategoryStore.emitChange();
     } else {
         $.ajax({
             method: 'GET',
-            url: api.PRODUCTS,
+            url: api.CATEGORIES,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             xhrFields: {
                 withCredentials: true
             },
             success: function (res) {
-                ProductStore.products = res.products;
-                ProductStore.emitChange();
+                CategoryStore.categories = res.categories;
+                CategoryStore.emitChange();
             },
             error: function (err) {
                 console.error(err);
@@ -31,10 +31,10 @@ function getProducts() {
     }
 }
 
-function createProduct(data) {
+function createCategory(data) {
     $.ajax({
         method: 'POST',
-        url: api.PRODUCTS,
+        url: api.CATEGORIES,
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         data: JSON.stringify(data),
@@ -42,7 +42,7 @@ function createProduct(data) {
             withCredentials: true
         },
         success: function (res) {
-            ProductStore.emitChange();
+            CategoryStore.emitChange();
         },
         error: function (err) {
             console.error(err);
@@ -51,8 +51,8 @@ function createProduct(data) {
 }
 
 
-var ProductStore = Object.assign({}, EventEmitter.prototype, {
-    products: null,
+var CategoryStore = Object.assign({}, EventEmitter.prototype, {
+    categories: null,
 
     emitChange() {
         this.emit(CHANGE_EVENT);
@@ -69,14 +69,14 @@ var ProductStore = Object.assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
-        case MainPageConstants.GET_PRODUCTS:
-            setTimeout(getProducts, 0);
+        case MainPageConstants.GET_CATEGORIES:
+            setTimeout(getCategories, 0);
             break;
-        case MainPageConstants.CREATE_PRODUCT:
-            setTimeout(createProduct.bind(this, action.data), 0);
+        case MainPageConstants.CREATE_CATEGORY:
+            setTimeout(createCategory.bind(this, action.data), 0);
             break;
 
     }
 });
 
-export default ProductStore
+export default CategoryStore

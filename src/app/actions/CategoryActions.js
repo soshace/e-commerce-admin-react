@@ -2,15 +2,15 @@ import AppDispatcher from './../AppDispatcher.js';
 import MainPageConstants from './../constants/MainPageConstants.js';
 
 export default {
-    getProducts: () => {
+    getCategories: () => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.GET_PRODUCTS
+            actionType: MainPageConstants.GET_CATEGORIES
         });
     },
-    createProduct: (product) => {
+    createCategory: (category) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.CREATE_PRODUCT,
-            data: product
+            actionType: MainPageConstants.CREATE_CATEGORY,
+            data: category
         });
     }
 }

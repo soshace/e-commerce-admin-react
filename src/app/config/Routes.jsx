@@ -18,6 +18,10 @@ import NewProduct from './../components/administration/products/NewProduct.jsx';
 import ProductList from './../components/administration/products/ProductList.jsx';
 import Products from './../components/administration/products/Products.jsx';
 
+import NewCategory from './../components/administration/categories/NewCategory.jsx';
+import CategoryList from './../components/administration/categories/CategoryList.jsx';
+import Categories from './../components/administration/categories/Categories.jsx';
+
 
 function requireAuth(nextState, replace) {
     if (!UserStore.loggedIn()) {
@@ -52,6 +56,11 @@ var Routes = (
                     <IndexRedirect to="list"/>
                     <Route path="list" component={ProductList}/>
                     <Route path="add" component={NewProduct}/>
+                </Route>
+                <Route path="categories" component={Categories}>
+                    <IndexRedirect to="list"/>
+                    <Route path="list" component={CategoryList}/>
+                    <Route path="add" component={NewCategory}/>
                 </Route>
             </Route>
 

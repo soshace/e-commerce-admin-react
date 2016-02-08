@@ -9,5 +9,7 @@ export default {
     COMPANIES: BASE_URL + 'companies',
     PROJECTS: BASE_URL + 'projects',
 
-    PRODUCTS: BASE_URL + 'products'
+    PRODUCTS: BASE_URL + 'products',
+    CATEGORIES: BASE_URL + 'categories'
+
 }
