@@ -38,7 +38,7 @@ class NewCategory extends React.Component {
                                 type="text"
                                 className="form-control"
                                 onChange={this._onFieldUpdate('name')}
-                                placeholder="CategoryStore name"
+                                placeholder="Category name"
                                 required
                             />
                         </div>
