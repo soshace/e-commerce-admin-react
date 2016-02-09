@@ -1,6 +1,6 @@
 import React from 'react';
-import {ProductStore} from './../../../stores';
-import {ProductActions} from './../../../actions';
+import {ProductStore, ProjectStore} from './../../../stores';
+import {ProductActions, ProjectActions} from './../../../actions';
 
 
 class ProductList extends React.Component {
@@ -12,16 +12,19 @@ class ProductList extends React.Component {
         };
 
         this._onProductsGet = this._onProductsGet.bind(this);
+        this._onProjectsGet = this._onProjectsGet.bind(this);
         this._onAddClick = this._onAddClick.bind(this);
     }
 
     componentDidMount() {
         ProductStore.addChangeListener(this._onProductsGet);
-        ProductActions.getProducts(true);
+        ProjectStore.addChangeListener(this._onProjectsGet);
+        ProjectActions.getProjects();
     }
 
     componentWillUnmount() {
         ProductStore.removeChangeListener(this._onProductsGet);
+        ProjectStore.removeChangeListener(this._onProjectsGet);
     }
 
     render() {
@@ -76,10 +79,16 @@ class ProductList extends React.Component {
         this.context.router.push(`/${projectKey}/products/add`);
     }
 
-    _onProductsGet() {
-        var products = ProductStore.products;
-        this.setState({products: products});
+    _onProjectsGet() {
+        var projectKey = this.props.params.projectKey,
+            project = ProjectStore.getProjectByKey(projectKey);
 
+        ProductActions.getProjectProducts(true, project.id);
+    }
+
+    _onProductsGet() {
+        var products = ProductStore.selectedProducts;
+        this.setState({products: products});
     }
 }
 

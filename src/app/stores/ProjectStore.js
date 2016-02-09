@@ -8,10 +8,14 @@ import _ from 'underscore';
 var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
+var projectsRequestPending = false;
+
 function getProjects() {
+    if (projectsRequestPending) return;
     if (ProjectStore.projects) {
         ProjectStore.emitChange();
     } else {
+        projectsRequestPending = true;
         $.ajax({
             method: 'GET',
             url: api.PROJECTS,
@@ -21,10 +25,12 @@ function getProjects() {
                 withCredentials: true
             },
             success: function (res) {
+                projectsRequestPending = false;
                 ProjectStore.projects = res.projects;
                 ProjectStore.emitChange();
             },
             error: function (err) {
+                projectsRequestPending = false;
                 console.error(err);
             }
         });

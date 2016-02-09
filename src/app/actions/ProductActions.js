@@ -8,6 +8,13 @@ export default {
             update: update
         });
     },
+    getProjectProducts: (update, projectId) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.GET_PROJECT_PRODUCTS,
+            update: update,
+            projectId: projectId
+        });
+    },
     createProduct: (product) => {
         AppDispatcher.dispatch({
             actionType: MainPageConstants.CREATE_PRODUCT,
