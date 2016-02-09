@@ -42,7 +42,6 @@ class Navbar extends React.Component {
                    className="navbar-item pull-left visible-xs visible-sm"><i
                     className="mdi-navigation-menu i-24"></i></a>
 
-                <div className="navbar-item pull-left h4"><Link to="/">Freeway</Link></div>
                 <ul className="nav nav-sm navbar-tool pull-right">
                     <li className="dropdown">
                         <a data-md-ink-ripple data-toggle="dropdown">
