@@ -37,6 +37,7 @@ function requireAuth(nextState, replace) {
 var Routes = (
     <Router history={hashHistory}>
         <Route path="/" component={App}>
+            <IndexRedirect to="signin"/>
             <Route path="signin" component={Login}/>
             <Route path="signup" component={Register}/>
             <Route path="account" component={Account} onEnter={requireAuth}>
