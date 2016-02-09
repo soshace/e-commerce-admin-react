@@ -8,6 +8,45 @@ import _ from 'underscore';
 var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
+function getProduct(id) {
+    $.ajax({
+        method: 'GET',
+        // TODO: if user changes url manually, there may be problems with products of another projects
+        url: `${api.PRODUCTS}/${id}`,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (res) {
+            ProductStore.selectedProduct = res.product;
+            ProductStore.emitChange();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
+function updateProduct(product) {
+    $.ajax({
+        method: 'PUT',
+        url: `${api.PRODUCTS}/${product.id}`,
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(product),
+        dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (res) {
+            //ProductStore.selectedProduct = res.product;
+            ProductStore.emitChange();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
 
 function getProducts(update) {
     if (ProductStore.products && !update) {
@@ -77,6 +116,7 @@ function createProduct(data) {
 
 var ProductStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
     products: null,
+    selectedProduct: null,
     selectedProducts: null
 });
 
@@ -84,6 +124,12 @@ AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case MainPageConstants.GET_PRODUCTS:
             setTimeout(getProducts.bind(this, action.update), 0);
+            break;
+        case MainPageConstants.GET_PRODUCT:
+            setTimeout(getProduct.bind(this, action.productId), 0);
+            break;
+        case MainPageConstants.UPDATE_PRODUCT:
+            setTimeout(updateProduct.bind(this, action.product), 0);
             break;
         case MainPageConstants.GET_PROJECT_PRODUCTS:
             setTimeout(getProjectProducts.bind(this, action.update, action.projectId), 0);

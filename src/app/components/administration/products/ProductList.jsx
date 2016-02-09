@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import {ProductStore, ProjectStore} from './../../../stores';
 import {ProductActions, ProjectActions} from './../../../actions';
 
@@ -28,7 +29,8 @@ class ProductList extends React.Component {
     }
 
     render() {
-        var products = this.state.products;
+        var products = this.state.products,
+            projectKey = this.props.params.projectKey;
         return (
             <div>
                 <div className="panel-heading">
@@ -54,7 +56,7 @@ class ProductList extends React.Component {
                         {products.map(function (product) {
                             return (
                                 <tr key={product.id}>
-                                    <td>{product.name}</td>
+                                    <td><Link to={`/${projectKey}/products/${product.id}`}>{product.name}</Link></td>
                                     <td>{product.description}</td>
                                 </tr>
                             )

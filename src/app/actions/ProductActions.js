@@ -8,6 +8,18 @@ export default {
             update: update
         });
     },
+    getProduct: (id) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.GET_PRODUCT,
+            productId: id
+        });
+    },
+    updateProduct: (product) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.UPDATE_PRODUCT,
+            product: product
+        });
+    },
     getProjectProducts: (update, projectId) => {
         AppDispatcher.dispatch({
             actionType: MainPageConstants.GET_PROJECT_PRODUCTS,

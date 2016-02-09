@@ -16,6 +16,7 @@ import { Account, AccountSettings, AccountCompanies } from './../components';
 
 import NewProduct from './../components/administration/products/NewProduct.jsx';
 import ProductList from './../components/administration/products/ProductList.jsx';
+import ProductDetail from './../components/administration/products/ProductDetail.jsx';
 import Products from './../components/administration/products/Products.jsx';
 
 import NewCategory from './../components/administration/categories/NewCategory.jsx';
@@ -57,6 +58,7 @@ var Routes = (
                     <IndexRedirect to="list"/>
                     <Route path="list" component={ProductList}/>
                     <Route path="add" component={NewProduct}/>
+                    <Route path=":productId" component={ProductDetail} />
                 </Route>
                 <Route path="categories" component={Categories}>
                     <IndexRedirect to="list"/>
