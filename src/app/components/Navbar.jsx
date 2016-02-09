@@ -33,7 +33,8 @@ class Navbar extends React.Component {
     }
 
     render() {
-        var companies = this.state.companies;
+        var companies = this.state.companies,
+            projects = this.state.projects;
 
         return (
             <div className="navbar md-whiteframe-z1 no-radius blue">
@@ -58,6 +59,21 @@ class Navbar extends React.Component {
                         </ul>
                     </li>
                 </ul>
+
+                <ul className="nav nav-sm navbar-tool pull-right">
+                    <li className="dropdown">
+                        <a data-md-ink-ripple data-toggle="dropdown">
+                            {projects.length}
+                        </a>
+                        <ul className="dropdown-menu dropdown-menu-scale pull-right pull-up text-color">
+                            {projects.map(function (p) {
+                                return <li key={p.id}><Link to={`/${p.slug}`}>{p.name}</Link></li>
+                            })}
+                        </ul>
+                    </li>
+                </ul>
+
+
                 <div className="pull-right"></div>
             </div>
         )
