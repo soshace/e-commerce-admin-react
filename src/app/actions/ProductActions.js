@@ -20,6 +20,14 @@ export default {
             product: product
         });
     },
+    updateProductCategory: (checked, productId, categoryId) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.UPDATE_PRODUCT_CATEGORY,
+            checked: checked,
+            productId: productId,
+            categoryId: categoryId
+        });
+    },
     getProjectProducts: (update, projectId) => {
         AppDispatcher.dispatch({
             actionType: MainPageConstants.GET_PROJECT_PRODUCTS,

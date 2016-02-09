@@ -8,6 +8,20 @@ export default {
             update: update
         });
     },
+    getProjectCategories: (update, projectId) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.GET_PROJECT_CATEGORIES,
+            update: update,
+            projectId: projectId
+        });
+    },
+    getProductCategories: (update, projectId) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.GET_PRODUCT_CATEGORIES,
+            update: update,
+            projectId: projectId
+        });
+    },
     getCategory: (id) => {
         AppDispatcher.dispatch({
             actionType: MainPageConstants.GET_CATEGORY,

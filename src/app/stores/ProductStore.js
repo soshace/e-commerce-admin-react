@@ -48,6 +48,26 @@ function updateProduct(product) {
     });
 }
 
+function updateProductCategory(checked, productId, categoryId) {
+    var method = checked ? 'POST' : 'DELETE';
+    $.ajax({
+        method: method,
+        url: `${api.CATEGORIES}/${categoryId}/products/${productId}`,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (res) {
+            //ProductStore.selectedProduct = res.product;
+            ProductStore.emitChange();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
 function getProducts(update) {
     if (ProductStore.products && !update) {
         ProductStore.emitChange();
@@ -130,6 +150,9 @@ AppDispatcher.register(function (action) {
             break;
         case MainPageConstants.UPDATE_PRODUCT:
             setTimeout(updateProduct.bind(this, action.product), 0);
+            break;
+        case MainPageConstants.UPDATE_PRODUCT_CATEGORY:
+            setTimeout(updateProductCategory.bind(this, action.checked, action.productId, action.categoryId), 0);
             break;
         case MainPageConstants.GET_PROJECT_PRODUCTS:
             setTimeout(getProjectProducts.bind(this, action.update, action.projectId), 0);

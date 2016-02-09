@@ -71,6 +71,29 @@ function getCategories(update) {
     }
 }
 
+function getProjectCategories(update, projectId) {
+    if (CategoryStore.selectedCategories && !update) {
+        CategoryStore.emitChange();
+    } else {
+        $.ajax({
+            method: 'GET',
+            url: `${api.PROJECTS}/${projectId}/categories`,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (res) {
+                CategoryStore.selectedCategories = res.categories;
+                CategoryStore.emitChange();
+            },
+            error: function (err) {
+                console.error(err);
+            }
+        });
+    }
+}
+
 function createCategory(data) {
     $.ajax({
         method: 'POST',
@@ -93,6 +116,7 @@ function createCategory(data) {
 
 var CategoryStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
     categories: null,
+    selectedCategories: null,
     selected: null
 });
 
@@ -100,6 +124,9 @@ AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case MainPageConstants.GET_CATEGORIES:
             setTimeout(getCategories.bind(this, action.update), 0);
+            break;
+        case MainPageConstants.GET_PROJECT_CATEGORIES:
+            setTimeout(getProjectCategories.bind(this, action.update, action.projectId), 0);
             break;
         case MainPageConstants.GET_CATEGORY:
             setTimeout(getCategory.bind(this, action.categoryId), 0);
