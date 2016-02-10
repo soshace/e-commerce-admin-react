@@ -8,5 +8,11 @@ export default {
             actionType: MainPageConstants.GET_PROJECT_PRODUCT_TYPES,
             projectId: projectId
         });
+    },
+    createProductType: (productType) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.CREATE_PRODUCT_TYPE,
+            productType: productType
+        });
     }
 }

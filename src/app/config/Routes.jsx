@@ -7,7 +7,7 @@ import {
     Account, AccountSettings, AccountCompanies,
     NewProduct, ProductList, ProductDetail, Products,
     NewCategory, CategoryList, Categories, CategoryDetail,
-    Developers,
+    Developers, ProductTypes, ProductTypeList, ProductTypeAdd, ProductTypeDetail,
     NotFound,
     Login, Register,
     Dashboard, AdminPanelPage,
@@ -57,7 +57,16 @@ var Routes = (
                     <Route path="add" component={NewCategory}/>
                     <Route path=":categoryId" component={CategoryDetail} />
                 </Route>
-                <Route path="developers" component={Developers}/>
+                <Route path="developers" component={Developers}>
+                    <IndexRedirect to="types"/>
+                    <Route path="types" component={ProductTypes}>
+                        <IndexRedirect to="list"/>
+                        <Route path="list" component={ProductTypeList}/>
+                        <Route path="add" component={ProductTypeAdd}/>
+                        <Route path=":productTypeId" component={ProductTypeDetail}/>
+                    </Route>
+
+                </Route>
             </Route>
 
             <Route path="*" component={NotFound}/>

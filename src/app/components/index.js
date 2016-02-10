@@ -4,6 +4,9 @@ import _AccountCompanies from './account/AccountCompanies.jsx';
 
 import _Developers from './administration/developers/Developers.jsx';
 import _ProductTypes from './administration/developers/ProductTypes.jsx';
+import _ProductTypeList from './administration/developers/ProductTypeList.jsx';
+import _ProductTypeAdd from './administration/developers/ProductTypeAdd.jsx';
+import _ProductTypeDetail from './administration/developers/ProductTypeDetail.jsx';
 
 import _NewProduct from './administration/products/NewProduct.jsx';
 import _ProductList from './administration/products/ProductList.jsx';
@@ -38,6 +41,9 @@ export default {
 
     Developers: _Developers,
     ProductTypes: _ProductTypes,
+    ProductTypeList: _ProductTypeList,
+    ProductTypeAdd: _ProductTypeAdd,
+    ProductTypeDetail: _ProductTypeDetail,
 
     NewProduct: _NewProduct,
     ProductList: _ProductList,

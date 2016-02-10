@@ -27,30 +27,28 @@ function getProjectProductTypes(projectId) {
     });
 }
 
-//function createProject(data) {
-//    $.ajax({
-//        method: 'POST',
-//        url: api.PROJECTS,
-//        contentType: 'application/json; charset=utf-8',
-//        dataType: 'json',
-//        data: JSON.stringify(data),
-//        xhrFields: {
-//            withCredentials: true
-//        },
-//        success: function (res) {
-//            var project = res.project;
-//            ProjectStore.projects.push(project);
-//            ProjectStore.companyProjects[project.company] = ProjectStore.companyProjects[project.company] || [];
-//            ProjectStore.companyProjects[project.company].push(project);
-//
-//            ProjectStore.emitChange();
-//        },
-//        error: function (err) {
-//            console.error(err);
-//        }
-//    });
-//}
-//
+function createProductType(productType) {
+    $.ajax({
+        method: 'POST',
+        url: api.PRODUCT_TYPES,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        data: JSON.stringify(productType),
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (res) {
+            var productType = res.productType;
+            ProductTypeStore.selectedProductTypes.push(productType);
+            ProductTypeStore.selectedProductType = productType;
+            ProductTypeStore.emitChange();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
 //function updateProject(id, data) {
 //    $.ajax({
 //        method: 'PUT',
@@ -76,13 +74,17 @@ function getProjectProductTypes(projectId) {
 //}
 
 var ProductTypeStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
-    selectedProductTypes: null
+    selectedProductType: null,
+    selectedProductTypes: []
 });
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case MainPageConstants.GET_PROJECT_PRODUCT_TYPES:
             getProjectProductTypes(action.projectId);
+            break;
+        case MainPageConstants.CREATE_PRODUCT_TYPE:
+            createProductType(action.productType);
             break;
     }
 });

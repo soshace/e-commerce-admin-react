@@ -10,6 +10,7 @@ export default {
     PROJECTS: BASE_URL + 'projects',
 
     PRODUCTS: BASE_URL + 'products',
+    PRODUCT_TYPES: BASE_URL + 'product_types',
     CATEGORIES: BASE_URL + 'categories'
 
 }
