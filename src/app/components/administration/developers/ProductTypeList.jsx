@@ -56,7 +56,7 @@ class ProductTypeList extends React.Component {
                             return (
                                 <tr key={type.id}>
                                     <td>
-                                        <Link to={`/${projectKey}/types/${type.id}`}>{type.name}</Link>
+                                        <Link to={`/${projectKey}/developers/types/${type.id}`}>{type.name}</Link>
                                     </td>
                                     <td>
                                         {type.description}

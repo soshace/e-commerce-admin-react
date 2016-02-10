@@ -27,6 +27,25 @@ function getProjectProductTypes(projectId) {
     });
 }
 
+function getProductType(id) {
+    $.ajax({
+        method: 'GET',
+        url: `${api.PRODUCT_TYPES}/${id}`,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (res) {
+            ProductTypeStore.selectedProductType = res.productType;
+            ProductTypeStore.emitChange();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
 function createProductType(productType) {
     $.ajax({
         method: 'POST',
@@ -49,29 +68,28 @@ function createProductType(productType) {
     });
 }
 
-//function updateProject(id, data) {
-//    $.ajax({
-//        method: 'PUT',
-//        url: `${api.PROJECTS}/${id}`,
-//        contentType: 'application/json; charset=utf-8',
-//        dataType: 'json',
-//        data: JSON.stringify(data),
-//        xhrFields: {
-//            withCredentials: true
-//        },
-//        success: function (res) {
-//            var project = res.project,
-//                userProject = _.findWhere(ProjectStore.projects, {id: project.id}),
-//                companyProject = _.findWhere(ProjectStore.companyProjects[project.company.id], {id: project.id});
-//            Object.assign(userProject, project);
-//            Object.assign(companyProject, project);
-//            ProjectStore.emitChange();
-//        },
-//        error: function (err) {
-//            console.error(err);
-//        }
-//    });
-//}
+function updateProductType(productType) {
+    $.ajax({
+        method: 'PUT',
+        url: `${api.PRODUCT_TYPES}/${productType.id}`,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        data: JSON.stringify(productType),
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (res) {
+            var selectedProductTypes = _.reject(ProductTypeStore.selectedProductTypes, {id: productType.id});
+            selectedProductTypes.push(productType);
+            ProductTypeStore.selectedProductTypes = selectedProductTypes;
+            ProductTypeStore.selectedProductType = productType;
+            ProductTypeStore.emitChange();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
 
 var ProductTypeStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
     selectedProductType: null,
@@ -83,8 +101,14 @@ AppDispatcher.register(function (action) {
         case MainPageConstants.GET_PROJECT_PRODUCT_TYPES:
             getProjectProductTypes(action.projectId);
             break;
+        case MainPageConstants.GET_PRODUCT_TYPE:
+            getProductType(action.productTypeId);
+            break;
         case MainPageConstants.CREATE_PRODUCT_TYPE:
             createProductType(action.productType);
+            break;
+        case MainPageConstants.UPDATE_PRODUCT_TYPE:
+            updateProductType(action.productType);
             break;
     }
 });
