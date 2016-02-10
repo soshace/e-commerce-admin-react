@@ -3,5 +3,5 @@
 ### Install project
 * run `chmod +x install.sh` if it does not have needed permissions
 * `./install.sh`
-* then serve index.html, you can use `python -m SimpleHTTPServer 8000` for example
+* `node app.js`
 * go to http://localhost:8000/ 

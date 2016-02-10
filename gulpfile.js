@@ -79,21 +79,21 @@ function copyStatic() {
 
 function copyAwesomeFonts() {
     gulp.src('./bower_components/font-awesome/fonts/*.*')
-        .pipe(gulp.dest('./build/fonts'));
+        .pipe(gulp.dest('./build/styles/fonts'));
 }
 
 function copyCssVendors() {
     gulp.src(cssVendors)
         .pipe(concat('vendors.css'))
         //.pipe(less())
-        .pipe(gulp.dest('./build'));
+        .pipe(gulp.dest('./build/styles'));
 }
 
 function buildThemeJS() {
     gulp.src(themeJS)
         .pipe(concat('libs.js'))
         //.pipe(less())
-        .pipe(gulp.dest('./build'));
+        .pipe(gulp.dest('./build/scripts'));
 }
 
 function browserifyTask(options) {
@@ -186,13 +186,13 @@ gulp.task('default', function () {
     browserifyTask({
         development: true,
         src: './src/app/main.js',
-        dest: './build'
+        dest: './build/scripts'
     });
 
     cssTask({
         development: true,
         src: './src/www/less/app.less',
-        dest: './build'
+        dest: './build/styles'
     });
 
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, IndexRoute, hashHistory, IndexRedirect  } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory, IndexRedirect  } from 'react-router';
 import App  from './../App.jsx';
 import { UserStore } from './../stores';
 
@@ -25,7 +25,7 @@ function requireAuth(nextState, replace) {
 }
 
 var Routes = (
-    <Router history={hashHistory}>
+    <Router history={browserHistory}>
         <Route path="/" component={App}>
             <IndexRedirect to="signin"/>
             <Route path="signin" component={Login}/>

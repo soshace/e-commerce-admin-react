@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
+sudo npm install -g gulp
+sudo npm install -g bower
 npm install
-npm install -g gulp
-npm install -g bower
 bower install
