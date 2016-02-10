@@ -45,7 +45,7 @@ class ProductCategories extends React.Component {
                             return (
                                 <div className="checkbox" key={c.id}>
                                     <label className="ui-checks">
-                                        <input type="checkbox" value="" onChange={self._onCategoryChange(c.id)} {...checked} />
+                                        <input type="checkbox" onChange={self._onCategoryChange(c.id)} {...checked} />
                                         <i></i>
                                         {c.name}
                                     </label>
@@ -73,10 +73,10 @@ class ProductCategories extends React.Component {
     }
 
     _onCategoryChange(categoryId) {
-        var productId = this.props.product.id;
-        var categories = this.state.product.categories;
-        //categories = _.reject(categories, )
         return (e) => {
+            var productId = this.props.product.id,
+                categories = this.state.product.categories;
+            //categories = _.reject(categories, )
             ProductActions.updateProductCategory(e.target.checked, productId, categoryId);
         }
     }
