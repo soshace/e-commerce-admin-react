@@ -36,7 +36,8 @@ class Aside extends React.Component {
     render() {
         var navClass = classnames({hide: !this.state.navItemsShown}),
             accountClass = classnames('m-v-xs', {hide: this.state.navItemsShown}),
-            asideClass = classnames('app-aside modal fade', {folded: this.state.asideFolded}),
+            //asideClass = classnames('app-aside modal fade', {folded: this.state.asideFolded}),
+            asideClass = classnames('app-aside modal fade'),
             user = this.state.user,
             projectKey = this.props.projectKey;
 
@@ -68,7 +69,7 @@ class Aside extends React.Component {
                                         <MenuItem link="/companyname/products" name="Orders" iconClass="mdi-action-perm-contact-cal" />
                                         <MenuItem link="/companyname/products" name="Customers" iconClass="mdi-action-perm-contact-cal" />
                                         <MenuItem link="/companyname/products" name="Discounts" iconClass="mdi-action-perm-contact-cal" />
-                                        <MenuItem link={`/${projectKey}/developers`} name="Developers" iconClass="mdi-action-perm-contact-cal" />
+                                        <MenuItem link={`/${projectKey}/develope`} name="Developers" iconClass="mdi-action-perm-contact-cal" />
                                         <MenuItem link="/companyname/products" name="Imports/Exports" iconClass="mdi-action-perm-contact-cal" />
                                     </Menu>
                                     <Menu header="Cool Project" className={accountClass}>

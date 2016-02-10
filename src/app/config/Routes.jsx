@@ -5,7 +5,7 @@ import { UserStore } from './../stores';
 
 import {
     Account, AccountSettings, AccountCompanies,
-    NewProduct, ProductList, ProductDetail, Products,
+    ProductAdd, ProductList, ProductDetail, Products,
     NewCategory, CategoryList, Categories, CategoryDetail,
     Developers, ProductTypes, ProductTypeList, ProductTypeAdd, ProductTypeDetail,
     NotFound,
@@ -48,7 +48,7 @@ var Routes = (
                 <Route path="products" component={Products}>
                     <IndexRedirect to="list"/>
                     <Route path="list" component={ProductList}/>
-                    <Route path="add" component={NewProduct}/>
+                    <Route path="add" component={ProductAdd}/>
                     <Route path=":productId" component={ProductDetail} />
                 </Route>
                 <Route path="categories" component={Categories}>

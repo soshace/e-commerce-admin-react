@@ -1,31 +1,42 @@
 import React from 'react';
-import {ProductStore, ProjectStore} from './../../../stores';
-import {ProductActions} from './../../../actions';
+import {ProductStore, ProjectStore, ProductTypeStore} from './../../../stores';
+import {ProductActions, ProductTypeActions, ProjectActions} from './../../../actions';
 
 
-class NewProduct extends React.Component {
+class ProductAdd extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            name: '',
-            description: ''
+            productTypes: [],
+            productTypeId: null,
+            product: {}
         };
 
         this._onProductCreate = this._onProductCreate.bind(this);
         this._onSubmit = this._onSubmit.bind(this);
         this._onFieldUpdate = this._onFieldUpdate.bind(this);
+        this._onProjectsGet= this._onProjectsGet.bind(this);
+        this._onProductTypesGet= this._onProductTypesGet.bind(this);
+        this._onProductTypeChange= this._onProductTypeChange.bind(this);
     }
 
     componentDidMount() {
         ProductStore.addChangeListener(this._onProductCreate);
+        ProductTypeStore.addChangeListener(this._onProductTypesGet);
+        ProjectStore.addChangeListener(this._onProjectsGet);
+
+        ProjectActions.getProjects();
     }
 
     componentWillUnmount() {
         ProductStore.removeChangeListener(this._onProductCreate);
+        ProductTypeStore.removeChangeListener(this._onProductTypesGet);
+        ProjectStore.removeChangeListener(this._onProjectsGet);
     }
 
     render() {
+        var productTypes = this.state.productTypes;
         return (
             <div className="panel-body">
                 <form className="form-horizontal p-h-xsform-horizontal p-h-xs"
@@ -58,6 +69,17 @@ class NewProduct extends React.Component {
                         </div>
                     </div>
 
+                    <div className="form-group form-grouplg">
+                        <label className="col-sm-2 control-label">Select</label>
+                        <div className="col-sm-10">
+                            <select className="form-control" onChange={this._onProductTypeChange}>
+                                {productTypes.map(function (type) {
+                                    return <option key={type.id} value={type.id}>{type.name}</option>
+                                })}
+                            </select>
+                        </div>
+                    </div>
+
                     <div className="form-group m-t">
                         <div className="col-sm-4 col-sm-offset-2">
                             <button type="submit" className="btn btn-primary">Create</button>
@@ -68,21 +90,38 @@ class NewProduct extends React.Component {
         )
     }
 
+    _onProjectsGet() {
+        var project = ProjectStore.getProjectByKey(this.props.params.projectKey);
+        ProductTypeActions.getProjectProductTypes(project.id);
+    }
+
+    _onProductTypesGet() {
+        var productTypes = ProductTypeStore.selectedProductTypes;
+        this.setState({productTypes: productTypes, productTypeId: productTypes[0].id});
+    }
+
     _onFieldUpdate(field) {
         var self = this;
         return e => {
-            self.setState({[field]: e.target.value});
+            var product = this.state.product;
+            product[field] = e.target.value;
+            self.setState({product: product});
         };
     }
 
+    _onProductTypeChange(e) {
+        this.setState({productTypeId: e.target.value});
+    }
+
     _onSubmit(e) {
-        var name = this.state.name,
-            description = this.state.description,
+        var product = this.state.product,
             projectKey = this.props.params.projectKey,
-            project = ProjectStore.getProjectByKey(projectKey),
-            projectId = project.id;
+            project = ProjectStore.getProjectByKey(projectKey)
+            ;
+        product.productType = this.state.productTypeId;
+        product.project = project.id;
         e.preventDefault();
-        ProductActions.createProduct({name, description, project:projectId});
+        ProductActions.createProduct(product);
     }
 
     _onProductCreate() {
@@ -91,8 +130,8 @@ class NewProduct extends React.Component {
     }
 }
 
-NewProduct.contextTypes = {
+ProductAdd.contextTypes = {
     router: React.PropTypes.object.isRequired
 };
 
-export default NewProduct
+export default ProductAdd

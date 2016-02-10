@@ -8,7 +8,7 @@ import _ProductTypeList from './administration/developers/ProductTypeList.jsx';
 import _ProductTypeAdd from './administration/developers/ProductTypeAdd.jsx';
 import _ProductTypeDetail from './administration/developers/ProductTypeDetail.jsx';
 
-import _NewProduct from './administration/products/NewProduct.jsx';
+import _ProductAdd from './administration/products/ProductAdd.jsx';
 import _ProductList from './administration/products/ProductList.jsx';
 import _ProductDetail from './administration/products/ProductDetail.jsx';
 import _Products from './administration/products/Products.jsx';
@@ -45,7 +45,7 @@ export default {
     ProductTypeAdd: _ProductTypeAdd,
     ProductTypeDetail: _ProductTypeDetail,
 
-    NewProduct: _NewProduct,
+    ProductAdd: _ProductAdd,
     ProductList: _ProductList,
     ProductDetail: _ProductDetail,
     Products: _Products,
