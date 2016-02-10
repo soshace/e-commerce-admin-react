@@ -93,7 +93,10 @@ function updateProductType(productType) {
 
 var ProductTypeStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
     selectedProductType: null,
-    selectedProductTypes: []
+    selectedProductTypes: [],
+    getTypeById: (id) => {
+        return _.findWhere(ProductTypeStore.selectedProductTypes, {id: id});
+    }
 });
 
 AppDispatcher.register(function (action) {

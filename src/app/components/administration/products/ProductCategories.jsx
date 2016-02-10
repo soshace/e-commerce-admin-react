@@ -13,23 +13,20 @@ class ProductCategories extends React.Component {
             product: {}
         };
         this._onCategoriesGet = this._onCategoriesGet.bind(this);
-        this._onProjectsGet = this._onProjectsGet.bind(this);
         this._onCategoryChange = this._onCategoryChange.bind(this);
     }
 
     componentDidMount() {
         CategoryStore.addChangeListener(this._onCategoriesGet);
-        ProjectStore.addChangeListener(this._onProjectsGet);
     }
 
     componentWillUnmount() {
         CategoryStore.removeChangeListener(this._onCategoriesGet);
-        ProjectStore.removeChangeListener(this._onProjectsGet);
     }
 
     componentWillReceiveProps(newProps) {
-        this.setState({projectKey: newProps.projectKey, product: newProps.product});
-        ProjectActions.getProjects();
+        CategoryActions.getProjectCategories(false, newProps.project.id);
+        this.setState({project: newProps.project, product: newProps.product});
     }
 
     render() {
@@ -45,7 +42,7 @@ class ProductCategories extends React.Component {
                             return (
                                 <div className="checkbox" key={c.id}>
                                     <label className="ui-checks">
-                                        <input type="checkbox" onChange={self._onCategoryChange(c.id)} {...checked} />
+                                        <input type="checkbox" onChange={self._onCategoryChange(c)} {...checked} />
                                         <i></i>
                                         {c.name}
                                     </label>
@@ -59,25 +56,31 @@ class ProductCategories extends React.Component {
         )
     }
 
-    _onProjectsGet() {
-        var projectKey = this.state.projectKey,
-            project;
-        if (projectKey) {
-            project = ProjectStore.getProjectByKey(projectKey);
-            CategoryActions.getProjectCategories(false, project.id);
-        }
-    }
-
     _onCategoriesGet() {
-        this.setState({categories: CategoryStore.selectedCategories});
+        var categories = CategoryStore.selectedCategories;
+        this.setState({categories: categories});
     }
 
-    _onCategoryChange(categoryId) {
+    _onCategoryChange(c) {
+        var self = this;
         return (e) => {
-            var productId = this.props.product.id,
-                categories = this.state.product.categories;
-            //categories = _.reject(categories, )
-            ProductActions.updateProductCategory(e.target.checked, productId, categoryId);
+            var product = this.state.product,
+                categories = this.state.categories,
+                productCategories = product.categories,
+                checked = e.target.checked,
+                productId = this.props.product.id,
+                productCategory = _.findWhere(productCategories, {id: c.id}),
+                category = _.findWhere(categories, {id: c.id});
+
+            if (productCategory) {
+                productCategories = _.reject(productCategories, {id: c.id});
+            } else {
+                productCategories.push(category);
+            }
+            category.checked = checked;
+            product.categories = productCategories;
+            ProductActions.updateProductCategory(checked, productId, c.id, categories);
+            self.setState({categories: categories, product: product});
         }
     }
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import {ProductStore, CategoryStore} from './../../../stores';
-import {ProductActions, CategoryActions} from './../../../actions';
+import {ProjectStore, ProductStore, CategoryStore, ProductTypeStore} from './../../../stores';
+import {ProjectActions, ProductActions, CategoryActions, ProductTypeActions} from './../../../actions';
 
 import ProductUpdate from './ProductUpdate.jsx';
 import ProductOverview from './ProductOverview.jsx';
@@ -12,25 +12,32 @@ class ProductDetail extends React.Component {
         super(props);
 
         this.state = {
-            product: null
+            product: null,
+            project: null
         };
 
         this._onProductGet = this._onProductGet.bind(this);
+        this._onProjectsGet = this._onProjectsGet.bind(this);
+        this._onProductTypesGet = this._onProductTypesGet.bind(this);
     }
 
     componentDidMount() {
         ProductStore.addChangeListener(this._onProductGet);
-        var productId = this.props.params.productId;
-        ProductActions.getProduct(productId);
+        ProductTypeStore.addChangeListener(this._onProductTypesGet);
+        ProjectStore.addChangeListener(this._onProjectsGet);
+
+        ProjectActions.getProjects();
     }
 
     componentWillUnmount() {
         ProductStore.removeChangeListener(this._onProductGet);
+        ProductTypeStore.removeChangeListener(this._onProductTypesGet);
+        ProjectStore.removeChangeListener(this._onProjectsGet);
     }
 
     render() {
-        var product = this.state.product,
-            projectKey = this.props.params.projectKey;
+        var { product, project, productTypes } = this.state;
+
         return (
             <div>
                 <ul className="nav nav-md nav-tabs nav-lines b-info">
@@ -46,22 +53,34 @@ class ProductDetail extends React.Component {
                 </ul>
                 <div className="tab-content p m-b-md b-t b-t-2x">
                     <div role="tabpanel" className="tab-pane animated fadeIn active" id="tab_1">
-                        <ProductOverview product={product}/>
+                        <ProductOverview product={product} productTypes={productTypes} />
                     </div>
                     <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_2">
-                        <ProductUpdate product={product} />
+                        <ProductUpdate product={product} productTypes={productTypes} />
                     </div>
                     <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_3">
-                        <ProductCategories product={product} projectKey={projectKey} />
+                        <ProductCategories product={product} project={project} />
                     </div>
                 </div>
             </div>
         )
     }
 
+    _onProjectsGet() {
+        var productId = this.props.params.productId;
+        ProductActions.getProduct(productId);
+    }
+
     _onProductGet() {
-        var product = ProductStore.selectedProduct;
-        this.setState({product: product});
+        var project = ProjectStore.getProjectByKey(this.props.params.projectKey);
+        ProductTypeActions.getProjectProductTypes(project.id);
+    }
+
+    _onProductTypesGet() {
+        var product = ProductStore.selectedProduct,
+            productTypes = ProductTypeStore.selectedProductTypes,
+            project = ProjectStore.getProjectByKey(this.props.params.projectKey);
+        this.setState({productTypes: productTypes, product: product, project: project});
     }
 }
 
