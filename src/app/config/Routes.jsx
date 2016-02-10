@@ -1,28 +1,18 @@
 import React from 'react';
 import { Router, Route, IndexRoute, hashHistory, IndexRedirect  } from 'react-router';
 import App  from './../App.jsx';
-import UserStore from './../stores/UserStore.js';
-import NotFound  from './../components/NotFound.jsx';
-import Login from './../components/auth/Login.jsx';
-import Register from './../components/auth/Register.jsx';
-import Dashboard  from './../components/administration/Dashboard.jsx';
-import AdminPanelPage  from './../components/administration/AdminPanelPage.jsx';
-import ManageProjects from './../components/company/ManageProjects.jsx';
-import ManageTeams from './../components/company/ManageTeams.jsx';
-import CompanyProfile from './../components/company/CompanyProfile.jsx';
-import Company from './../components/company/Company.jsx';
-import NewCompany from './../components/company/NewCompany.jsx';
-import { Account, AccountSettings, AccountCompanies } from './../components';
+import { UserStore } from './../stores';
 
-import NewProduct from './../components/administration/products/NewProduct.jsx';
-import ProductList from './../components/administration/products/ProductList.jsx';
-import ProductDetail from './../components/administration/products/ProductDetail.jsx';
-import Products from './../components/administration/products/Products.jsx';
-
-import NewCategory from './../components/administration/categories/NewCategory.jsx';
-import CategoryList from './../components/administration/categories/CategoryList.jsx';
-import Categories from './../components/administration/categories/Categories.jsx';
-import CategoryDetail from './../components/administration/categories/CategoryDetail.jsx';
+import {
+    Account, AccountSettings, AccountCompanies,
+    NewProduct, ProductList, ProductDetail, Products,
+    NewCategory, CategoryList, Categories, CategoryDetail,
+    Developers,
+    NotFound,
+    Login, Register,
+    Dashboard, AdminPanelPage,
+    ManageProjects, ManageTeams, CompanyProfile, Company, NewCompany
+} from './../components';
 
 
 function requireAuth(nextState, replace) {
@@ -67,6 +57,7 @@ var Routes = (
                     <Route path="add" component={NewCategory}/>
                     <Route path=":categoryId" component={CategoryDetail} />
                 </Route>
+                <Route path="developers" component={Developers}/>
             </Route>
 
             <Route path="*" component={NotFound}/>
