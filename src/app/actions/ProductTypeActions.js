@@ -9,10 +9,11 @@ export default {
             projectId: projectId
         });
     },
-    getProductType: (productTypeId) => {
+    getProductType: (productTypeId, withAttrs) => {
         AppDispatcher.dispatch({
             actionType: MainPageConstants.GET_PRODUCT_TYPE,
-            productTypeId: productTypeId
+            productTypeId: productTypeId,
+            withAttrs: withAttrs
         });
     },
     createProductType: (productType) => {

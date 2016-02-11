@@ -27,7 +27,7 @@ function getProjectProductTypes(projectId) {
     });
 }
 
-function getProductType(id) {
+function getProductType(id, withAttrs) {
     $.ajax({
         method: 'GET',
         url: `${api.PRODUCT_TYPES}/${id}`,
@@ -38,6 +38,30 @@ function getProductType(id) {
         },
         success: function (res) {
             ProductTypeStore.selectedProductType = res.productType;
+            if (withAttrs) {
+                getProductTypeAttributes();
+            } else {
+                ProductTypeStore.emitChange();
+            }
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
+function getProductTypeAttributes() {
+    var id = ProductTypeStore.selectedProductType.id;
+    $.ajax({
+        method: 'GET',
+        url: `${api.PRODUCT_TYPES}/${id}/product_attributes`,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (res) {
+            ProductTypeStore.selectedProductType.attributes = res.productAttributes;
             ProductTypeStore.emitChange();
         },
         error: function (err) {
@@ -105,7 +129,7 @@ AppDispatcher.register(function (action) {
             getProjectProductTypes(action.projectId);
             break;
         case MainPageConstants.GET_PRODUCT_TYPE:
-            getProductType(action.productTypeId);
+            getProductType(action.productTypeId, action.withAttrs);
             break;
         case MainPageConstants.CREATE_PRODUCT_TYPE:
             createProductType(action.productType);

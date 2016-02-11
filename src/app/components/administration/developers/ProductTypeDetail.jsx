@@ -8,7 +8,9 @@ class ProductTypeDetail extends React.Component {
         super(props);
 
         this.state = {
-            productType: {}
+            productType: {
+                attributes: []
+            }
         };
 
         this._onProductTypeGet = this._onProductTypeGet.bind(this);
@@ -17,9 +19,10 @@ class ProductTypeDetail extends React.Component {
     }
 
     componentDidMount() {
-        var productTypeId = this.props.params.productTypeId;
+        var productTypeId = this.props.params.productTypeId,
+            withAttrs = true;
         ProductTypeStore.addChangeListener(this._onProductTypeGet);
-        ProductTypeActions.getProductType(productTypeId);
+        ProductTypeActions.getProductType(productTypeId, withAttrs);
     }
 
     componentWillUnmount() {
@@ -63,10 +66,45 @@ class ProductTypeDetail extends React.Component {
                     </div>
                     <div className="form-group m-t">
                         <div className="col-sm-4 col-sm-offset-2">
-                            <button type="submit" className="btn btn-primary">Create</button>
+                            <button type="submit" className="btn btn-primary">Save</button>
                         </div>
                     </div>
                 </form>
+
+                <table className="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Name</th>
+                        <th>Constraint</th>
+                        <th>Required</th>
+                        <th>Searchable</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {productType.attributes.map(function (attr) {
+                        return (
+                            <tr key={attr.id}>
+                                <th>{attr.attributeType}</th>
+                                <th>{attr.label}</th>
+                                <th>{attr.constraints}</th>
+                                <th>{attr.isRequired.toString()}</th>
+                                <th>{attr.isSearchable.toString()}</th>
+                                <th>X</th>
+                            </tr>
+                        )
+                    })}
+
+                    </tbody>
+                    <tfoot className="">
+                    <tr>
+                        <td colSpan="5" className="text-center">
+                            <ul className="pagination"></ul>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
             </div>
         )
     }
