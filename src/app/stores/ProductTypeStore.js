@@ -115,6 +115,26 @@ function updateProductType(productType) {
     });
 }
 
+function addAttribute(newAttribute) {
+    $.ajax({
+        method: 'POST',
+        url: `${api.PRODUCT_ATTRIBUTES}`,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        data: JSON.stringify(newAttribute),
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (res) {
+            ProductTypeStore.selectedProductType.attributes.unshift(res.productAttribute);
+            ProductTypeStore.emitChange();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
 var ProductTypeStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
     selectedProductType: null,
     selectedProductTypes: [],
@@ -136,6 +156,9 @@ AppDispatcher.register(function (action) {
             break;
         case MainPageConstants.UPDATE_PRODUCT_TYPE:
             updateProductType(action.productType);
+            break;
+        case MainPageConstants.ADD_ATTRIBUTE:
+            addAttribute(action.newAttribute);
             break;
     }
 });

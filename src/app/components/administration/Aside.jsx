@@ -58,7 +58,7 @@ class Aside extends React.Component {
 
                                     <ProfileInfo
                                         onClick={this._toggleNav.bind(this)}
-                                        avatarSrc="images/a0.jpg"
+                                        avatarSrc="/images/a0.jpg"
                                         name={user.name}
                                         email={user.email} />
 

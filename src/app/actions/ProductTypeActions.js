@@ -27,5 +27,11 @@ export default {
             actionType: MainPageConstants.UPDATE_PRODUCT_TYPE,
             productType: productType
         });
+    },
+    addAttribute: (newAttribute) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.ADD_ATTRIBUTE,
+            newAttribute: newAttribute
+        });
     }
 }

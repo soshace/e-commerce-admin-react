@@ -14,9 +14,14 @@ export default {
     CREATE_PRODUCT_TYPE: 'CREATE_PRODUCT_TYPE',
     UPDATE_PRODUCT_TYPE: 'UPDATE_PRODUCT_TYPE',
     GET_PRODUCT_VARIANTS: 'GET_PRODUCT_VARIANTS',
+    ADD_ATTRIBUTE: 'ADD_ATTRIBUTE',
 
     GET_CATEGORY: 'GET_CATEGORY',
     UPDATE_CATEGORY: 'UPDATE_CATEGORY',
     GET_CATEGORIES: 'GET_CATEGORIES',
-    CREATE_CATEGORY: 'CREATE_CATEGORY'
+    CREATE_CATEGORY: 'CREATE_CATEGORY',
+
+    PRODUCT_ATTR_TYPES: [
+        'text', 'boolean', 'localizedText', 'enum', 'localizedEnum',
+        'number', 'money', 'date', 'time', 'dateTime', 'set', 'reference']
 }

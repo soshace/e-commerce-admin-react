@@ -11,6 +11,7 @@ export default {
 
     PRODUCTS: BASE_URL + 'products',
     PRODUCT_TYPES: BASE_URL + 'product_types',
+    PRODUCT_ATTRIBUTES: BASE_URL + 'product_attributes',
     CATEGORIES: BASE_URL + 'categories'
 
 }
