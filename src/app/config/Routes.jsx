@@ -43,7 +43,7 @@ var Routes = (
                 <Route path="profile" component={CompanyProfile}/>
             </Route>
             <Route path=":projectKey" component={AdminPanelPage} meta={{requireAuth: true}}>
-                <IndexRedirect to="dashboard"/>
+                <IndexRedirect to="products"/>
                 <Route path="dashboard" component={Dashboard}/>
                 <Route path="products" component={Products}>
                     <IndexRedirect to="list"/>
