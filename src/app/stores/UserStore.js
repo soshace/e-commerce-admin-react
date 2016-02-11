@@ -57,7 +57,8 @@ function getUser() {
                 UserStore.emitChange(USER_CHANGE);
             },
             error: function (err) {
-                console.error(err);
+                UserStore.user = {};
+                UserStore.emitChange(USER_CHANGE);
             }
         });
     }
@@ -78,7 +79,7 @@ function updateUser(data) {
 function onRegisterFail(res) {
     var invalidAttrs = res.responseJSON.message.invalidAttributes;
     if (invalidAttrs && invalidAttrs.email) {
-        UserStore.user.validationErrors = UserStore.user.validationErrors || [];
+        UserStore.user.validationErrors = [];
         UserStore.user.validationErrors.push('email');
     }
     UserStore.emitChange(LOGIN_ERROR);
@@ -95,7 +96,6 @@ function onLogin(res) {
 }
 
 function authRequest(props) {
-    UserStore.user.validationErrors = [];
     $.ajax({
         url: props.url,
         type: props.type,

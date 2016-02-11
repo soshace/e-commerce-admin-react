@@ -28,21 +28,21 @@ var Routes = (
     <Router history={browserHistory}>
         <Route path="/" component={App}>
             <IndexRedirect to="signin"/>
-            <Route path="signin" component={Login}/>
-            <Route path="signup" component={Register}/>
-            <Route path="account" component={Account} onEnter={requireAuth}>
+            <Route path="signin" component={Login} meta={{requireAuth: false}}/>
+            <Route path="signup" component={Register} meta={{requireAuth: false}}/>
+            <Route path="account" component={Account} meta={{requireAuth: true}}>
                 <IndexRedirect to="profile"/>
                 <Route path="profile" component={AccountSettings}/>
                 <Route path="companies" component={AccountCompanies}/>
             </Route>
-            <Route path="companies/new" component={NewCompany} onEnter={requireAuth}/>
-            <Route path="companies/:id" component={Company} onEnter={requireAuth}>
+            <Route path="companies/new" component={NewCompany} meta={{requireAuth: false}}/>
+            <Route path="companies/:id" component={Company} meta={{requireAuth: false}} >
                 <IndexRedirect to="profile"/>
                 <Route path="projects" component={ManageProjects}/>
                 <Route path="teams" component={ManageTeams}/>
                 <Route path="profile" component={CompanyProfile}/>
             </Route>
-            <Route path=":projectKey" component={AdminPanelPage} onEnter={requireAuth}>
+            <Route path=":projectKey" component={AdminPanelPage} meta={{requireAuth: true}}>
                 <IndexRedirect to="dashboard"/>
                 <Route path="dashboard" component={Dashboard}/>
                 <Route path="products" component={Products}>

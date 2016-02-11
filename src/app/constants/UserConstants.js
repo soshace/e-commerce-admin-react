@@ -7,6 +7,7 @@ export default {
 
     LOGIN_SUCCESS_CODE: 'successful',
     LOGIN_FAIL_CODE: 'error',
+    NOT_AUTHENTICATED_CODE: 'not.authenticated',
 
     EMAIL_ALREADY_EXISTS: 'EMAIL_ALREADY_EXISTS'
 }
