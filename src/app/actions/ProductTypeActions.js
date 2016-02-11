@@ -33,5 +33,11 @@ export default {
             actionType: MainPageConstants.ADD_ATTRIBUTE,
             newAttribute: newAttribute
         });
+    },
+    removeAttribute: (id) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.REMOVE_ATTRIBUTE,
+            attrId: id
+        });
     }
 }

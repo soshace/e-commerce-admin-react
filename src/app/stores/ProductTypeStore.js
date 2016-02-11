@@ -135,6 +135,26 @@ function addAttribute(newAttribute) {
     });
 }
 
+function removeAttribute(id) {
+    $.ajax({
+        method: 'DELETE',
+        url: `${api.PRODUCT_ATTRIBUTES}/${id}`,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (res) {
+            var attrs = _.reject(ProductTypeStore.selectedProductType.attributes, {id: id});
+            ProductTypeStore.selectedProductType.attributes = attrs;
+            ProductTypeStore.emitChange();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
 var ProductTypeStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
     selectedProductType: null,
     selectedProductTypes: [],
@@ -159,6 +179,9 @@ AppDispatcher.register(function (action) {
             break;
         case MainPageConstants.ADD_ATTRIBUTE:
             addAttribute(action.newAttribute);
+            break;
+        case MainPageConstants.REMOVE_ATTRIBUTE:
+            removeAttribute(action.attrId);
             break;
     }
 });

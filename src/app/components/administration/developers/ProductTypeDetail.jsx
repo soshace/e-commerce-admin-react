@@ -24,6 +24,7 @@ class ProductTypeDetail extends React.Component {
         this._onSubmit = this._onSubmit.bind(this);
         this._toggleAttrForm = this._toggleAttrForm.bind(this);
         this._addAttribute = this._addAttribute.bind(this);
+        this._removeAttribute = this._removeAttribute.bind(this);
     }
 
     componentDidMount() {
@@ -39,7 +40,8 @@ class ProductTypeDetail extends React.Component {
 
     render() {
         var { productType, newAttribute }  = this.state,
-            attrFormClass = classnames({hide: this.state.attrFormHide});
+            attrFormClass = classnames({hide: this.state.attrFormHide}),
+            self = this;
         return (
             <div className="panel-body">
                 <form className="form-horizontal p-h-xsform-horizontal p-h-xs"
@@ -147,6 +149,7 @@ class ProductTypeDetail extends React.Component {
                     <tr>
                         <th>Type</th>
                         <th>Name</th>
+                        <th>Label</th>
                         <th>Constraint</th>
                         <th>Required</th>
                         <th>Searchable</th>
@@ -158,11 +161,14 @@ class ProductTypeDetail extends React.Component {
                         return (
                             <tr key={attr.id}>
                                 <td>{attr.attributeType}</td>
+                                <td>{attr.name}</td>
                                 <td>{attr.label}</td>
                                 <td>{attr.constraints}</td>
                                 <td>{attr.isRequired.toString()}</td>
                                 <td>{attr.isSearchable.toString()}</td>
-                                <td>X</td>
+                                <td>
+                                    <i className="glyphicon glyphicon-remove" onClick={self._removeAttribute.bind(self, attr.id)}></i>
+                                </td>
                             </tr>
                         )
                     })}
@@ -218,6 +224,10 @@ class ProductTypeDetail extends React.Component {
         newAttribute.productType = productType.id;
         e.preventDefault();
         ProductTypeActions.addAttribute(newAttribute);
+    }
+
+    _removeAttribute(id) {
+        ProductTypeActions.removeAttribute(id);
     }
 }
 
