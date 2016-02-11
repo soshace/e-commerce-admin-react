@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
-import {CategoryStore} from './../../../stores';
-import {CategoryActions} from './../../../actions';
+import {CategoryStore, ProjectStore} from './../../../stores';
+import {CategoryActions, ProjectActions} from './../../../actions';
 
 
 class CategoryList extends React.Component {
@@ -14,15 +14,19 @@ class CategoryList extends React.Component {
 
         this._onCategoriesGet = this._onCategoriesGet.bind(this);
         this._onAddClick = this._onAddClick.bind(this);
+        this._onProjectsGet = this._onProjectsGet.bind(this);
     }
 
     componentDidMount() {
         CategoryStore.addChangeListener(this._onCategoriesGet);
-        CategoryActions.getCategories(true);
+        ProjectStore.addChangeListener(this._onProjectsGet);
+
+        ProjectActions.getProjects();
     }
 
     componentWillUnmount() {
         CategoryStore.removeChangeListener(this._onCategoriesGet);
+        ProjectStore.removeChangeListener(this._onProjectsGet);
     }
 
     render() {
@@ -77,10 +81,15 @@ class CategoryList extends React.Component {
         this.context.router.push(`/${projectKey}/categories/add`);
     }
 
-    _onCategoriesGet() {
-        var categories = CategoryStore.categories;
-        this.setState({categories: categories});
+    _onProjectsGet() {
+        var projectKey = this.props.params.projectKey,
+            project = ProjectStore.getProjectByKey(projectKey);
+        CategoryActions.getProjectCategories(true, project.id);
+    }
 
+    _onCategoriesGet() {
+        var categories = CategoryStore.selectedCategories;
+        this.setState({categories: categories});
     }
 }
 
