@@ -5,6 +5,7 @@ import {ProjectActions, ProductActions, CategoryActions, ProductTypeActions} fro
 import ProductUpdate from './ProductUpdate.jsx';
 import ProductOverview from './ProductOverview.jsx';
 import ProductCategories from './ProductCategories.jsx';
+import ProductVariants from './ProductVariants.jsx';
 
 
 class ProductDetail extends React.Component {
@@ -50,6 +51,9 @@ class ProductDetail extends React.Component {
                     <li>
                         <a href data-toggle="tab" data-target="#tab_3">Categories</a>
                     </li>
+                    <li>
+                        <a href data-toggle="tab" data-target="#tab_4">Variants</a>
+                    </li>
                 </ul>
                 <div className="tab-content p m-b-md b-t b-t-2x">
                     <div role="tabpanel" className="tab-pane animated fadeIn active" id="tab_1">
@@ -60,6 +64,9 @@ class ProductDetail extends React.Component {
                     </div>
                     <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_3">
                         <ProductCategories product={product} project={project} />
+                    </div>
+                    <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_4">
+                        <ProductVariants product={product} project={project} />
                     </div>
                 </div>
             </div>
