@@ -167,7 +167,8 @@ class ProductTypeDetail extends React.Component {
                                 <td>{attr.isRequired.toString()}</td>
                                 <td>{attr.isSearchable.toString()}</td>
                                 <td>
-                                    <i className="glyphicon glyphicon-remove" onClick={self._removeAttribute.bind(self, attr.id)}></i>
+                                    <a className="glyphicon glyphicon-remove"
+                                       onClick={self._removeAttribute.bind(self, attr.id)}></a>
                                 </td>
                             </tr>
                         )
