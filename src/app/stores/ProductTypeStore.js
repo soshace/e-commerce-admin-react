@@ -50,8 +50,8 @@ function getProductType(id, withAttrs) {
     });
 }
 
-function getProductTypeAttributes() {
-    var id = ProductTypeStore.selectedProductType.id;
+function getProductTypeAttributes(productTypeId) {
+    var id = productTypeId || ProductTypeStore.selectedProductType.id;
     $.ajax({
         method: 'GET',
         url: `${api.PRODUCT_TYPES}/${id}/product_attributes`,
@@ -156,7 +156,7 @@ function removeAttribute(id) {
 }
 
 var ProductTypeStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
-    selectedProductType: null,
+    selectedProductType: {},
     selectedProductTypes: [],
     getTypeById: (id) => {
         return _.findWhere(ProductTypeStore.selectedProductTypes, {id: id});
@@ -170,6 +170,9 @@ AppDispatcher.register(function (action) {
             break;
         case MainPageConstants.GET_PRODUCT_TYPE:
             getProductType(action.productTypeId, action.withAttrs);
+            break;
+        case MainPageConstants.GET_PRODUCT_TYPE_ATTRS:
+            getProductTypeAttributes(action.productTypeId);
             break;
         case MainPageConstants.CREATE_PRODUCT_TYPE:
             createProductType(action.productType);

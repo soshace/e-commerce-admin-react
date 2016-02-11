@@ -37,7 +37,7 @@ class ProductDetail extends React.Component {
     }
 
     render() {
-        var { product, project, productTypes } = this.state;
+        var { product, project, productTypes, productAttributes } = this.state;
 
         return (
             <div>
@@ -66,7 +66,7 @@ class ProductDetail extends React.Component {
                         <ProductCategories product={product} project={project} />
                     </div>
                     <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_4">
-                        <ProductVariants product={product} project={project} />
+                        <ProductVariants product={product} project={project} productAttributes={productAttributes} />
                     </div>
                 </div>
             </div>
@@ -86,8 +86,13 @@ class ProductDetail extends React.Component {
     _onProductTypesGet() {
         var product = ProductStore.selectedProduct,
             productTypes = ProductTypeStore.selectedProductTypes,
-            project = ProjectStore.getProjectByKey(this.props.params.projectKey);
-        this.setState({productTypes: productTypes, product: product, project: project});
+            project = ProjectStore.getProjectByKey(this.props.params.projectKey),
+            attrs = ProductTypeStore.selectedProductType.attributes;
+        if (attrs) {
+            this.setState({productTypes: productTypes, product: product, project: project, productAttributes: attrs});
+        } else {
+            ProductTypeActions.getProductTypeAttributes(product.productType);
+        }
     }
 }
 

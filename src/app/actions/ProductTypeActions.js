@@ -16,6 +16,12 @@ export default {
             withAttrs: withAttrs
         });
     },
+    getProductTypeAttributes: (productTypeId) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.GET_PRODUCT_TYPE_ATTRS,
+            productTypeId: productTypeId
+        });
+    },
     createProductType: (productType) => {
         AppDispatcher.dispatch({
             actionType: MainPageConstants.CREATE_PRODUCT_TYPE,
