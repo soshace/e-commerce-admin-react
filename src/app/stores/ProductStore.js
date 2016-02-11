@@ -2,22 +2,15 @@ import AppDispatcher from './../AppDispatcher.js';
 import MainPageConstants from './../constants/MainPageConstants.js';
 import api from './../constants/APIRoutes.js';
 import BaseStore from './BaseStore.js';
-import $ from 'jquery';
 import _ from 'underscore';
 
 var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
 function getProduct(id) {
-    $.ajax({
+    api.request({
         method: 'GET',
-        // TODO: if user changes url manually, there may be problems with products of another projects
         url: `${api.PRODUCTS}/${id}`,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        xhrFields: {
-            withCredentials: true
-        },
         success: function (res) {
             ProductStore.selectedProduct = res.product;
             ProductStore.emitChange();
@@ -29,15 +22,10 @@ function getProduct(id) {
 }
 
 function updateProduct(product) {
-    $.ajax({
+    api.request({
         method: 'PUT',
         url: `${api.PRODUCTS}/${product.id}`,
-        contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(product),
-        dataType: 'json',
-        xhrFields: {
-            withCredentials: true
-        },
+        data: product,
         success: function (res) {
             //ProductStore.selectedProduct = res.product;
             ProductStore.emitChange();
@@ -50,14 +38,9 @@ function updateProduct(product) {
 
 function updateProductCategory(checked, productId, categoryId) {
     var method = checked ? 'POST' : 'DELETE';
-    $.ajax({
+    api.request({
         method: method,
         url: `${api.CATEGORIES}/${categoryId}/products/${productId}`,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        xhrFields: {
-            withCredentials: true
-        },
         success: function (res) {
             //ProductStore.selectedProduct = res.product;
             ProductStore.emitChange();
@@ -72,14 +55,9 @@ function getProducts(update) {
     if (ProductStore.products && !update) {
         ProductStore.emitChange();
     } else {
-        $.ajax({
+        api.request({
             method: 'GET',
             url: api.PRODUCTS,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            xhrFields: {
-                withCredentials: true
-            },
             success: function (res) {
                 ProductStore.products = res.products;
                 ProductStore.emitChange();
@@ -95,14 +73,9 @@ function getProjectProducts(update, projectId) {
     if (ProductStore.selectedProducts && !update) {
         ProductStore.emitChange();
     } else {
-        $.ajax({
+        api.request({
             method: 'GET',
             url: `${api.PROJECTS}/${projectId}/products`,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            xhrFields: {
-                withCredentials: true
-            },
             success: function (res) {
                 ProductStore.selectedProducts = res.products;
                 ProductStore.emitChange();
@@ -115,15 +88,10 @@ function getProjectProducts(update, projectId) {
 }
 
 function createProduct(data) {
-    $.ajax({
+    api.request({
         method: 'POST',
         url: api.PRODUCTS,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        data: JSON.stringify(data),
-        xhrFields: {
-            withCredentials: true
-        },
+        data: data,
         success: function (res) {
             ProductStore.emitChange();
         },

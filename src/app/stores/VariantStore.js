@@ -2,21 +2,15 @@ import MainPageConstants from './../constants/MainPageConstants.js';
 import AppDispatcher from './../AppDispatcher.js';
 import api from './../constants/APIRoutes.js';
 import BaseStore from './BaseStore.js';
-import $ from 'jquery';
 import _ from 'underscore';
 
 var EventEmitter = require('events').EventEmitter;
 
 
 function getProductVariants(productId) {
-    $.ajax({
+    api.request({
         method: 'GET',
         url: `${api.PRODUCTS}/${productId}/variants`,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        xhrFields: {
-            withCredentials: true
-        },
         success: function (res) {
             VariantStore.selectedVariants = res.variants;
             VariantStore.emitChange();

@@ -2,7 +2,6 @@ import UserConstants from './../constants/UserConstants.js';
 import AppDispatcher from './../AppDispatcher.js';
 import ProjectStore from './ProjectStore.js';
 import api from './../constants/APIRoutes.js';
-import $ from 'jquery';
 
 var EventEmitter = require('events').EventEmitter;
 var LOGIN_SUCCESS = 'login_success';
@@ -11,31 +10,29 @@ var USER_CHANGE = 'user_change';
 
 
 function register(data) {
-    authRequest({
-        url: api.USER,
+    api.request({
+        method: 'POST',
         data: data,
-        type: 'POST',
-        success: onLogin.bind(self),
-        error: onRegisterFail.bind(self)
+        url: api.USERS,
+        success: onLogin,
+        error: onRegisterFail
     });
 }
 
 function login(data) {
-    authRequest({
-        url: api.LOGIN,
+    api.request({
+        method: 'POST',
         data: data,
-        type: 'POST',
-        success: onLogin.bind(self),
-        error: onLogin.bind(self)
+        url: api.LOGIN,
+        success: onLogin,
+        error: onLogin
     });
 }
 
-function logout(cb) {
-    authRequest({
-        url: api.LOGOUT,
-        type: 'GET',
-        success: cb,
-        error: cb
+function logout() {
+    api.request({
+        method: 'POST',
+        url: api.LOGOUT
     });
     UserStore.user = {};
 }
@@ -44,14 +41,9 @@ function getUser() {
     if (UserStore.user.id) {
         UserStore.emitChange(USER_CHANGE);
     } else {
-        $.ajax({
+        api.request({
             method: 'GET',
             url: api.PROFILE,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            xhrFields: {
-                withCredentials: true
-            },
             success: function (res) {
                 UserStore.user = res.profile;
                 UserStore.emitChange(USER_CHANGE);
@@ -65,10 +57,10 @@ function getUser() {
 }
 
 function updateUser(data) {
-    authRequest({
-        url: `${api.USER}/${data.id}`,
+    api.request({
+        method: 'PUT',
+        url: `${api.USERS}/${data.id}`,
         data: data,
-        type: 'PUT',
         success: (res) => {
             UserStore.user = res.user;
             UserStore.emitChange(USER_CHANGE);
@@ -95,20 +87,6 @@ function onLogin(res) {
     }
 }
 
-function authRequest(props) {
-    $.ajax({
-        url: props.url,
-        type: props.type,
-        contentType: 'application/json',
-        xhrFields: {
-            withCredentials: true
-        },
-        data: JSON.stringify(props.data),
-        success: props.success,
-        error: props.error
-    });
-}
-
 var UserStore = Object.assign({}, EventEmitter.prototype, {
     user: {},
 
@@ -132,10 +110,6 @@ var UserStore = Object.assign({}, EventEmitter.prototype, {
         } else {
             this.removeListener(USER_CHANGE, successCb);
         }
-    },
-
-    loggedIn() {
-        return true;
     }
 });
 

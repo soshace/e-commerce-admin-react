@@ -2,7 +2,6 @@ import ProjectConstants from './../constants/ProjectConstants.js';
 import AppDispatcher from './../AppDispatcher.js';
 import api from './../constants/APIRoutes.js';
 import BaseStore from './BaseStore.js';
-import $ from 'jquery';
 import _ from 'underscore';
 
 var EventEmitter = require('events').EventEmitter;
@@ -16,14 +15,9 @@ function getProjects() {
         ProjectStore.emitChange();
     } else {
         projectsRequestPending = true;
-        $.ajax({
-            method: 'GET',
+        api.request({
             url: api.PROJECTS,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            xhrFields: {
-                withCredentials: true
-            },
+            method: 'GET',
             success: function (res) {
                 projectsRequestPending = false;
                 ProjectStore.projects = res.projects;
@@ -41,14 +35,9 @@ function getCompanyProjects(companyId) {
     if (ProjectStore.companyProjects[companyId]) {
         ProjectStore.emitChange(CHANGE_EVENT);
     } else {
-        $.ajax({
+        api.request({
             method: 'GET',
             url: `${api.COMPANIES}/${companyId}/projects`,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            xhrFields: {
-                withCredentials: true
-            },
             success: function (res) {
                 ProjectStore.companyProjects[companyId] = res.projects;
                 ProjectStore.emitChange(CHANGE_EVENT);
@@ -61,15 +50,10 @@ function getCompanyProjects(companyId) {
 }
 
 function createProject(data) {
-    $.ajax({
+    api.request({
         method: 'POST',
+        data: data,
         url: api.PROJECTS,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        data: JSON.stringify(data),
-        xhrFields: {
-            withCredentials: true
-        },
         success: function (res) {
             var project = res.project;
             ProjectStore.projects.push(project);
@@ -85,19 +69,14 @@ function createProject(data) {
 }
 
 function updateProject(id, data) {
-    $.ajax({
+    api.request({
         method: 'PUT',
+        data: data,
         url: `${api.PROJECTS}/${id}`,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        data: JSON.stringify(data),
-        xhrFields: {
-            withCredentials: true
-        },
         success: function (res) {
             var project = res.project,
                 userProject = _.findWhere(ProjectStore.projects, {id: project.id}),
-                companyProject = _.findWhere(ProjectStore.companyProjects[project.company.id], {id: project.id});
+                companyProject = _.findWhere(ProjectStore.companyProjects[project.company], {id: project.id});
             Object.assign(userProject, project);
             Object.assign(companyProject, project);
             ProjectStore.emitChange();

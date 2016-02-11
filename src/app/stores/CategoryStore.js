@@ -1,7 +1,6 @@
 import AppDispatcher from './../AppDispatcher.js';
 import MainPageConstants from './../constants/MainPageConstants.js';
 import api from './../constants/APIRoutes.js';
-import $ from 'jquery';
 import _ from 'underscore';
 import BaseStore from './BaseStore.js';
 
@@ -10,14 +9,9 @@ var CHANGE_EVENT = 'change';
 
 
 function getCategory(id) {
-    $.ajax({
+    api.request({
         method: 'GET',
         url: `${api.CATEGORIES}/${id}`,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        xhrFields: {
-            withCredentials: true
-        },
         success: function (res) {
             CategoryStore.selected = res.category;
             CategoryStore.emitChange();
@@ -29,15 +23,10 @@ function getCategory(id) {
 }
 
 function updateCategory(category) {
-    $.ajax({
+    api.request({
         method: 'PUT',
         url: `${api.CATEGORIES}/${category.id}`,
-        contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(category),
-        dataType: 'json',
-        xhrFields: {
-            withCredentials: true
-        },
+        data: category,
         success: function (res) {
             CategoryStore.selected = res.category;
             CategoryStore.emitChange();
@@ -52,14 +41,9 @@ function getCategories(update) {
     if (CategoryStore.categories && !update) {
         CategoryStore.emitChange();
     } else {
-        $.ajax({
+        api.request({
             method: 'GET',
             url: api.CATEGORIES,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            xhrFields: {
-                withCredentials: true
-            },
             success: function (res) {
                 CategoryStore.categories = res.categories;
                 CategoryStore.emitChange();
@@ -75,14 +59,9 @@ function getProjectCategories(update, projectId) {
     if (CategoryStore.selectedCategories && !update) {
         CategoryStore.emitChange();
     } else {
-        $.ajax({
+        api.request({
             method: 'GET',
             url: `${api.PROJECTS}/${projectId}/categories`,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            xhrFields: {
-                withCredentials: true
-            },
             success: function (res) {
                 CategoryStore.selectedCategories = res.categories;
                 CategoryStore.emitChange();
@@ -95,15 +74,10 @@ function getProjectCategories(update, projectId) {
 }
 
 function createCategory(data) {
-    $.ajax({
+    api.request({
         method: 'POST',
         url: api.CATEGORIES,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        data: JSON.stringify(data),
-        xhrFields: {
-            withCredentials: true
-        },
+        data: data,
         success: function (res) {
             CategoryStore.emitChange();
         },

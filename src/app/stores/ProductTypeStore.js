@@ -2,21 +2,15 @@ import MainPageConstants from './../constants/MainPageConstants.js';
 import AppDispatcher from './../AppDispatcher.js';
 import api from './../constants/APIRoutes.js';
 import BaseStore from './BaseStore.js';
-import $ from 'jquery';
 import _ from 'underscore';
 
 var EventEmitter = require('events').EventEmitter;
 
 
 function getProjectProductTypes(projectId) {
-    $.ajax({
+    api.request({
         method: 'GET',
         url: `${api.PROJECTS}/${projectId}/product_types`,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        xhrFields: {
-            withCredentials: true
-        },
         success: function (res) {
             ProductTypeStore.selectedProductTypes = res.productTypes;
             ProductTypeStore.emitChange();
@@ -28,14 +22,9 @@ function getProjectProductTypes(projectId) {
 }
 
 function getProductType(id, withAttrs) {
-    $.ajax({
+    api.request({
         method: 'GET',
         url: `${api.PRODUCT_TYPES}/${id}`,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        xhrFields: {
-            withCredentials: true
-        },
         success: function (res) {
             ProductTypeStore.selectedProductType = res.productType;
             if (withAttrs) {
@@ -52,14 +41,9 @@ function getProductType(id, withAttrs) {
 
 function getProductTypeAttributes(productTypeId) {
     var id = productTypeId || ProductTypeStore.selectedProductType.id;
-    $.ajax({
+    api.request({
         method: 'GET',
         url: `${api.PRODUCT_TYPES}/${id}/product_attributes`,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        xhrFields: {
-            withCredentials: true
-        },
         success: function (res) {
             ProductTypeStore.selectedProductType.attributes = res.productAttributes;
             ProductTypeStore.emitChange();
@@ -71,15 +55,10 @@ function getProductTypeAttributes(productTypeId) {
 }
 
 function createProductType(productType) {
-    $.ajax({
+    api.request({
         method: 'POST',
         url: api.PRODUCT_TYPES,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        data: JSON.stringify(productType),
-        xhrFields: {
-            withCredentials: true
-        },
+        data: productType,
         success: function (res) {
             var productType = res.productType;
             ProductTypeStore.selectedProductTypes.push(productType);
@@ -93,15 +72,10 @@ function createProductType(productType) {
 }
 
 function updateProductType(productType) {
-    $.ajax({
+    api.request({
         method: 'PUT',
         url: `${api.PRODUCT_TYPES}/${productType.id}`,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        data: JSON.stringify(productType),
-        xhrFields: {
-            withCredentials: true
-        },
+        data: productType,
         success: function (res) {
             var selectedProductTypes = _.reject(ProductTypeStore.selectedProductTypes, {id: productType.id});
             selectedProductTypes.push(productType);
@@ -116,15 +90,10 @@ function updateProductType(productType) {
 }
 
 function addAttribute(newAttribute) {
-    $.ajax({
+    api.request({
         method: 'POST',
         url: `${api.PRODUCT_ATTRIBUTES}`,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        data: JSON.stringify(newAttribute),
-        xhrFields: {
-            withCredentials: true
-        },
+        data: newAttribute,
         success: function (res) {
             ProductTypeStore.selectedProductType.attributes.unshift(res.productAttribute);
             ProductTypeStore.emitChange();
@@ -136,14 +105,9 @@ function addAttribute(newAttribute) {
 }
 
 function removeAttribute(id) {
-    $.ajax({
+    api.request({
         method: 'DELETE',
         url: `${api.PRODUCT_ATTRIBUTES}/${id}`,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        xhrFields: {
-            withCredentials: true
-        },
         success: function (res) {
             var attrs = _.reject(ProductTypeStore.selectedProductType.attributes, {id: id});
             ProductTypeStore.selectedProductType.attributes = attrs;

@@ -3,7 +3,6 @@ import ProjectStore from './ProjectStore.js';
 import CompanyConstants from './../constants/CompanyConstants.js';
 import api from './../constants/APIRoutes.js';
 import BaseStore from './BaseStore.js';
-import $ from 'jquery';
 import _ from 'underscore';
 
 var EventEmitter = require('events').EventEmitter;
@@ -14,14 +13,9 @@ function getCompanies() {
     if (CompanyStore.companies) {
         CompanyStore.emitChange();
     } else {
-        $.ajax({
+        api.request({
             method: 'GET',
             url: api.COMPANIES,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            xhrFields: {
-                withCredentials: true
-            },
             success: function (res) {
                 CompanyStore.companies = res.companies;
                 CompanyStore.emitChange();
@@ -34,15 +28,10 @@ function getCompanies() {
 }
 
 function createCompany(data) {
-    $.ajax({
+    api.request({
         method: 'POST',
         url: api.COMPANIES,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        data: JSON.stringify(data),
-        xhrFields: {
-            withCredentials: true
-        },
+        data: data,
         success: function (res) {
             CompanyStore.companies.push(res.company);
             CompanyStore.lastCreatedCompany = res.company;
@@ -58,12 +47,7 @@ function updateCompany(id, data) {
     $.ajax({
         method: 'PUT',
         url: `${api.COMPANIES}/${id}`,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        data: JSON.stringify(data),
-        xhrFields: {
-            withCredentials: true
-        },
+        data: data,
         success: function (res) {
             var company = _.findWhere(CompanyStore.companies, {id: res.company.id});
             Object.assign(company, res.company);
