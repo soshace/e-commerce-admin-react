@@ -63,7 +63,7 @@ class ProductUpdate extends React.Component {
                                     value={productTypeId}
                                     onChange={this._onProductTypeChange}>
                                 {productTypes.map(function (type) {
-                                    return <option key={type.id} value={type.id} value={type.id}>{type.name}</option>
+                                    return <option key={type.id} value={type.id}>{type.name}</option>
                                 })}
                             </select>
                         </div>

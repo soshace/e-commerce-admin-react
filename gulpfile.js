@@ -3,6 +3,7 @@ var gulp = require('gulp'),
     browserify = require('browserify'),
     watchify = require('watchify'),
     babelify = require('babelify'),
+    reactify = require('reactify'),
     gulpif = require('gulp-if'),
     uglify = require('gulp-uglify'),
     streamify = require('gulp-streamify'),
@@ -11,7 +12,7 @@ var gulp = require('gulp'),
     cssmin = require('gulp-cssmin'),
     gutil = require('gulp-util'),
     less = require('gulp-less'),
-    htmlreplace = require('gulp-html-replace');
+    babel = require('gulp-babel');
 
 // External dependencies you do not want to rebundle while developing,
 // but include in your application deployment
@@ -97,12 +98,14 @@ function buildThemeJS() {
 }
 
 function browserifyTask(options) {
+    console.log(options.src);
     var appBundler = browserify({
         entries: [options.src],
-        transform: [babelify],
-        debug: options.development,
-        cache: {}, packageCache: {}, fullPaths: options.development
-    });
+        transform:  [babelify],
+        debug: options.development
+        //cache: {}, packageCache: {}, fullPaths: options.development
+    })
+        //.transform(babelify, {presets: ["es2015", "react"]});
     appBundler.external(options.development ? dependencies : []);
 
     var rebundle = function () {
@@ -111,7 +114,10 @@ function browserifyTask(options) {
         appBundler.bundle()
             .on('error', gutil.log)
             .pipe(source('main.js'))
-            .pipe(gulpif(!options.development, streamify(uglify())))
+            .pipe(streamify(babel({
+                presets: ['es2015']
+            }).on('error', gutil.log)))
+            .pipe(gulpif(!options.development, streamify(uglify().on('error', gutil.log))))
             .pipe(gulp.dest(options.dest))
             .pipe(notify(function () {
                 console.log('APP bundle built in ' + (Date.now() - start) + ' ms');
@@ -198,17 +204,20 @@ gulp.task('default', function () {
 });
 
 gulp.task('deploy', function () {
+    copyStatic();
+    copyCssVendors();
+    buildThemeJS();
 
     browserifyTask({
         development: false,
         src: './src/app/main.js',
-        dest: './dist'
+        dest: './build/scripts'
     });
 
     cssTask({
         development: false,
         src: './src/www/css/**/*.less',
-        dest: './dist'
+        dest: './build/styles'
     });
 
 });
