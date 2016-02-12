@@ -10,9 +10,11 @@ class ProductVariants extends React.Component {
 
         this.state = {
             variants: [],
-            product: {}
+            product: {},
+            productAttributes: []
         };
         this._onVariantsChange = this._onVariantsChange.bind(this);
+        this._addVariant = this._addVariant.bind(this);
         this._onAttrChange = this._onAttrChange.bind(this);
         this._updateAttr = this._updateAttr.bind(this);
     }
@@ -39,6 +41,7 @@ class ProductVariants extends React.Component {
             self = this;
         return (
             <div className="panel-body">
+                <button className="btn btn-default" onClick={this._addVariant}>Add Variant</button>
                 {variants.map(function (variant) {
                     return (
                         <div key={variant.id} className="panel panel-default">
@@ -53,7 +56,7 @@ class ProductVariants extends React.Component {
                                             <div key={attr.id} className="form-group">
                                                 <div className="col-sm-10">
                                                     <input type="text"
-                                                           value={varAttr.value}
+                                                           value={valueAttr && varAttr.value}
                                                            onKeyPress={self._onAttrChange.bind(self, varAttr)}
                                                            onChange={self._onAttrChange.bind(self, varAttr)}
                                                            className="form-control"
@@ -70,6 +73,15 @@ class ProductVariants extends React.Component {
                 })}
             </div>
         )
+    }
+
+    _addVariant() {
+        var product = this.state.product,
+            variant = {
+                product: product.id,
+                productType: product.productType
+            };
+        VariantActions.createVariant(variant);
     }
 
     _onVariantsChange() {

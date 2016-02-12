@@ -9,6 +9,12 @@ export default {
             productId: productId
         });
     },
+    createVariant: (variant) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.CREATE_VARIANT,
+            variant: variant
+        });
+    },
     updateAttribute: (variantAttr) => {
         AppDispatcher.dispatch({
             actionType: MainPageConstants.UPDATE_VARIANT_ATTRIBUTE,

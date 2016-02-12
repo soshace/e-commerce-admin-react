@@ -12,6 +12,7 @@ export default {
     PROJECTS: BASE_URL + 'projects',
 
     PRODUCTS: BASE_URL + 'products',
+    VARIANTS: BASE_URL + 'variants',
     PRODUCT_TYPES: BASE_URL + 'product_types',
     PRODUCT_ATTRIBUTES: BASE_URL + 'product_attributes',
     VARIANT_ATTRIBUTES: BASE_URL + 'variant_attributes',

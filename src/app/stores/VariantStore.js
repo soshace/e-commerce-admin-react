@@ -21,6 +21,21 @@ function getProductVariants(productId) {
     });
 }
 
+function createVariant(variant) {
+    api.request({
+        method: 'POST',
+        url: api.VARIANTS,
+        data: variant,
+        success: function (res) {
+            VariantStore.selectedVariants.push(res.variant);
+            VariantStore.emitChange();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
 function updateAttribute(variantAttr) {
     api.request({
         method: 'PUT',
@@ -48,6 +63,9 @@ AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case MainPageConstants.GET_PRODUCT_VARIANTS:
             getProductVariants(action.productId);
+            break;
+        case MainPageConstants.CREATE_VARIANT:
+            createVariant(action.variant);
             break;
         case MainPageConstants.UPDATE_VARIANT_ATTRIBUTE:
             updateAttribute(action.variantAttr);
