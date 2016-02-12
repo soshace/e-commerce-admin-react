@@ -36,6 +36,20 @@ function createVariant(variant) {
     });
 }
 
+function removeVariant(variantId) {
+    api.request({
+        method: 'DELETE',
+        url: `${api.VARIANTS}/${variantId}`,
+        success: function (res) {
+            VariantStore.selectedVariants = _.reject(VariantStore.selectedVariants, {id: variantId});
+            VariantStore.emitChange();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
 function updateAttribute(variantAttr) {
     api.request({
         method: 'PUT',
@@ -66,6 +80,9 @@ AppDispatcher.register(function (action) {
             break;
         case MainPageConstants.CREATE_VARIANT:
             createVariant(action.variant);
+            break;
+        case MainPageConstants.REMOVE_VARIANT:
+            removeVariant(action.variantId);
             break;
         case MainPageConstants.UPDATE_VARIANT_ATTRIBUTE:
             updateAttribute(action.variantAttr);

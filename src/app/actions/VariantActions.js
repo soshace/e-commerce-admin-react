@@ -15,6 +15,12 @@ export default {
             variant: variant
         });
     },
+    removeVariant: (variantId) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.REMOVE_VARIANT,
+            variant: variantId
+        });
+    },
     updateAttribute: (variantAttr) => {
         AppDispatcher.dispatch({
             actionType: MainPageConstants.UPDATE_VARIANT_ATTRIBUTE,

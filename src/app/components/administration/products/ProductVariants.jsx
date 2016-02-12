@@ -56,7 +56,7 @@ class ProductVariants extends React.Component {
                                             <div key={attr.id} className="form-group">
                                                 <div className="col-sm-10">
                                                     <input type="text"
-                                                           value={valueAttr && varAttr.value}
+                                                           value={varAttr.value}
                                                            onKeyPress={self._onAttrChange.bind(self, varAttr)}
                                                            onChange={self._onAttrChange.bind(self, varAttr)}
                                                            className="form-control"
