@@ -8,5 +8,11 @@ export default {
             actionType: MainPageConstants.GET_PRODUCT_VARIANTS,
             productId: productId
         });
+    },
+    updateAttribute: (variantAttr) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.UPDATE_VARIANT_ATTRIBUTE,
+            variantAttr: variantAttr
+        });
     }
 }

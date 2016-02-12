@@ -21,6 +21,24 @@ function getProductVariants(productId) {
     });
 }
 
+function updateAttribute(variantAttr) {
+    api.request({
+        method: 'PUT',
+        url: `${api.VARIANT_ATTRIBUTES}/${variantAttr.id}`,
+        data: variantAttr,
+        success: function (res) {
+            var attr = res.attribute,
+                variant = _.findWhere(VariantStore.selectedVariants, {id: attr.variant}),
+                variantAttr = _.findWhere(variant.attributes, {id: attr.id});
+            variantAttr.value = attr.value;
+            VariantStore.emitChange();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
 var VariantStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
     variant: null,
     selectedVariants: []
@@ -30,6 +48,9 @@ AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case MainPageConstants.GET_PRODUCT_VARIANTS:
             getProductVariants(action.productId);
+            break;
+        case MainPageConstants.UPDATE_VARIANT_ATTRIBUTE:
+            updateAttribute(action.variantAttr);
             break;
     }
 });

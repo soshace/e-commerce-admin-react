@@ -14,6 +14,7 @@ export default {
     PRODUCTS: BASE_URL + 'products',
     PRODUCT_TYPES: BASE_URL + 'product_types',
     PRODUCT_ATTRIBUTES: BASE_URL + 'product_attributes',
+    VARIANT_ATTRIBUTES: BASE_URL + 'variant_attributes',
     CATEGORIES: BASE_URL + 'categories',
 
     request: function (options) {
