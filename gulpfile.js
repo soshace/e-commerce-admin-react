@@ -105,9 +105,9 @@ function browserifyTask(options) {
     var appBundler = browserify({
         entries: [options.src],
         transform:  [babelify],
-        debug: options.development
-        //cache: {}, packageCache: {}, fullPaths: options.development
-    })
+        debug: options.development,
+        cache: {}, packageCache: {}, fullPaths: options.development
+    });
         //.transform(babelify, {presets: ["es2015", "react"]});
     appBundler.external(options.development ? dependencies : []);
 
