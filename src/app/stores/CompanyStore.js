@@ -50,7 +50,7 @@ function createCompany(data) {
 }
 
 function updateCompany(id, data) {
-    $.ajax({
+    api.request({
         method: 'PUT',
         url: `${api.COMPANIES}/${id}`,
         data: data,
