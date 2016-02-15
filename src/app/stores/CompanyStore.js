@@ -8,19 +8,25 @@ import _ from 'underscore';
 var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
+var projectsRequestPending = false;
+
 
 function getCompanies() {
+    if (projectsRequestPending) return;
     if (CompanyStore.companies) {
         CompanyStore.emitChange();
     } else {
+        projectsRequestPending = true;
         api.request({
             method: 'GET',
             url: api.COMPANIES,
             success: function (res) {
+                projectsRequestPending = false;
                 CompanyStore.companies = res.companies;
                 CompanyStore.emitChange();
             },
             error: function (err) {
+                projectsRequestPending = false;
                 console.error(err);
             }
         });
