@@ -66,6 +66,8 @@ class Navbar extends React.Component {
                         </a>
                         <ul className="dropdown-menu dropdown-menu-scale pull-right pull-up text-color">
                             {projects.map(function (p) {
+                                // TODO: remove after server api fix (now it can return nulls with a project array)
+                                if (!p) return;
                                 return <li key={p.id}><Link to={`/${p.slug}`}>{p.name}</Link></li>
                             })}
                         </ul>

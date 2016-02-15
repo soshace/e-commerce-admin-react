@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { TeamAction } from './../../actions';
+import { TeamActions } from './../../actions';
 
 
 class TeamMembers extends React.Component {
@@ -40,7 +40,7 @@ class TeamMembers extends React.Component {
     }
 
     _removeMember(member) {
-        TeamAction.removeMember();
+        TeamActions.removeMember();
     }
 }
 
