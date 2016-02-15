@@ -75,12 +75,15 @@ function copyStatic() {
     gulp.src(lazyLoadFiles)
         .pipe(gulp.dest('./build/libs'));
 
-    copyAwesomeFonts();
+    copyFonts();
 }
 
-function copyAwesomeFonts() {
+function copyFonts() {
     gulp.src('./bower_components/font-awesome/fonts/*.*')
-        .pipe(gulp.dest('./build/styles/fonts'));
+        .pipe(gulp.dest('./build/fonts'));
+
+    gulp.src('./src/www/fonts/**/*.*')
+        .pipe(gulp.dest('./build/fonts'));
 }
 
 function copyCssVendors() {
