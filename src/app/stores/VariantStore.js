@@ -27,8 +27,9 @@ function createVariant(variant) {
         url: api.VARIANTS,
         data: variant,
         success: function (res) {
-            VariantStore.selectedVariants.push(res.variant);
-            VariantStore.emitChange();
+            //VariantStore.selectedVariants.push(res.variant);
+            //VariantStore.emitChange();
+            getProductVariants(variant.product);
         },
         error: function (err) {
             console.error(err);

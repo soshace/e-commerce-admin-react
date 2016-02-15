@@ -2,6 +2,7 @@ import React from 'react';
 import {VariantStore, ProductTypeStore} from './../../../stores';
 import {VariantActions} from './../../../actions';
 import _ from 'underscore';
+import classnames from 'classnames';
 
 
 class ProductVariants extends React.Component {
@@ -15,6 +16,7 @@ class ProductVariants extends React.Component {
         };
         this._onVariantsChange = this._onVariantsChange.bind(this);
         this._addVariant = this._addVariant.bind(this);
+        this._removeVariant = this._removeVariant.bind(this);
         this._onAttrChange = this._onAttrChange.bind(this);
         this._updateAttr = this._updateAttr.bind(this);
     }
@@ -43,10 +45,19 @@ class ProductVariants extends React.Component {
             <div className="panel-body">
                 <button className="btn btn-default" onClick={this._addVariant}>Add Variant</button>
                 {variants.map(function (variant) {
+                    var removeIconClass = classnames("glyphicon glyphicon-remove col-sm-1 pull-left",
+                        {
+                            "col-sm-offset-9": variant.isMaster,
+                            "col-sm-offset-11": !variant.isMaster
+                        });
                     return (
                         <div key={variant.id} className="panel panel-default">
                             <div className="panel-heading bg-white">
-                                <span className="label blue">{variant.isMaster ? 'Master variant' : false}</span>
+                                <div className="row">
+                                    <div
+                                        className="label blue col-sm-2">{variant.isMaster ? 'Master variant' : false}</div>
+                                    <a className={removeIconClass} onClick={self._removeVariant.bind(self, variant.id)}></a>
+                                </div>
                             </div>
                             <div className="panel-body">
                                 <form className="form-inline" role="form">
@@ -82,6 +93,10 @@ class ProductVariants extends React.Component {
                 productType: product.productType
             };
         VariantActions.createVariant(variant);
+    }
+
+    _removeVariant(id) {
+        VariantActions.removeVariant(id);
     }
 
     _onVariantsChange() {

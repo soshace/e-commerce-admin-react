@@ -18,7 +18,7 @@ export default {
     removeVariant: (variantId) => {
         AppDispatcher.dispatch({
             actionType: MainPageConstants.REMOVE_VARIANT,
-            variant: variantId
+            variantId: variantId
         });
     },
     updateAttribute: (variantAttr) => {
