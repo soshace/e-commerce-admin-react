@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import {TeamActions} from './../../actions';
 import {TeamStore} from './../../stores';
 import TeamMembers from './TeamMembers.jsx';
+import _ from 'underscore';
 
 
 class ManageTeams extends React.Component {
@@ -45,7 +46,7 @@ class ManageTeams extends React.Component {
                         <div key={team.id} className="panel panel-default">
                             <div className="panel-heading bg-white">
                                 <div className="row">
-                                    <div className="col-sm-3">
+                                    <div className="col-sm-4">
                                         <div className="input-group m-b">
                                             <span className="input-group-addon">Name</span>
                                             <input type="text"
@@ -83,8 +84,6 @@ class ManageTeams extends React.Component {
                                 </div>
                             </div>
                         </div>
-
-
                     )
                 })}
             </div>
@@ -95,8 +94,16 @@ class ManageTeams extends React.Component {
         this.setState({teams: TeamStore.teams});
     }
 
-    _updateTeam() {
+    _updateTeam(id, field, e) {
+        var teams = this.state.teams,
+            team = _.findWhere(teams, {id: id});
 
+        if (e.key == 'Enter') {
+            TeamActions.updateTeam(team);
+        } else {
+            team[field] = e.target.value;
+            this.setState({teams: teams});
+        }
     }
 }
 

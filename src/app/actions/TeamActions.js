@@ -9,6 +9,12 @@ export default {
             companyId: companyId
         });
     },
+    updateTeam: (team) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.UPDATE_TEAM,
+            team: team
+        });
+    },
     removeMember: (companyId) => {
         AppDispatcher.dispatch({
             actionType: MainPageConstants.REMOVE_MEMBER
