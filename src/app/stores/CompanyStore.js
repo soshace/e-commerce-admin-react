@@ -42,9 +42,6 @@ function createCompany(data) {
             CompanyStore.companies.push(res.company);
             CompanyStore.lastCreatedCompany = res.company;
             CompanyStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -58,9 +55,6 @@ function updateCompany(id, data) {
             var company = _.findWhere(CompanyStore.companies, {id: res.company.id});
             Object.assign(company, res.company);
             CompanyStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }

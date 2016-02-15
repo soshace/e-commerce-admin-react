@@ -13,9 +13,6 @@ function getTeams(companyId) {
         success: function (res) {
             TeamStore.teams = res.teams;
             TeamStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -27,9 +24,6 @@ function removeMember() {
     //    success: function (res) {
     //        TeamStore.teams = res.teams;
     //        TeamStore.emitChange();
-    //    },
-    //    error: function (err) {
-    //        console.error(err);
     //    }
     //});
 }

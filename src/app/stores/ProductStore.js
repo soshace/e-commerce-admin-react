@@ -14,9 +14,6 @@ function getProduct(id) {
         success: function (res) {
             ProductStore.selectedProduct = res.product;
             ProductStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -29,9 +26,6 @@ function updateProduct(product) {
         success: function (res) {
             //ProductStore.selectedProduct = res.product;
             ProductStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -44,9 +38,6 @@ function updateProductCategory(checked, productId, categoryId) {
         success: function (res) {
             //ProductStore.selectedProduct = res.product;
             ProductStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -61,9 +52,6 @@ function getProducts(update) {
             success: function (res) {
                 ProductStore.products = res.products;
                 ProductStore.emitChange();
-            },
-            error: function (err) {
-                console.error(err);
             }
         });
     }
@@ -79,9 +67,6 @@ function getProjectProducts(update, projectId) {
             success: function (res) {
                 ProductStore.selectedProducts = res.products;
                 ProductStore.emitChange();
-            },
-            error: function (err) {
-                console.error(err);
             }
         });
     }
@@ -94,9 +79,6 @@ function createProduct(data) {
         data: data,
         success: function (res) {
             ProductStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }

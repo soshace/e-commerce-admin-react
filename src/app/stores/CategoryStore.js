@@ -15,9 +15,6 @@ function getCategory(id) {
         success: function (res) {
             CategoryStore.selected = res.category;
             CategoryStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -30,9 +27,6 @@ function updateCategory(category) {
         success: function (res) {
             CategoryStore.selected = res.category;
             CategoryStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -47,9 +41,6 @@ function getCategories(update) {
             success: function (res) {
                 CategoryStore.categories = res.categories;
                 CategoryStore.emitChange();
-            },
-            error: function (err) {
-                console.error(err);
             }
         });
     }
@@ -65,9 +56,6 @@ function getProjectCategories(update, projectId) {
             success: function (res) {
                 CategoryStore.selectedCategories = res.categories;
                 CategoryStore.emitChange();
-            },
-            error: function (err) {
-                console.error(err);
             }
         });
     }
@@ -80,9 +68,6 @@ function createCategory(data) {
         data: data,
         success: function (res) {
             CategoryStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }

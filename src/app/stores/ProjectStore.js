@@ -41,9 +41,6 @@ function getCompanyProjects(companyId) {
             success: function (res) {
                 ProjectStore.companyProjects[companyId] = res.projects;
                 ProjectStore.emitChange(CHANGE_EVENT);
-            },
-            error: function (err) {
-                console.error(err);
             }
         });
     }
@@ -61,9 +58,6 @@ function createProject(data) {
             ProjectStore.companyProjects[project.company].push(project);
 
             ProjectStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -80,9 +74,6 @@ function updateProject(id, data) {
             Object.assign(userProject, project);
             Object.assign(companyProject, project);
             ProjectStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }

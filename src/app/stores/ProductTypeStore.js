@@ -14,9 +14,6 @@ function getProjectProductTypes(projectId) {
         success: function (res) {
             ProductTypeStore.selectedProductTypes = res.productTypes;
             ProductTypeStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -32,9 +29,6 @@ function getProductType(id, withAttrs) {
             } else {
                 ProductTypeStore.emitChange();
             }
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -47,9 +41,6 @@ function getProductTypeAttributes(productTypeId) {
         success: function (res) {
             ProductTypeStore.selectedProductType.attributes = res.productAttributes;
             ProductTypeStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -64,9 +55,6 @@ function createProductType(productType) {
             ProductTypeStore.selectedProductTypes.push(productType);
             ProductTypeStore.selectedProductType = productType;
             ProductTypeStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -82,9 +70,6 @@ function updateProductType(productType) {
             ProductTypeStore.selectedProductTypes = selectedProductTypes;
             ProductTypeStore.selectedProductType = productType;
             ProductTypeStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -97,9 +82,6 @@ function addAttribute(newAttribute) {
         success: function (res) {
             ProductTypeStore.selectedProductType.attributes.unshift(res.productAttribute);
             ProductTypeStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -112,9 +94,6 @@ function removeAttribute(id) {
             var attrs = _.reject(ProductTypeStore.selectedProductType.attributes, {id: id});
             ProductTypeStore.selectedProductType.attributes = attrs;
             ProductTypeStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }

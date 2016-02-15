@@ -25,7 +25,14 @@ export default {
             .withCredentials()
             .send(options.data || {})
             .end(function(err, res){
-                if (err) options.error && options.error(err);
+                var errCb = options.error;
+                if (err) {
+                    if (errCb) {
+                        errCb(err);
+                    } else {
+                        console.error(err);
+                    }
+                }
                 options.success && options.success(res.body, res);
             });
     }

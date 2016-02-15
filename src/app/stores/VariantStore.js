@@ -14,9 +14,6 @@ function getProductVariants(productId) {
         success: function (res) {
             VariantStore.selectedVariants = res.variants;
             VariantStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -30,9 +27,6 @@ function createVariant(variant) {
             //VariantStore.selectedVariants.push(res.variant);
             //VariantStore.emitChange();
             getProductVariants(variant.product);
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -46,9 +40,6 @@ function updateVariant(variant) {
             //VariantStore.selectedVariants.push(res.variant);
             //VariantStore.emitChange();
             //getProductVariants(variant.product);
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -60,9 +51,6 @@ function removeVariant(variantId) {
         success: function (res) {
             VariantStore.selectedVariants = _.reject(VariantStore.selectedVariants, {id: variantId});
             VariantStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
@@ -78,9 +66,6 @@ function updateAttribute(variantAttr) {
                 variantAttr = _.findWhere(variant.attributes, {id: attr.id});
             variantAttr.value = attr.value;
             VariantStore.emitChange();
-        },
-        error: function (err) {
-            console.error(err);
         }
     });
 }
