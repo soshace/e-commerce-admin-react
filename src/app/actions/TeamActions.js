@@ -8,5 +8,10 @@ export default {
             actionType: MainPageConstants.GET_TEAMS,
             companyId: companyId
         });
+    },
+    removeMember: (companyId) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.REMOVE_MEMBER
+        });
     }
 }

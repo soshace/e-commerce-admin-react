@@ -2,6 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import {TeamActions} from './../../actions';
 import {TeamStore} from './../../stores';
+import TeamMembers from './TeamMembers.jsx';
 
 
 class ManageTeams extends React.Component {
@@ -71,7 +72,7 @@ class ManageTeams extends React.Component {
                                 </ul>
                                 <div className="tab-content p m-b-md b-t b-t-2x">
                                     <div role="tabpanel" className="tab-pane animated fadeIn active" id="tab_1">
-                                        {/*<TeamMembers team={team}/>*/}
+                                        <TeamMembers team={team}/>
                                     </div>
                                     <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_2">
                                         {/*<TeamPermissions team={team} />*/}

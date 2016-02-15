@@ -30,6 +30,7 @@ export default {
     CREATE_CATEGORY: 'CREATE_CATEGORY',
 
     GET_TEAMS: 'GET_TEAMS',
+    REMOVE_MEMBER: 'REMOVE_MEMBER',
 
     PRODUCT_ATTR_TYPES: [
         'text', 'boolean', 'localizedText', 'enum', 'localizedEnum',
