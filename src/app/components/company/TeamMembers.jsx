@@ -24,10 +24,10 @@ class TeamMembers extends React.Component {
             <div>
                 {members.map(function (member) {
                     return (
-                        <div key={member.id} className="inline">
+                        <div key={member.id} className="inline w-xs">
                             <a className="glyphicon glyphicon-remove"
                                onClick={self._removeMember.bind(self, member)}></a>
-                            <a href="" className="w-xs">
+                            <a href="">
                                 <img src={`/images/a${Math.round(Math.random() * 10)}.jpg`}
                                      className="img-circle img-responsive"/>
                             </a>
