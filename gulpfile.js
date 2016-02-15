@@ -114,9 +114,9 @@ function browserifyTask(options) {
         appBundler.bundle()
             .on('error', gutil.log)
             .pipe(source('main.js'))
-            .pipe(streamify(babel({
+            .pipe(gulpif(!options.development, streamify(babel({
                 presets: ['es2015']
-            }).on('error', gutil.log)))
+            }).on('error', gutil.log))))
             .pipe(gulpif(!options.development, streamify(uglify().on('error', gutil.log))))
             .pipe(gulp.dest(options.dest))
             .pipe(notify(function () {
