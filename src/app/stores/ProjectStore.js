@@ -83,8 +83,11 @@ var ProjectStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
     companyProjects: {},
 
     getProjectByKey(key) {
-        var project = _.findWhere(this.projects, {slug: key});
-        return project;
+        return _.findWhere(this.projects, {slug: key});
+    },
+
+    getProjectById(id) {
+        return _.findWhere(this.projects, {id: id});
     }
 });
 

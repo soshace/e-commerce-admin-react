@@ -32,6 +32,21 @@ function updateTeam(team) {
     });
 }
 
+function updatePermission(permission) {
+    api.request({
+        method: 'PUT',
+        data: permission,
+        url: `${api.PERMISSIONS}/${permission.id}`,
+        success: function (res) {
+            var resPerm = res.permission,
+                team = _.findWhere(TeamStore.teams, {id: resPerm.team}),
+                permission = _.findWhere(team.permissions, {id: resPerm.id});
+            Object.assign(permission, resPerm);
+            TeamStore.emitChange();
+        }
+    });
+}
+
 function removeMember() {
     //api.request({
     //    method: 'GET',
@@ -55,6 +70,9 @@ AppDispatcher.register(function (action) {
             break;
         case MainPageConstants.UPDATE_TEAM:
             setTimeout(updateTeam.bind(this, action.team), 0);
+            break;
+        case MainPageConstants.UPDATE_PERMISSION:
+            setTimeout(updatePermission.bind(this, action.permission), 0);
             break;
         case MainPageConstants.REMOVE_MEMBER:
             setTimeout(removeMember.bind(this), 0);

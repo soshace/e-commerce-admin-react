@@ -31,9 +31,12 @@ export default {
 
     GET_TEAMS: 'GET_TEAMS',
     UPDATE_TEAM: 'UPDATE_TEAM',
+    UPDATE_PERMISSION: 'UPDATE_PERMISSION',
     REMOVE_MEMBER: 'REMOVE_MEMBER',
 
     PRODUCT_ATTR_TYPES: [
         'text', 'boolean', 'localizedText', 'enum', 'localizedEnum',
-        'number', 'money', 'date', 'time', 'dateTime', 'set', 'reference']
+        'number', 'money', 'date', 'time', 'dateTime', 'set', 'reference'],
+
+    PERMISSIONS: ['none', 'view', 'manage']
 }
