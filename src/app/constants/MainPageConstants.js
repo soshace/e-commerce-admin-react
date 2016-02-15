@@ -29,6 +29,8 @@ export default {
     GET_CATEGORIES: 'GET_CATEGORIES',
     CREATE_CATEGORY: 'CREATE_CATEGORY',
 
+    GET_TEAMS: 'GET_TEAMS',
+
     PRODUCT_ATTR_TYPES: [
         'text', 'boolean', 'localizedText', 'enum', 'localizedEnum',
         'number', 'money', 'date', 'time', 'dateTime', 'set', 'reference']

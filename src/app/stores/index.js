@@ -6,11 +6,13 @@ import _ProductTypeStore from './ProductTypeStore.js';
 import _UserStore from './UserStore.js';
 import _BaseStore from './BaseStore.js';
 import _VariantStore from './VariantStore.js';
+import _TeamStore from './TeamStore.js';
 
 
 export default {
     BaseStore: _BaseStore,
     CategoryStore: _CategoryStore,
+    TeamStore: _TeamStore,
     CompanyStore: _CompanyStore,
     ProductStore: _ProductStore,
     ProjectStore: _ProjectStore,

@@ -34,7 +34,11 @@ class Company extends React.Component {
 
     render() {
         var id = this.props.params.id,
-            company = this.state.company;
+            company = this.state.company,
+            childrenWithProps;
+        childrenWithProps = React.Children.map(this.props.children, (child) => {
+            return React.cloneElement(child, {company: company});
+        });
         return (
             <div>
                 <Navbar/>
@@ -43,10 +47,10 @@ class Company extends React.Component {
                     <div className="p-h-md p-v bg-white box-shadow pos-rlt">
                         <h3 className="no-margin">Company Settings: {company.name}</h3>
                     </div>
-                    <div className="box">
+                    <div className="box panel">
                         <CompanyMenu id={id}/>
 
-                        {this.props.children}
+                        {childrenWithProps}
                     </div>
                 </div>
             </div>
