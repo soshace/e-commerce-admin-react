@@ -80,7 +80,7 @@ function onRegisterFail(res) {
 function onLogin(res) {
     if (res.code === UserConstants.LOGIN_SUCCESS_CODE) {
         localStorage.setItem('loggedIn', true);
-        Object.assign(UserStore.user, res.user);
+        UserStore.user = Object.assign(UserStore.user || {}, res.user);
         UserStore.emitChange(LOGIN_SUCCESS);
     } else {
         UserStore.emitChange(LOGIN_ERROR);
