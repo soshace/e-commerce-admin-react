@@ -45,18 +45,31 @@ class ProductVariants extends React.Component {
             <div className="panel-body">
                 <button className="btn btn-default" onClick={this._addVariant}>Add Variant</button>
                 {variants.map(function (variant) {
-                    var removeIconClass = classnames("glyphicon glyphicon-remove col-sm-1 pull-left",
+                    var removeIconClass = classnames("glyphicon glyphicon-remove col-sm-1 pull-right",
                         {
-                            "col-sm-offset-9": variant.isMaster,
-                            "col-sm-offset-11": !variant.isMaster
+                            "col-sm-offset-6": variant.isMaster,
+                            "col-sm-offset-8": !variant.isMaster
                         });
                     return (
                         <div key={variant.id} className="panel panel-default">
                             <div className="panel-heading bg-white">
                                 <div className="row">
+                                    <div className="col-sm-3">
+                                        <div className="input-group m-b">
+                                            <span className="input-group-addon">SKU</span>
+                                            <input type="text"
+                                                   className="form-control"
+                                                   value={variant.sku}
+                                                   onChange={self._updateVariant.bind(self, variant.id, 'sku')}
+                                                   onKeyPress={self._updateVariant.bind(self, variant.id, 'sku')}
+                                                   placeholder="SKU"/>
+                                        </div>
+                                    </div>
                                     <div
                                         className="label blue col-sm-2">{variant.isMaster ? 'Master variant' : false}</div>
-                                    <a className={removeIconClass} onClick={self._removeVariant.bind(self, variant.id)}></a>
+
+                                    <a className={removeIconClass}
+                                       onClick={self._removeVariant.bind(self, variant.id)}></a>
                                 </div>
                             </div>
                             <div className="panel-body">
@@ -116,6 +129,18 @@ class ProductVariants extends React.Component {
 
     _updateAttr(variantAttr) {
         VariantActions.updateAttribute(variantAttr);
+    }
+
+    _updateVariant(variantId, field, e) {
+        var variants = this.state.variants,
+            variant = _.findWhere(variants, {id: variantId});
+
+        if (e.key == 'Enter') {
+            VariantActions.updateVariant(variant);
+        } else {
+            variant[field] = e.target.value;
+            this.setState({variants: variants});
+        }
     }
 
 }
