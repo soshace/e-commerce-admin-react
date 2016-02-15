@@ -1,0 +1,57 @@
+{
+	"id": "f6934296-3845-9860-1d8d-934f3a18f46d",
+	"name": "product_attributes",
+	"description": "",
+	"order": [
+		"f0d6f72e-c001-5e6a-365a-5f0a3872de53",
+		"3c69375d-dd67-044b-6b1e-2817cfbef77e"
+	],
+	"folders": [],
+	"timestamp": 1455192744512,
+	"owner": "",
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "3c69375d-dd67-044b-6b1e-2817cfbef77e",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://{{address}}:{{port}}/product_attributes",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"collectionId": "f6934296-3845-9860-1d8d-934f3a18f46d",
+			"data": [],
+			"dataMode": "raw",
+			"name": "create",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1455195162779,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n    \"name\": \"jump height\",\n    \"label\": \"jump height Label\",\n    \"productType\":\"56bc79d9c9fe5d6c160a2bf9\",\n    \"attributeType\": \"text\"\n}"
+		},
+		{
+			"id": "f0d6f72e-c001-5e6a-365a-5f0a3872de53",
+			"headers": "",
+			"url": "http://{{address}}:{{port}}/product_attributes",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "f6934296-3845-9860-1d8d-934f3a18f46d",
+			"data": [],
+			"dataMode": "params",
+			"name": "all attributes",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1455192744512,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		}
+	]
+}

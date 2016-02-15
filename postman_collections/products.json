@@ -1,0 +1,56 @@
+{
+	"id": "e9d2cf50-abe6-16a6-4b67-4b4fa51a5048",
+	"name": "products",
+	"description": "products description",
+	"order": [
+		"17479c24-3916-0d9b-531c-1c2f3eaa0e6d",
+		"131545f0-5597-bb52-4f2c-b7a3e7043ca2"
+	],
+	"folders": [],
+	"timestamp": 1454433566463,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "131545f0-5597-bb52-4f2c-b7a3e7043ca2",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://{{address}}:{{port}}/products",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1455111824794,
+			"name": "create",
+			"description": "",
+			"collectionId": "e9d2cf50-abe6-16a6-4b67-4b4fa51a5048",
+			"responses": [],
+			"rawModeData": "{\n    \"name\": \"New product with product type\",\n    \"description\": \"this is a description\",\n    \"project\": \"56b4b9385c35545946ed1e93\",\n    \"productType\": \"56bafd03149d49f034a78603\"\n}"
+		},
+		{
+			"id": "17479c24-3916-0d9b-531c-1c2f3eaa0e6d",
+			"headers": "",
+			"url": "http://{{address}}:{{port}}/products",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "e9d2cf50-abe6-16a6-4b67-4b4fa51a5048",
+			"data": [],
+			"dataMode": "params",
+			"name": "list",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1454918286333,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		}
+	]
+}

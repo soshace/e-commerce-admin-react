@@ -1,0 +1,31 @@
+{
+	"id": "3179cc53-2e7d-8583-4eaf-5f88154c4c27",
+	"name": "variant_attributes",
+	"requests": [
+		{
+			"id": "030754c3-703a-2f74-9521-61a5fbedffe5",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://{{address}}:{{port}}/variant_attributes/56bcafe0c9fe5d6c160a2c09",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "PUT",
+			"collectionId": "3179cc53-2e7d-8583-4eaf-5f88154c4c27",
+			"data": [],
+			"dataMode": "raw",
+			"name": "update",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1455271259349,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n    \"value\": \"redrum\"\n}"
+		}
+	],
+	"order": [
+		"030754c3-703a-2f74-9521-61a5fbedffe5"
+	],
+	"timestamp": 1455271259350
+}
