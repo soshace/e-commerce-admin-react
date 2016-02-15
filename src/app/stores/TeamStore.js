@@ -32,6 +32,17 @@ function updateTeam(team) {
     });
 }
 
+function removeTeam(teamId) {
+    api.request({
+        method: 'DELETE',
+        url: `${api.TEAMS}/${teamId}`,
+        success: function (res) {
+            TeamStore.teams = _.reject(TeamStore.teams, {id: teamId});
+            TeamStore.emitChange();
+        }
+    });
+}
+
 function updatePermission(permission) {
     api.request({
         method: 'PUT',
@@ -70,6 +81,9 @@ AppDispatcher.register(function (action) {
             break;
         case MainPageConstants.UPDATE_TEAM:
             setTimeout(updateTeam.bind(this, action.team), 0);
+            break;
+        case MainPageConstants.REMOVE_TEAM:
+            setTimeout(removeTeam.bind(this, action.teamId), 0);
             break;
         case MainPageConstants.UPDATE_PERMISSION:
             setTimeout(updatePermission.bind(this, action.permission), 0);

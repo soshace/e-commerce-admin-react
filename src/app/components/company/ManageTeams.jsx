@@ -4,6 +4,7 @@ import {TeamActions} from './../../actions';
 import {TeamStore} from './../../stores';
 import TeamMembers from './TeamMembers.jsx';
 import TeamPermissions from './TeamPermissions.jsx';
+import TeamSettings from './TeamSettings.jsx';
 import _ from 'underscore';
 
 
@@ -63,24 +64,24 @@ class ManageTeams extends React.Component {
                             <div className="panel-body">
                                 <ul className="nav nav-md nav-tabs nav-lines b-info">
                                     <li className="active">
-                                        <a href data-toggle="tab" data-target="#tab_1">Members</a>
+                                        <a href data-toggle="tab" data-target={`#tab-${team.id}-members`}>Members</a>
                                     </li>
                                     <li>
-                                        <a href data-toggle="tab" data-target="#tab_2">Permission</a>
+                                        <a href data-toggle="tab" data-target={`#tab-${team.id}-permissions`}>Permissions</a>
                                     </li>
                                     <li>
-                                        <a href data-toggle="tab" data-target="#tab_3">Settings</a>
+                                        <a href data-toggle="tab" data-target={`#tab-${team.id}-settings`}>Settings</a>
                                     </li>
                                 </ul>
                                 <div className="tab-content p m-b-md b-t b-t-2x">
-                                    <div role="tabpanel" className="tab-pane animated fadeIn active" id="tab_1">
+                                    <div role="tabpanel" className="tab-pane animated fadeIn active" id={`tab-${team.id}-members`}>
                                         <TeamMembers team={team}/>
                                     </div>
-                                    <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_2">
+                                    <div role="tabpanel" className="tab-pane animated fadeIn" id={`tab-${team.id}-permissions`}>
                                         <TeamPermissions team={team}/>
                                     </div>
-                                    <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_3">
-
+                                    <div role="tabpanel" className="tab-pane animated fadeIn" id={`tab-${team.id}-settings`}>
+                                        <TeamSettings team={team} />
                                     </div>
                                 </div>
                             </div>

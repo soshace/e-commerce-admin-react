@@ -15,6 +15,12 @@ export default {
             team: team
         });
     },
+    removeTeam: (teamId) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.REMOVE_TEAM,
+            teamId: teamId
+        });
+    },
     updatePermission: (permission) => {
         AppDispatcher.dispatch({
             actionType: MainPageConstants.UPDATE_PERMISSION,
