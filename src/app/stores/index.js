@@ -6,6 +6,7 @@ import _ProductTypeStore from './ProductTypeStore.js';
 import _UserStore from './UserStore.js';
 import _BaseStore from './BaseStore.js';
 import _VariantStore from './VariantStore.js';
+import _ImageStore from './ImageStore.js';
 import _TeamStore from './TeamStore.js';
 
 
@@ -18,5 +19,6 @@ export default {
     ProjectStore: _ProjectStore,
     ProductTypeStore: _ProductTypeStore,
     VariantStore: _VariantStore,
+    ImageStore: _ImageStore,
     UserStore: _UserStore
 }
