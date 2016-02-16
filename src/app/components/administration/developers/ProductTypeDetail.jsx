@@ -13,7 +13,6 @@ class ProductTypeDetail extends React.Component {
             productType: {
                 attributes: []
             },
-            attrFormHide: false,
             newAttribute: {
                 attributeType: PRODUCT_ATTR_TYPES[0]
             }
@@ -22,7 +21,6 @@ class ProductTypeDetail extends React.Component {
         this._onProductTypeGet = this._onProductTypeGet.bind(this);
         this._onFieldUpdate = this._onFieldUpdate.bind(this);
         this._onSubmit = this._onSubmit.bind(this);
-        this._toggleAttrForm = this._toggleAttrForm.bind(this);
         this._addAttribute = this._addAttribute.bind(this);
         this._removeAttribute = this._removeAttribute.bind(this);
     }
@@ -40,7 +38,6 @@ class ProductTypeDetail extends React.Component {
 
     render() {
         var { productType, newAttribute }  = this.state,
-            attrFormClass = classnames({hide: this.state.attrFormHide}),
             self = this;
         return (
             <div className="panel-body">
@@ -82,13 +79,7 @@ class ProductTypeDetail extends React.Component {
                     </div>
                 </form>
 
-                <div className="row">
-                    <div className="col-sm-4 col-sm-offset-8">
-                        <button className="btn pull-right" onClick={this._toggleAttrForm}>New Attribute</button>
-                    </div>
-                </div>
-
-                <div className={attrFormClass + " panel panel-default"}>
+                <div className="panel panel-default">
                     <div className="panel-heading bg-white">
                         {productType.attributes.length} attributes
                     </div>
@@ -212,11 +203,7 @@ class ProductTypeDetail extends React.Component {
     }
 
     _onProductTypeGet() {
-        this.setState({productType: ProductTypeStore.selectedProductType, attrFormHide: true});
-    }
-
-    _toggleAttrForm() {
-        this.setState({attrFormHide: !this.state.attrFormHide});
+        this.setState({productType: ProductTypeStore.selectedProductType});
     }
 
     _addAttribute(e) {
