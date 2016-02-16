@@ -8,16 +8,17 @@ class TeamMembers extends React.Component {
         super(props);
 
         this.state = {
-            members: this.props.members
+            members: this.props.team.members,
+            team: this.props.team
         };
     }
 
     componentWillReceiveProps(newProps) {
-        this.setState({members: this.props.members});
+        this.setState({members: this.props.team.members});
     }
 
     render() {
-        var { members } = this.state,
+        var { members, team } = this.state,
             self = this;
         return (
             <div>
@@ -25,7 +26,7 @@ class TeamMembers extends React.Component {
                     return (
                         <div key={member.id} className="inline w-xs vtop">
                             <a className="glyphicon glyphicon-remove"
-                               onClick={self._removeMember.bind(self, member)}></a>
+                               onClick={self._removeMember.bind(self, member.id, team.id)}></a>
                             <a href="">
                                 <img src={`/images/a${Math.round(Math.random() * 10)}.jpg`}
                                      className="img-circle img-responsive"/>
@@ -38,8 +39,8 @@ class TeamMembers extends React.Component {
         )
     }
 
-    _removeMember(member) {
-        TeamActions.removeMember();
+    _removeMember(memberId, teamId) {
+        TeamActions.removeMember(memberId, teamId);
     }
 }
 

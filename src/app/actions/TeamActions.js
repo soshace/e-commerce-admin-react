@@ -39,9 +39,11 @@ export default {
             invite: invite
         });
     },
-    removeMember: (companyId) => {
+    removeMember: (memberId, teamId) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.REMOVE_MEMBER
+            actionType: MainPageConstants.REMOVE_MEMBER,
+            teamId: teamId,
+            memberId: memberId
         });
     }
 }

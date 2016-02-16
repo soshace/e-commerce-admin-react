@@ -34,8 +34,9 @@ export default {
                     } else {
                         console.error(err);
                     }
+                } else {
+                    options.success && options.success(res.body, res);
                 }
-                options.success && options.success(res.body, res);
             });
     }
 

@@ -113,7 +113,7 @@ class TeamItem extends React.Component {
                     <div className="tab-content p m-b-md b-t b-t-2x">
                         <div role="tabpanel" className="tab-pane animated fadeIn active"
                              id={`tab-${team.id}-members`}>
-                            <TeamMembers members={team.members}/>
+                            <TeamMembers team={team}/>
                         </div>
                         <div role="tabpanel" className="tab-pane animated fadeIn"
                              id={`tab-${team.id}-permissions`}>
@@ -141,6 +141,8 @@ class TeamItem extends React.Component {
             case ResponseCodes.USER_ADDED_TO_TEAM:
                 alertMessage = `User ${invited} added to the team`;
                 break;
+            default:
+                alertMessage = null;
         }
 
         this.setState({alertMessage: alertMessage, inviteEmail: null});

@@ -88,15 +88,17 @@ function sendInvite(invite) {
     });
 }
 
-function removeMember() {
-    //api.request({
-    //    method: 'GET',
-    //    url: `${api.COMPANIES}/${companyId}/teams`,
-    //    success: function (res) {
-    //        TeamStore.teams = res.teams;
-    //        TeamStore.emitChange();
-    //    }
-    //});
+function removeMember(memberId, teamId) {
+    api.request({
+        method: 'DELETE',
+        url: `${api.TEAMS}/${teamId}/members/${memberId}`,
+        success: function (res) {
+            var teams = TeamStore.teams,
+                team = _.findWhere(teams, {id: res.team.id});
+            Object.assign(team, res.team);
+            TeamStore.emitChange();
+        }
+    });
 }
 
 
@@ -126,7 +128,7 @@ AppDispatcher.register(function (action) {
             setTimeout(sendInvite.bind(this, action.invite), 0);
             break;
         case MainPageConstants.REMOVE_MEMBER:
-            setTimeout(removeMember.bind(this), 0);
+            setTimeout(removeMember.bind(this, action.memberId, action.teamId), 0);
             break;
 
     }
