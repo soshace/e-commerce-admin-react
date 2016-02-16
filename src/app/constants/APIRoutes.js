@@ -12,6 +12,7 @@ export default {
     PROJECTS: BASE_URL + 'projects',
     TEAMS: BASE_URL + 'teams',
     PERMISSIONS: BASE_URL + 'permissions',
+    INVITATIONS: BASE_URL + 'invitations',
 
     PRODUCTS: BASE_URL + 'products',
     VARIANTS: BASE_URL + 'variants',

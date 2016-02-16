@@ -27,6 +27,12 @@ export default {
             permission: permission
         });
     },
+    sendInvite: (invite) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.SEND_INVITE,
+            invite: invite
+        });
+    },
     removeMember: (companyId) => {
         AppDispatcher.dispatch({
             actionType: MainPageConstants.REMOVE_MEMBER

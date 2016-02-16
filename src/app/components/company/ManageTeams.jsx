@@ -5,6 +5,7 @@ import {TeamStore} from './../../stores';
 import TeamMembers from './TeamMembers.jsx';
 import TeamPermissions from './TeamPermissions.jsx';
 import TeamSettings from './TeamSettings.jsx';
+import ResponseCodes from './../../constants/ResponseCodes.js';
 import _ from 'underscore';
 
 
@@ -14,10 +15,15 @@ class ManageTeams extends React.Component {
 
         this.state = {
             company: this.props.company,
-            teams: []
+            teams: [],
+            inviteEmail: null,
+            invited: null,
+            alertMessage: null
         };
 
-        this._onTeamsGet = this._onTeamsGet.bind(this);
+        this._onTeamsChange = this._onTeamsChange.bind(this);
+        this._inviteToTeam = this._inviteToTeam.bind(this);
+        this._onInvitedChange = this._onInvitedChange.bind(this);
     }
 
     componentDidMount() {
@@ -25,11 +31,11 @@ class ManageTeams extends React.Component {
         if (company.id) {
             TeamActions.getCompanyTeams(company.id);
         }
-        TeamStore.addChangeListener(this._onTeamsGet);
+        TeamStore.addChangeListener(this._onTeamsChange);
     }
 
     componentWillUnmount() {
-        TeamStore.removeChangeListener(this._onTeamsGet);
+        TeamStore.removeChangeListener(this._onTeamsChange);
     }
 
     componentWillReceiveProps(newProps) {
@@ -39,13 +45,46 @@ class ManageTeams extends React.Component {
     }
 
     render() {
-        var { company, teams } = this.state,
+        var { company, teams, inviteEmail, alertMessage } = this.state,
             self = this;
         return (
             <div className="panel-body">
                 {teams.map(function (team) {
+                    var alertClass = classnames('alert alert-success', {hide: !alertMessage});
                     return (
                         <div key={team.id} className="panel panel-default">
+
+                            <div className="modal fade" id={`modal-${team.id}`} tabIndex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel">
+                                <div className="modal-dialog" role="document">
+                                    <div className="modal-content">
+                                        <div className="modal-header">
+                                            <button type="button" className="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h4 className="modal-title" id="myModalLabel">Invite someone
+                                                to {team.name}</h4>
+                                        </div>
+                                        <div className="modal-body">
+                                            <div className={alertClass}>{alertMessage}</div>
+                                            <div className="input-group">
+                                                <input type="text"
+                                                       value={inviteEmail}
+                                                       onChange={self._onInvitedChange}
+                                                       className="form-control"/>
+                                                <span className="input-group-btn">
+                                                <button className="btn btn-default waves-effect"
+                                                        onClick={self._inviteToTeam.bind(self, team.id)}
+                                                        type="button">Invite
+                                                </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="panel-heading bg-white">
                                 <div className="row">
                                     <div className="col-sm-4">
@@ -59,6 +98,16 @@ class ManageTeams extends React.Component {
                                                    placeholder="Name"/>
                                         </div>
                                     </div>
+
+                                    <div className="col-sm-2 col-sm-offset-6">
+                                        <button data-md-ink-ripple type="button"
+                                                className="md-btn md-raised m-b btn-fw bg-white"
+                                                data-toggle="modal"
+                                                data-target={`#modal-${team.id}`}>
+                                            Invite someone
+                                        </button>
+                                    </div>
+
                                 </div>
                             </div>
                             <div className="panel-body">
@@ -74,14 +123,17 @@ class ManageTeams extends React.Component {
                                     </li>
                                 </ul>
                                 <div className="tab-content p m-b-md b-t b-t-2x">
-                                    <div role="tabpanel" className="tab-pane animated fadeIn active" id={`tab-${team.id}-members`}>
+                                    <div role="tabpanel" className="tab-pane animated fadeIn active"
+                                         id={`tab-${team.id}-members`}>
                                         <TeamMembers team={team}/>
                                     </div>
-                                    <div role="tabpanel" className="tab-pane animated fadeIn" id={`tab-${team.id}-permissions`}>
+                                    <div role="tabpanel" className="tab-pane animated fadeIn"
+                                         id={`tab-${team.id}-permissions`}>
                                         <TeamPermissions team={team}/>
                                     </div>
-                                    <div role="tabpanel" className="tab-pane animated fadeIn" id={`tab-${team.id}-settings`}>
-                                        <TeamSettings team={team} />
+                                    <div role="tabpanel" className="tab-pane animated fadeIn"
+                                         id={`tab-${team.id}-settings`}>
+                                        <TeamSettings team={team}/>
                                     </div>
                                 </div>
                             </div>
@@ -92,8 +144,21 @@ class ManageTeams extends React.Component {
         )
     }
 
-    _onTeamsGet() {
-        this.setState({teams: TeamStore.teams});
+    _onTeamsChange() {
+        var inviteResCode = TeamStore.inviteResCode,
+            alertMessage = null,
+            invited = this.state.inviteEmail;
+
+        switch (inviteResCode) {
+            case ResponseCodes.INVITE_SENT:
+                alertMessage = `Invitation was sent to ${invited}`;
+                break;
+            case ResponseCodes.USER_ADDED_TO_TEAM:
+                alertMessage = `User ${invited} added to the team`;
+                break;
+        }
+
+        this.setState({teams: TeamStore.teams, alertMessage: alertMessage, inviteEmail: null});
     }
 
     _updateTeam(id, field, e) {
@@ -105,6 +170,20 @@ class ManageTeams extends React.Component {
         } else {
             team[field] = e.target.value;
             this.setState({teams: teams});
+        }
+    }
+
+    _onInvitedChange(e) {
+        this.setState({inviteEmail: e.target.value});
+    }
+
+    _inviteToTeam(teamId) {
+        var invite = {
+            email: this.state.inviteEmail,
+            team: teamId
+        };
+        if (invite.email) {
+            TeamActions.sendInvite(invite);
         }
     }
 }

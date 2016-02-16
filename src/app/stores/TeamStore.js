@@ -1,5 +1,6 @@
 import AppDispatcher from './../AppDispatcher.js';
 import MainPageConstants from './../constants/MainPageConstants.js';
+import ResponseCodes from './../constants/ResponseCodes.js';
 import api from './../constants/APIRoutes.js';
 import BaseStore from './BaseStore.js';
 import _ from 'underscore';
@@ -58,6 +59,24 @@ function updatePermission(permission) {
     });
 }
 
+function sendInvite(invite) {
+    TeamStore.inviteResCode = null;
+    api.request({
+        method: 'POST',
+        data: invite,
+        url: api.INVITATIONS,
+        success: function (res) {
+            var team;
+            if (res.code === ResponseCodes.USER_ADDED_TO_TEAM) {
+                team = _.findWhere(TeamStore.teams, {id: res.team.id});
+                Object.assign(team, res.team);
+            }
+            TeamStore.inviteResCode = res.code;
+            TeamStore.emitChange();
+        }
+    });
+}
+
 function removeMember() {
     //api.request({
     //    method: 'GET',
@@ -71,7 +90,8 @@ function removeMember() {
 
 
 var TeamStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
-    teams: null
+    teams: null,
+    inviteResCode: null
 });
 
 AppDispatcher.register(function (action) {
@@ -87,6 +107,9 @@ AppDispatcher.register(function (action) {
             break;
         case MainPageConstants.UPDATE_PERMISSION:
             setTimeout(updatePermission.bind(this, action.permission), 0);
+            break;
+        case MainPageConstants.SEND_INVITE:
+            setTimeout(sendInvite.bind(this, action.invite), 0);
             break;
         case MainPageConstants.REMOVE_MEMBER:
             setTimeout(removeMember.bind(this), 0);

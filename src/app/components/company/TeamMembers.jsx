@@ -24,7 +24,7 @@ class TeamMembers extends React.Component {
             <div>
                 {members.map(function (member) {
                     return (
-                        <div key={member.id} className="inline w-xs">
+                        <div key={member.id} className="inline">
                             <a className="glyphicon glyphicon-remove"
                                onClick={self._removeMember.bind(self, member)}></a>
                             <a href="">
