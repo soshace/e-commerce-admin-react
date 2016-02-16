@@ -10,14 +10,14 @@ class TeamPermissions extends React.Component {
         super(props);
 
         this.state = {
-            permissions: this.props.team && this.props.team.permissions
+            permissions: this.props.permissions
         };
 
         this._generatePermissionSelect = this._generatePermissionSelect.bind(this);
     }
 
     componentWillReceiveProps(newProps) {
-        this.setState({permissions: this.props.team.permissions});
+        this.setState({permissions: this.props.permissions});
     }
 
     render() {

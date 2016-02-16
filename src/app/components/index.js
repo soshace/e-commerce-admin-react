@@ -27,7 +27,7 @@ import _Dashboard  from './administration/Dashboard.jsx';
 import _AdminPanelPage  from './administration/AdminPanelPage.jsx';
 
 import _ManageProjects from './company/ManageProjects.jsx';
-import _ManageTeams from './company/ManageTeams.jsx';
+import _TeamList from './company/TeamList.jsx';
 import _CompanyProfile from './company/CompanyProfile.jsx';
 import _Company from './company/Company.jsx';
 import _NewCompany from './company/NewCompany.jsx';
@@ -64,7 +64,7 @@ export default {
     AdminPanelPage: _AdminPanelPage,
 
     ManageProjects: _ManageProjects,
-    ManageTeams: _ManageTeams,
+    TeamList: _TeamList,
     CompanyProfile: _CompanyProfile,
     Company: _Company,
     NewCompany: _NewCompany,

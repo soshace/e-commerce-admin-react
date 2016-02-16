@@ -11,7 +11,7 @@ import {
     NotFound,
     Login, Register,
     Dashboard, AdminPanelPage,
-    ManageProjects, ManageTeams, CompanyProfile, Company, NewCompany
+    ManageProjects, TeamList, CompanyProfile, Company, NewCompany
 } from './../components';
 
 
@@ -39,7 +39,7 @@ var Routes = (
             <Route path="companies/:id" component={Company} meta={{requireAuth: true}} >
                 <IndexRedirect to="profile"/>
                 <Route path="projects" component={ManageProjects}/>
-                <Route path="teams" component={ManageTeams}/>
+                <Route path="teams" component={TeamList}/>
                 <Route path="profile" component={CompanyProfile}/>
             </Route>
             <Route path=":projectKey" component={AdminPanelPage} meta={{requireAuth: true}}>

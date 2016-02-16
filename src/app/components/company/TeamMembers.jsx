@@ -8,13 +8,12 @@ class TeamMembers extends React.Component {
         super(props);
 
         this.state = {
-            members: this.props.team && this.props.team.members
+            members: this.props.members
         };
-
     }
 
     componentWillReceiveProps(newProps) {
-        this.setState({members: this.props.team.members});
+        this.setState({members: this.props.members});
     }
 
     render() {
@@ -24,7 +23,7 @@ class TeamMembers extends React.Component {
             <div>
                 {members.map(function (member) {
                     return (
-                        <div key={member.id} className="inline">
+                        <div key={member.id} className="inline w-xs vtop">
                             <a className="glyphicon glyphicon-remove"
                                onClick={self._removeMember.bind(self, member)}></a>
                             <a href="">
