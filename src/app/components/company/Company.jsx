@@ -2,8 +2,9 @@ import React from 'react';
 import classnames from 'classnames';
 import CompanyMenu from './CompanyMenu.jsx';
 import {CompanyActions} from './../../actions';
-import {CompanyStore} from './../../stores';
+import {CompanyStore, ProjectStore} from './../../stores';
 import Navbar from './../Navbar.jsx';
+import { childrenWithProps } from './../../utils/utils.js';
 
 
 class Company extends React.Component {
@@ -11,37 +12,32 @@ class Company extends React.Component {
         super(props);
 
         this.state = {
-            company: {
-                name: ''
-            }
+            company: CompanyStore.getCompanyById(this.props.params.companyId),
+            projects: this.props.projects,
+            companies: this.props.companies,
+            user: this.props.user,
+            project: ProjectStore.getProjectByKey(this.props.params.projectKey)
         };
-
-        this._onCompaniesGet = this._onCompaniesGet.bind(this);
-    }
-
-    componentDidMount() {
-        CompanyStore.addChangeListener(this._onCompaniesGet);
-        CompanyActions.getCompanies();
-    }
-
-    componentWillUnmount() {
-        CompanyStore.removeChangeListener(this._onCompaniesGet);
     }
 
     componentWillReceiveProps(newProps) {
-        this._onCompaniesGet(newProps);
+        var id = newProps.params.companyId,
+            company= CompanyStore.getCompanyById(id);
+        this.setState({company: company});
     }
 
     render() {
-        var id = this.props.params.id,
-            company = this.state.company,
-            childrenWithProps;
-        childrenWithProps = React.Children.map(this.props.children, (child) => {
-            return React.cloneElement(child, {company: company});
-        });
+        var { companies, projects, company, project, user } = this.state,
+            id = this.props.params.companyId,
+            children = childrenWithProps(this, {company});
+
         return (
             <div>
-                <Navbar/>
+                <Navbar project={project}
+                        user={user}
+                        projects={projects}
+                        companies={companies}
+                />
 
                 <div className="app-content">
                     <div className="p-h-md p-v bg-white box-shadow pos-rlt">
@@ -50,23 +46,11 @@ class Company extends React.Component {
                     <div className="box panel">
                         <CompanyMenu id={id}/>
 
-                        {childrenWithProps}
+                        {children}
                     </div>
                 </div>
             </div>
         )
-    }
-
-    _onCompaniesGet(newProps) {
-        var id,
-            company;
-        if (newProps) {
-            id = newProps.params.id;
-        } else {
-            id = this.props.params.id;
-        }
-        company = CompanyStore.getCompanyById(id);
-        this.setState({company: company});
     }
 }
 

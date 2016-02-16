@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import CompanyMenu from './CompanyMenu.jsx';
 import {CompanyActions} from './../../actions';
-import {CompanyStore} from './../../stores';
+import {CompanyStore, ProjectStore} from './../../stores';
 import Navbar from './../Navbar.jsx';
 
 
@@ -12,7 +12,11 @@ class NewCompany extends React.Component {
 
         this.state = {
             name: '',
-            created: false
+            created: false,
+            projects: this.props.projects,
+            companies: this.props.companies,
+            user: this.props.user,
+            project: ProjectStore.getProjectByKey(this.props.params.projectKey)
         };
 
         this._onCompanyCreate = this._onCompanyCreate.bind(this);
@@ -20,9 +24,18 @@ class NewCompany extends React.Component {
         this._onSubmit = this._onSubmit.bind(this);
     }
 
+    componentWillReceiveProps(newProps) {
+        this.setState({
+            projects: newProps.projects,
+            companies: newProps.companies,
+            user: newProps.user,
+            project: ProjectStore.getProjectByKey(newProps.params.projectKey)
+        });
+    }
+
+
     componentDidMount() {
         CompanyStore.addChangeListener(this._onCompanyCreate);
-        CompanyActions.getCompanies();
     }
 
     componentWillUnmount() {
@@ -31,9 +44,14 @@ class NewCompany extends React.Component {
 
 
     render() {
+        var { projects, companies, user, project } = this.state;
         return (
             <div>
-                <Navbar/>
+                <Navbar project={project}
+                        user={user}
+                        projects={projects}
+                        companies={companies}
+                />
 
                 <div className="app-content">
                     <div className="box">

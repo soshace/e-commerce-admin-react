@@ -23,7 +23,7 @@ class ManageProjects extends React.Component {
     }
 
     componentDidMount() {
-        var companyId = this.props.params.id;
+        var companyId = this.props.params.companyId;
         ProjectStore.addChangeListener(this._onProjectsGet);
         ProjectActions.getCompanyProjects(companyId);
     }
@@ -135,7 +135,7 @@ class ManageProjects extends React.Component {
     }
 
     _onSubmit(e) {
-        var companyId = this.props.params.id;
+        var companyId = this.props.params.companyId;
         var {name, slug, currency, language} = this.state;
         e.preventDefault();
         ProjectActions.createProject(name, slug, currency, language, companyId);
@@ -159,7 +159,7 @@ class ManageProjects extends React.Component {
     }
 
     _onProjectsGet() {
-        var companyId = this.props.params.id,
+        var companyId = this.props.params.companyId,
             projects = ProjectStore.companyProjects[companyId];
         this.setState({projects: projects});
         //var projectSlug = ProjectStore.projects[0].slug;

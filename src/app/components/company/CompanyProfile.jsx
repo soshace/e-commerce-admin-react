@@ -9,27 +9,20 @@ class CompanyProfile extends React.Component {
         super(props);
 
         this.state = {
-            company: {
-                name: ''
-            }
+            company: this.props.company
         };
 
-        this._onCompanyGet = this._onCompanyGet.bind(this);
         this._onNameChange = this._onNameChange.bind(this);
         this._onSubmit = this._onSubmit.bind(this);
     }
 
-    componentDidMount() {
-        CompanyStore.addChangeListener(this._onCompanyGet);
-        CompanyActions.getCompanies();
-    }
-
-    componentWillUnmount() {
-        CompanyStore.removeChangeListener(this._onCompanyGet);
-    }
-
     componentWillReceiveProps(newProps) {
-        this._onCompanyGet(newProps);
+        var companyId,
+            company;
+        companyId = newProps.params.companyId;
+        company = CompanyStore.getCompanyById(companyId);
+
+        this.setState({company: company});
     }
 
     render() {
@@ -63,22 +56,9 @@ class CompanyProfile extends React.Component {
     }
 
     _onSubmit(e) {
-        var companyId = this.props.params.id;
+        var companyId = this.props.params.companyId;
         e.preventDefault();
         CompanyActions.updateCompany(companyId, this.state.company);
-    }
-
-    _onCompanyGet(newProps) {
-        var companyId,
-            company;
-        if (newProps) {
-            companyId = newProps.params.id;
-        } else {
-            companyId = this.props.params.id;
-        }
-        company = CompanyStore.getCompanyById(companyId);
-
-        this.setState({company: company});
     }
 }
 

@@ -7,16 +7,13 @@ class ProfileInfo extends React.Component {
         super(props);
 
         this.state = {
-            name: '',
-            email: ''
+            user: this.props.user
         };
 
         this.props = {
             onClick: function () {
             },
-            avatarSrc: '',
-            email: '',
-            name: ''
+            avatarSrc: ''
         }
     }
 
@@ -25,7 +22,8 @@ class ProfileInfo extends React.Component {
     }
 
     render() {
-        var handleClick = this.props.onClick;
+        var handleClick = this.props.onClick,
+            { user } = this.state;
         return (
             <div className="p hidden-folded blue-50"
                  style={{backgroundImage: "url(images/bg.png)",  backgroundSize: "cover"}}>
@@ -33,12 +31,12 @@ class ProfileInfo extends React.Component {
                     <img src={this.props.avatarSrc} className="img-responsive rounded"/>
                 </div>
                 <a className="block m-t-sm" onClick={handleClick}>
-                    <span className="block font-bold">{this.state.name}</span>
+                    <span className="block font-bold">{user.name}</span>
                     <span className="pull-right auto">
                         <i className="fa inline fa-caret-down"></i>
                         <i className="fa none fa-caret-up"></i>
                     </span>
-                    {this.state.email}
+                    {user.email}
                 </a>
             </div>
         )

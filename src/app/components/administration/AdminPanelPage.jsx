@@ -12,39 +12,58 @@ class AdminPanelPage extends React.Component {
         super(props);
 
         this.state = {
+            projects: this.props.projects,
+            companies: this.props.companies,
+            user: this.props.user,
             project: null
         };
-
-        this._onProjectsGet = this._onProjectsGet.bind(this);
-        this._onCompaniesGet = this._onCompaniesGet.bind(this);
     }
 
-    componentDidMount() {
-        ProjectStore.addChangeListener(this._onProjectsGet);
-        CompanyStore.addChangeListener(this._onCompaniesGet);
-        CompanyActions.getCompanies();
+    componentWillMount() {
+        var { companies } = this.state,
+            projectKey = this.props.params.projectKey,
+            project = ProjectStore.getProjectByKey(projectKey);
+        if (project) {
+            this.setState({project: project});
+        } else {
+            this.context.router.push(`/companies/${companies[0].id}/projects`);
+        }
     }
 
-    componentWillUnmount() {
-        ProjectStore.removeChangeListener(this._onProjectsGet);
-        CompanyStore.removeChangeListener(this._onCompaniesGet);
+    componentWillReceiveProps(newProps) {
+        this.setState({
+            projects: newProps.projects,
+            companies: newProps.companies,
+            user: newProps.user
+        });
     }
 
     render() {
-        var { project } = this.state,
+        var { project, projects, companies, user } = this.state,
             children;
 
         if (project) {
-            children = childrenWithProps(this, { project: project });
+            children = childrenWithProps(this, { project, projects, companies, user });
         }
 
         return (
             <div>
-                <Navbar/>
+                {project
+                    ?
+                    <Navbar project={project}
+                            user={user}
+                            projects={projects}
+                            companies={companies}
+                    />
+                    :
+                    null
+                }
                 {project
                     ?
                     <Aside project={project}
-                           user={this.props.user}
+                           user={user}
+                           projects={projects}
+                           companies={companies}
                     />
                     :
                     null
@@ -67,22 +86,6 @@ class AdminPanelPage extends React.Component {
             </div>
         )
     }
-
-    _onCompaniesGet() {
-        ProjectActions.getProjects();
-    }
-
-    _onProjectsGet() {
-        var companies = CompanyStore.companies,
-            projectKey = this.props.params.projectKey,
-            project = ProjectStore.getProjectByKey(projectKey);
-        if (project) {
-            this.setState({project: project});
-        } else {
-            this.context.router.push(`/companies/${companies[0].id}/projects`);
-        }
-    }
-
 
 }
 

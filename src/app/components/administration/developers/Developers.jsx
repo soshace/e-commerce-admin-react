@@ -10,6 +10,7 @@ class Developers extends React.Component {
             project: this.props.project
         }
     }
+
     componentWillReceiveProps(newProps) {
         this.setState({project: newProps.project});
     }

@@ -14,9 +14,15 @@ class Aside extends React.Component {
 
         this.state = {
             navItemsShown: true,
-            asideFolded: true
+            asideFolded: true,
+            user: this.props.user
         };
 
+    }
+
+    componentWillReceiveProps(newProps) {
+        var user = newProps.user;
+        this.setState({user: user});
     }
 
     render() {
@@ -24,7 +30,7 @@ class Aside extends React.Component {
             accountClass = classnames('m-v-xs', {hide: this.state.navItemsShown}),
             //asideClass = classnames('app-aside modal fade', {folded: this.state.asideFolded}),
             asideClass = classnames('app-aside modal fade'),
-            user = this.props.user,
+            { user } = this.state,
             projectKey = this.props.project.slug;
 
         return (
@@ -44,8 +50,7 @@ class Aside extends React.Component {
                                     <ProfileInfo
                                         onClick={this._toggleNav.bind(this)}
                                         avatarSrc="/images/a0.jpg"
-                                        name={user.name}
-                                        email={user.email} />
+                                        user={user} />
 
                                     <Menu header="Cool Project" className={navClass}>
                                         <MenuItem link={`/${projectKey}/dashboard`} name="Dashboard" iconClass="mdi-action-dashboard" />

@@ -3,8 +3,20 @@ import { childrenWithProps } from './../../../utils/utils.js';
 
 
 class Products extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            project: this.props.project
+        }
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.setState({project: newProps.project});
+    }
+
     render() {
-        var { project } = this.props,
+        var { project } = this.state,
             children;
 
         if (project) {

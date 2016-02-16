@@ -10,7 +10,7 @@ class AccountSettings extends React.Component {
         super(props);
 
         this.state = {
-            user: {}
+            user: this.props.user
         };
 
         this._onUserGet = this._onUserGet.bind(this);
@@ -20,7 +20,6 @@ class AccountSettings extends React.Component {
 
     componentDidMount() {
         UserStore.addChangeListener(this._onUserGet);
-        UserActions.getUser();
     }
 
     componentWillUnmount() {
@@ -28,7 +27,7 @@ class AccountSettings extends React.Component {
     }
 
     render() {
-        var user = this.state.user;
+        var { user } = this.state;
         return (
             <div className="col-md-9 b-l bg-white bg-auto">
                 <form role="form" className="form-horizontal p-md col-md-6" onSubmit={this._onSubmit}>

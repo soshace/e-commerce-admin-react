@@ -36,7 +36,7 @@ var Routes = (
                 <Route path="companies" component={AccountCompanies}/>
             </Route>
             <Route path="companies/new" component={NewCompany} meta={{requireAuth: true}}/>
-            <Route path="companies/:id" component={Company} meta={{requireAuth: true}} >
+            <Route path="companies/:companyId" component={Company} meta={{requireAuth: true}} >
                 <IndexRedirect to="profile"/>
                 <Route path="projects" component={ManageProjects}/>
                 <Route path="teams" component={TeamList}/>

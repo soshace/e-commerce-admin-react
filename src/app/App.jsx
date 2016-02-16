@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import { UserStore, ProjectStore, CompanyStore }  from './stores';
-import { UserActions } from './actions';
+import { UserActions, ProjectActions, CompanyActions } from './actions';
 import { childrenWithProps } from './utils/utils.js';
 
 
@@ -15,17 +15,22 @@ class App extends React.Component {
         ;
 
         this._onUserGet = this._onUserGet.bind(this);
+        this._onPropertyGet = this._onPropertyGet.bind(this);
     }
 
     componentDidMount() {
         this._initWaves();
 
+        ProjectStore.addChangeListener(this._onPropertyGet);
+        CompanyStore.addChangeListener(this._onPropertyGet);
         UserStore.addChangeListener(this._onUserGet);
 
         UserActions.getUser();
     }
 
     componentWillUnmount() {
+        ProjectStore.removeChangeListener(this._onPropertyGet);
+        CompanyStore.removeChangeListener(this._onPropertyGet);
         UserStore.removeChangeListener(this._onUserGet);
     }
 
@@ -34,12 +39,12 @@ class App extends React.Component {
     }
 
     render() {
-        var user = this.state.user,
+        var { user, companies, projects } = this.state,
             children,
             requiredAuth = this.props.children && this.props.children.props.route.meta.requireAuth;
 
         if (user || !requiredAuth) {
-            children = childrenWithProps(this, {user: user});
+            children = childrenWithProps(this, { user, companies, projects });
         }
         return <div>{children}</div>
     }
@@ -53,12 +58,22 @@ class App extends React.Component {
     _onUserGet() {
         var user = UserStore.user;
 
-        if (user.email) {
-            this.setState({user: user});
-        } else {
+        if (!user.email) {
             this.context.router.push('/signin');
         }
 
+        CompanyActions.getCompanies();
+        ProjectActions.getProjects();
+    }
+
+    _onPropertyGet() {
+        var projects = ProjectStore.projects,
+            companies = CompanyStore.companies,
+            user = UserStore.user;
+
+        if (projects && companies) {
+            this.setState({user, companies, projects});
+        }
     }
 }
 
