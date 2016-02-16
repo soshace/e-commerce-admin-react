@@ -8,27 +8,32 @@ class ProductTypeList extends React.Component {
         super(props);
 
         this.state = {
-            productTypes: []
+            productTypes: [],
+            project: this.props.project
         };
 
         this._onProductTypesGet = this._onProductTypesGet.bind(this);
-        this._onProjectsGet = this._onProjectsGet.bind(this);
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.setState({project: newProps.project});
     }
 
     componentDidMount() {
+        var { project } = this.state;
         ProductTypeStore.addChangeListener(this._onProductTypesGet);
-        ProjectStore.addChangeListener(this._onProjectsGet);
         ProjectActions.getProjects();
+
+        ProductTypeActions.getProjectProductTypes(project.id);
     }
 
     componentWillUnmount() {
         ProductTypeStore.removeChangeListener(this._onProductTypesGet);
-        ProjectStore.removeChangeListener(this._onProjectsGet);
     }
 
     render() {
-        var productTypes = this.state.productTypes,
-            projectKey = this.props.params.projectKey;
+        var { productTypes, project } = this.state,
+            projectKey = project.slug;
         return (
             <div>
                 <div className="panel-heading">
@@ -70,12 +75,6 @@ class ProductTypeList extends React.Component {
                 </div>
             </div>
         )
-    }
-
-    _onProjectsGet() {
-        var projectKey = this.props.params.projectKey,
-            project = ProjectStore.getProjectByKey(projectKey);
-        ProductTypeActions.getProjectProductTypes(project.id);
     }
 
     _onProductTypesGet() {

@@ -2,6 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import { UserStore, ProjectStore, CompanyStore }  from './stores';
 import { UserActions } from './actions';
+import { childrenWithProps } from './utils/utils.js';
 
 
 class App extends React.Component {
@@ -34,15 +35,13 @@ class App extends React.Component {
 
     render() {
         var user = this.state.user,
-            childrenWithProps,
+            children,
             requiredAuth = this.props.children && this.props.children.props.route.meta.requireAuth;
 
         if (user || !requiredAuth) {
-            childrenWithProps = React.Children.map(this.props.children, (child) => {
-                return React.cloneElement(child, { user: user });
-            });
+            children = childrenWithProps(this, {user: user});
         }
-        return <div>{childrenWithProps}</div>
+        return <div>{children}</div>
     }
 
     _initWaves() {

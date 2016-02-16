@@ -9,29 +9,29 @@ class CategoryList extends React.Component {
         super(props);
 
         this.state = {
-            categories: []
+            categories: [],
+            project: this.props.project
         };
 
         this._onCategoriesGet = this._onCategoriesGet.bind(this);
         this._onAddClick = this._onAddClick.bind(this);
-        this._onProjectsGet = this._onProjectsGet.bind(this);
     }
 
     componentDidMount() {
-        CategoryStore.addChangeListener(this._onCategoriesGet);
-        ProjectStore.addChangeListener(this._onProjectsGet);
+        var { project } = this.state;
 
-        ProjectActions.getProjects();
+        CategoryStore.addChangeListener(this._onCategoriesGet);
+
+        CategoryActions.getProjectCategories(true, project.id);
     }
 
     componentWillUnmount() {
         CategoryStore.removeChangeListener(this._onCategoriesGet);
-        ProjectStore.removeChangeListener(this._onProjectsGet);
     }
 
     render() {
-        var categories = this.state.categories,
-            projectKey = this.props.params.projectKey;
+        var { categories, project } = this.state,
+            projectKey = project.slug;
         return (
             <div>
                 <div className="panel-heading">
@@ -77,14 +77,8 @@ class CategoryList extends React.Component {
     }
 
     _onAddClick() {
-        var projectKey = this.props.params.projectKey;
+        var projectKey = this.state.project.slug;
         this.context.router.push(`/${projectKey}/categories/add`);
-    }
-
-    _onProjectsGet() {
-        var projectKey = this.props.params.projectKey,
-            project = ProjectStore.getProjectByKey(projectKey);
-        CategoryActions.getProjectCategories(true, project.id);
     }
 
     _onCategoriesGet() {

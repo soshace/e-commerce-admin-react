@@ -35,8 +35,7 @@ class CategoryDetail extends React.Component {
     }
 
     render() {
-        var products = this.state.products,
-            category = this.state.category;
+        var { products, category } = this.state;
         return (
             <div>
                 <ul className="nav nav-md nav-tabs nav-lines b-info">

@@ -4,11 +4,16 @@ import Aside from './Aside.jsx';
 import Navbar from './../Navbar.jsx';
 import {ProjectActions, CompanyActions} from './../../actions';
 import {ProjectStore, CompanyStore} from './../../stores';
+import { childrenWithProps } from './../../utils/utils.js';
 
 
 class AdminPanelPage extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            project: null
+        };
 
         this._onProjectsGet = this._onProjectsGet.bind(this);
         this._onCompaniesGet = this._onCompaniesGet.bind(this);
@@ -26,10 +31,25 @@ class AdminPanelPage extends React.Component {
     }
 
     render() {
+        var { project } = this.state,
+            children;
+
+        if (project) {
+            children = childrenWithProps(this, { project: project });
+        }
+
         return (
             <div>
                 <Navbar/>
-                <Aside projectKey={this.props.params.projectKey}/>
+                {project
+                    ?
+                    <Aside project={project}
+                           user={this.props.user}
+                    />
+                    :
+                    null
+                }
+
 
                 <div id="content" className="app-content" role="main">
                     <div className="box">
@@ -37,7 +57,7 @@ class AdminPanelPage extends React.Component {
                             <div className="box-cell padding">
                                 <div className="row">
                                     <div className="col-lg-12 col-md-12 col-sm-12">
-                                        {this.props.children}
+                                        {children}
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +76,9 @@ class AdminPanelPage extends React.Component {
         var companies = CompanyStore.companies,
             projectKey = this.props.params.projectKey,
             project = ProjectStore.getProjectByKey(projectKey);
-        if (!project) {
+        if (project) {
+            this.setState({project: project});
+        } else {
             this.context.router.push(`/companies/${companies[0].id}/projects`);
         }
     }

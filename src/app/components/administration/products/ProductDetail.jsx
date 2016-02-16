@@ -15,28 +15,26 @@ class ProductDetail extends React.Component {
 
         this.state = {
             product: null,
-            project: null
+            project: this.props.project
         };
 
         this._onProductGet = this._onProductGet.bind(this);
-        this._onProjectsGet = this._onProjectsGet.bind(this);
         this._onProductTypesGet = this._onProductTypesGet.bind(this);
         this._onVariantsTypesGet = this._onVariantsTypesGet.bind(this);
     }
 
     componentDidMount() {
+        var productId = this.props.params.productId;
         ProductStore.addChangeListener(this._onProductGet);
         ProductTypeStore.addChangeListener(this._onProductTypesGet);
-        ProjectStore.addChangeListener(this._onProjectsGet);
         VariantStore.addChangeListener(this._onVariantsTypesGet);
 
-        ProjectActions.getProjects();
+        ProductActions.getProduct(productId);
     }
 
     componentWillUnmount() {
         ProductStore.removeChangeListener(this._onProductGet);
         ProductTypeStore.removeChangeListener(this._onProductTypesGet);
-        ProjectStore.removeChangeListener(this._onProjectsGet);
         VariantStore.removeChangeListener(this._onVariantsTypesGet);
     }
 
@@ -83,13 +81,8 @@ class ProductDetail extends React.Component {
         )
     }
 
-    _onProjectsGet() {
-        var productId = this.props.params.productId;
-        ProductActions.getProduct(productId);
-    }
-
     _onProductGet() {
-        var project = ProjectStore.getProjectByKey(this.props.params.projectKey);
+        var { project } = this.state;
         ProductTypeActions.getProjectProductTypes(project.id);
     }
 

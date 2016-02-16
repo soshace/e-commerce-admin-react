@@ -14,23 +14,9 @@ class Aside extends React.Component {
 
         this.state = {
             navItemsShown: true,
-            asideFolded: true,
-            user: {
-                name: '',
-                email: ''
-            }
+            asideFolded: true
         };
 
-        this._onUserGet = this._onUserGet.bind(this);
-    }
-
-    componentDidMount() {
-        UserStore.addChangeListener(this._onUserGet);
-        UserActions.getUser();
-    }
-
-    componentWillUnmount() {
-        UserStore.removeChangeListener(this._onUserGet);
     }
 
     render() {
@@ -38,9 +24,8 @@ class Aside extends React.Component {
             accountClass = classnames('m-v-xs', {hide: this.state.navItemsShown}),
             //asideClass = classnames('app-aside modal fade', {folded: this.state.asideFolded}),
             asideClass = classnames('app-aside modal fade'),
-            user = this.state.user,
-            projectKey = this.props.projectKey;
-
+            user = this.props.user,
+            projectKey = this.props.project.slug;
 
         return (
             <aside id="aside" className={asideClass} role="menu">
@@ -104,11 +89,6 @@ class Aside extends React.Component {
                 </div>
             </aside>
         )
-    }
-
-    _onUserGet() {
-        var user = UserStore.user;
-        this.setState({user: user});
     }
 
     _toggleNav() {
