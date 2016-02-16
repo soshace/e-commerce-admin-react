@@ -37,6 +37,13 @@ export default {
     SEND_INVITE: 'SEND_INVITE',
     REMOVE_MEMBER: 'REMOVE_MEMBER',
 
+    GET_PRODUCT_IMAGES: 'GET_PRODUCT_IMAGES',
+    ADD_IMAGE: 'ADD_IMAGE',
+    UPLOAD_IMAGE: 'UPLOAD_IMAGE',
+    GET_IMAGE: 'GET_IMAGE',
+    UPDATE_IMAGE: 'UPDATE_IMAGE',
+    REMOVE_IMAGE: 'REMOVE_IMAGE',
+
     PRODUCT_ATTR_TYPES: [
         'text', 'boolean', 'localizedText', 'enum', 'localizedEnum',
         'number', 'money', 'date', 'time', 'dateTime', 'set', 'reference'],
