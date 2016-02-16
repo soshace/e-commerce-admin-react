@@ -33,6 +33,17 @@ function updateTeam(team) {
     });
 }
 
+function createTeam(team) {
+    api.request({
+        method: 'POST',
+        data: team,
+        url: api.TEAMS,
+        success: function (res) {
+            getTeams(res.team.company);
+        }
+    });
+}
+
 function removeTeam(teamId) {
     api.request({
         method: 'DELETE',
@@ -98,6 +109,9 @@ AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case MainPageConstants.GET_TEAMS:
             setTimeout(getTeams.bind(this, action.companyId), 0);
+            break;
+        case MainPageConstants.CREATE_TEAM:
+            setTimeout(createTeam.bind(this, action.team), 0);
             break;
         case MainPageConstants.UPDATE_TEAM:
             setTimeout(updateTeam.bind(this, action.team), 0);

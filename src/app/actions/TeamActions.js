@@ -9,6 +9,12 @@ export default {
             companyId: companyId
         });
     },
+    createTeam: (team) => {
+        AppDispatcher.dispatch({
+            actionType: MainPageConstants.CREATE_TEAM,
+            team: team
+        });
+    },
     updateTeam: (team) => {
         AppDispatcher.dispatch({
             actionType: MainPageConstants.UPDATE_TEAM,

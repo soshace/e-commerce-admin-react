@@ -30,7 +30,7 @@ class NewCategory extends React.Component {
                 <form className="form-horizontal p-h-xsform-horizontal p-h-xs"
                       onSubmit={this._onSubmit}>
                     <div className="form-group form-grouplg">
-                        <label className="col-sm-2 control-label">CategoryStore Name</label>
+                        <label className="col-sm-2 control-label">Category Name</label>
 
                         <div className="col-sm-10">
                             <input

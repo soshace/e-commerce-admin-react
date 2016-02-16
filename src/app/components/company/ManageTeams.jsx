@@ -16,12 +16,14 @@ class ManageTeams extends React.Component {
         this.state = {
             company: this.props.company,
             teams: [],
+            newTeam: {},
             inviteEmail: null,
             invited: null,
             alertMessage: null
         };
 
         this._onTeamsChange = this._onTeamsChange.bind(this);
+        this._createTeam = this._createTeam.bind(this);
         this._inviteToTeam = this._inviteToTeam.bind(this);
         this._onInvitedChange = this._onInvitedChange.bind(this);
     }
@@ -45,7 +47,7 @@ class ManageTeams extends React.Component {
     }
 
     render() {
-        var { company, teams, inviteEmail, alertMessage } = this.state,
+        var { company, teams, inviteEmail, alertMessage, newTeam } = this.state,
             self = this;
         return (
             <div className="panel-body">
@@ -140,6 +142,40 @@ class ManageTeams extends React.Component {
                         </div>
                     )
                 })}
+
+                <div className="panel panel-default">
+                    <div className="panel-heading bg-white">
+                        <h1>Create a new team</h1>
+                    </div>
+                    <div className="panel-body">
+                        <form className="form-horizontal p-h-xsform-horizontal p-h-xs"
+                              onSubmit={self._createTeam}>
+                            <div className="form-group form-grouplg">
+                                <label className="col-sm-2 control-label">Name</label>
+
+                                <div className="col-sm-10">
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={newTeam.name}
+                                        onChange={self._onNewTeamChange.bind(self, 'name')}
+                                        placeholder="Team name"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="form-group m-t">
+                                <div className="col-sm-4 col-sm-offset-2">
+                                    <button type="submit"
+                                            className="btn btn-primary waves-effect"
+                                    >Create
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         )
     }
@@ -158,7 +194,7 @@ class ManageTeams extends React.Component {
                 break;
         }
 
-        this.setState({teams: TeamStore.teams, alertMessage: alertMessage, inviteEmail: null});
+        this.setState({teams: TeamStore.teams, alertMessage: alertMessage, inviteEmail: null, newTeam: {}});
     }
 
     _updateTeam(id, field, e) {
@@ -185,6 +221,22 @@ class ManageTeams extends React.Component {
         if (invite.email) {
             TeamActions.sendInvite(invite);
         }
+    }
+
+    _onNewTeamChange(field, e) {
+        var newTeam = this.state.newTeam;
+        newTeam[field] = e.target.value;
+        this.setState({newTeam: newTeam});
+    }
+
+    _createTeam(e) {
+        e.preventDefault();
+        var { newTeam, company } = this.state,
+            team = {
+                name: newTeam.name,
+                company: company.id
+            };
+        TeamActions.createTeam(team);
     }
 }
 
