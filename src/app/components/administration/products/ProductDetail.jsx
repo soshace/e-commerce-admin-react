@@ -1,6 +1,6 @@
 import React from 'react';
-import {ProjectStore, ProductStore, CategoryStore, ProductTypeStore} from './../../../stores';
-import {ProjectActions, ProductActions, CategoryActions, ProductTypeActions} from './../../../actions';
+import {ProjectStore, ProductStore, CategoryStore, ProductTypeStore, VariantStore} from './../../../stores';
+import {ProjectActions, ProductActions, CategoryActions, ProductTypeActions, VariantActions} from './../../../actions';
 
 import ProductUpdate from './ProductUpdate.jsx';
 import ProductOverview from './ProductOverview.jsx';
@@ -20,12 +20,14 @@ class ProductDetail extends React.Component {
         this._onProductGet = this._onProductGet.bind(this);
         this._onProjectsGet = this._onProjectsGet.bind(this);
         this._onProductTypesGet = this._onProductTypesGet.bind(this);
+        this._onVariantsTypesGet = this._onVariantsTypesGet.bind(this);
     }
 
     componentDidMount() {
         ProductStore.addChangeListener(this._onProductGet);
         ProductTypeStore.addChangeListener(this._onProductTypesGet);
         ProjectStore.addChangeListener(this._onProjectsGet);
+        VariantStore.addChangeListener(this._onVariantsTypesGet);
 
         ProjectActions.getProjects();
     }
@@ -34,10 +36,11 @@ class ProductDetail extends React.Component {
         ProductStore.removeChangeListener(this._onProductGet);
         ProductTypeStore.removeChangeListener(this._onProductTypesGet);
         ProjectStore.removeChangeListener(this._onProjectsGet);
+        VariantStore.removeChangeListener(this._onVariantsTypesGet);
     }
 
     render() {
-        var { product, project, productTypes, productAttributes } = this.state;
+        var { product, project, productTypes, productAttributes, variants } = this.state;
 
         return (
             <div>
@@ -66,7 +69,7 @@ class ProductDetail extends React.Component {
                         <ProductCategories product={product} project={project} />
                     </div>
                     <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_4">
-                        <ProductVariants product={product} project={project} productAttributes={productAttributes} />
+                        <ProductVariants variants={variants} product={product} project={project} productAttributes={productAttributes} />
                     </div>
                 </div>
             </div>
@@ -85,14 +88,24 @@ class ProductDetail extends React.Component {
 
     _onProductTypesGet() {
         var product = ProductStore.selectedProduct,
-            productTypes = ProductTypeStore.selectedProductTypes,
-            project = ProjectStore.getProjectByKey(this.props.params.projectKey),
-            attrs = ProductTypeStore.selectedProductType.attributes;
-        if (attrs) {
-            this.setState({productTypes: productTypes, product: product, project: project, productAttributes: attrs});
+            productAttributes = ProductTypeStore.selectedProductType.attributes;
+
+        if (productAttributes) {
+            VariantActions.getProductVariants(product.id);
         } else {
             ProductTypeActions.getProductTypeAttributes(product.productType);
         }
+    }
+
+    _onVariantsTypesGet() {
+        var product = ProductStore.selectedProduct,
+            productTypes = ProductTypeStore.selectedProductTypes,
+            project = ProjectStore.getProjectByKey(this.props.params.projectKey),
+            productAttributes = ProductTypeStore.selectedProductType.attributes,
+            variants = VariantStore.selectedVariants;
+
+        this.setState({productTypes, product, project, productAttributes, variants});
+
     }
 }
 

@@ -30,11 +30,11 @@ class ProductVariants extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
-        VariantActions.getProductVariants(newProps.product.id);
         this.setState({
             project: newProps.project,
             product: newProps.product,
-            productAttributes: newProps.productAttributes
+            productAttributes: newProps.productAttributes,
+            variants: newProps.variants
         });
     }
 
