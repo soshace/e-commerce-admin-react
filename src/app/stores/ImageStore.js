@@ -1,5 +1,5 @@
 import AppDispatcher from './../AppDispatcher.js';
-import MainPageConstants from './../constants/MainPageConstants.js';
+import AppConstants from './../constants/AppConstants.js';
 import ResponseCodes from './../constants/ResponseCodes.js';
 import api from './../constants/APIRoutes.js';
 import BaseStore from './BaseStore.js';
@@ -76,19 +76,19 @@ var ImageStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
-        case MainPageConstants.GET_PRODUCT_IMAGES:
+        case AppConstants.GET_PRODUCT_IMAGES:
             setTimeout(getProductImages, 0);
             break;
-        case MainPageConstants.GET_IMAGE:
+        case AppConstants.GET_IMAGE:
             setTimeout(getImage.bind(this, action.imageId), 0);
             break;
-        case MainPageConstants.ADD_IMAGE:
+        case AppConstants.ADD_IMAGE:
             setTimeout(addImage.bind(this, action.image), 0);
             break;
-        case MainPageConstants.UPDATE_IMAGE:
+        case AppConstants.UPDATE_IMAGE:
             setTimeout(updateImage.bind(this, action.image), 0);
             break;
-        case MainPageConstants.REMOVE_IMAGE:
+        case AppConstants.REMOVE_IMAGE:
             setTimeout(removeImage.bind(this, action.imageId), 0);
             break;
 

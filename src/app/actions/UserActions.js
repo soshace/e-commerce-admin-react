@@ -1,34 +1,34 @@
 import AppDispatcher from './../AppDispatcher.js';
-import UserConstants from './../constants/UserConstants.js';
+import AppConstants from './../constants/AppConstants.js';
 
 export default {
     login: (email, password) => {
         AppDispatcher.dispatch({
-            actionType: UserConstants.LOGIN_USER,
+            actionType: AppConstants.LOGIN_USER,
             data: {email, password}
         });
     },
 
     logout: () => {
         AppDispatcher.dispatch({
-            actionType: UserConstants.LOGOUT_USER
+            actionType: AppConstants.LOGOUT_USER
         });
     },
 
     register: (email, password, name) => {
         AppDispatcher.dispatch({
-            actionType: UserConstants.REGISTER_USER,
+            actionType: AppConstants.REGISTER_USER,
             data: {email, password, name}
         });
     },
     getUser: () => {
         AppDispatcher.dispatch({
-            actionType: UserConstants.GET_USER
+            actionType: AppConstants.GET_USER
         });
     },
     updateUser: (user) => {
         AppDispatcher.dispatch({
-            actionType: UserConstants.UPDATE_USER,
+            actionType: AppConstants.UPDATE_USER,
             user: user
         });
     },

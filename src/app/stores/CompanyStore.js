@@ -1,6 +1,6 @@
 import AppDispatcher from './../AppDispatcher.js';
 import ProjectStore from './ProjectStore.js';
-import CompanyConstants from './../constants/CompanyConstants.js';
+import AppConstants from './../constants/AppConstants.js';
 import api from './../constants/APIRoutes.js';
 import BaseStore from './BaseStore.js';
 import _ from 'underscore';
@@ -70,13 +70,13 @@ var CompanyStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
-        case CompanyConstants.GET_COMPANIES:
+        case AppConstants.GET_COMPANIES:
             setTimeout(getCompanies, 0);
             break;
-        case CompanyConstants.UPDATE_COMPANY:
+        case AppConstants.UPDATE_COMPANY:
             updateCompany(action.id, action.data);
             break;
-        case CompanyConstants.CREATE_COMPANY:
+        case AppConstants.CREATE_COMPANY:
             createCompany(action.data);
             break;
         }

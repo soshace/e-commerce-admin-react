@@ -1,4 +1,4 @@
-import MainPageConstants from './../constants/MainPageConstants.js';
+import AppConstants from './../constants/AppConstants.js';
 import AppDispatcher from './../AppDispatcher.js';
 import api from './../constants/APIRoutes.js';
 import BaseStore from './BaseStore.js';
@@ -77,19 +77,19 @@ var VariantStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
-        case MainPageConstants.GET_PRODUCT_VARIANTS:
+        case AppConstants.GET_PRODUCT_VARIANTS:
             getProductVariants(action.productId);
             break;
-        case MainPageConstants.CREATE_VARIANT:
+        case AppConstants.CREATE_VARIANT:
             createVariant(action.variant);
             break;
-        case MainPageConstants.UPDATE_VARIANT:
+        case AppConstants.UPDATE_VARIANT:
             updateVariant(action.variant);
             break;
-        case MainPageConstants.REMOVE_VARIANT:
+        case AppConstants.REMOVE_VARIANT:
             removeVariant(action.variantId);
             break;
-        case MainPageConstants.UPDATE_VARIANT_ATTRIBUTE:
+        case AppConstants.UPDATE_VARIANT_ATTRIBUTE:
             updateAttribute(action.variantAttr);
             break;
     }

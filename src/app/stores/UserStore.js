@@ -1,4 +1,4 @@
-import UserConstants from './../constants/UserConstants.js';
+import AppConstants from './../constants/AppConstants.js';
 import AppDispatcher from './../AppDispatcher.js';
 import ProjectStore from './ProjectStore.js';
 import api from './../constants/APIRoutes.js';
@@ -78,7 +78,7 @@ function onRegisterFail(res) {
 }
 
 function onLogin(res) {
-    if (res.code === UserConstants.LOGIN_SUCCESS_CODE) {
+    if (res.code === AppConstants.LOGIN_SUCCESS_CODE) {
         localStorage.setItem('loggedIn', true);
         UserStore.user = Object.assign(UserStore.user || {}, res.user);
         UserStore.emitChange(LOGIN_SUCCESS);
@@ -115,19 +115,19 @@ var UserStore = Object.assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
-        case UserConstants.REGISTER_USER:
+        case AppConstants.REGISTER_USER:
             register(action.data);
             break;
-        case UserConstants.LOGIN_USER:
+        case AppConstants.LOGIN_USER:
             login(action.data);
             break;
-        case UserConstants.LOGOUT_USER:
+        case AppConstants.LOGOUT_USER:
             logout();
             break;
-        case UserConstants.GET_USER:
+        case AppConstants.GET_USER:
             getUser();
             break;
-        case UserConstants.UPDATE_USER:
+        case AppConstants.UPDATE_USER:
             updateUser(action.user);
             break;
     }

@@ -1,4 +1,4 @@
-import ProjectConstants from './../constants/ProjectConstants.js';
+import AppConstants from './../constants/AppConstants.js';
 import AppDispatcher from './../AppDispatcher.js';
 import api from './../constants/APIRoutes.js';
 import BaseStore from './BaseStore.js';
@@ -93,16 +93,16 @@ var ProjectStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
-        case ProjectConstants.GET_PROJECTS:
+        case AppConstants.GET_PROJECTS:
             setTimeout(getProjects, 0);
             break;
-        case ProjectConstants.GET_COMPANY_PROJECTS:
+        case AppConstants.GET_COMPANY_PROJECTS:
             getCompanyProjects(action.id);
             break;
-        case ProjectConstants.ADD_PROJECT:
+        case AppConstants.ADD_PROJECT:
             createProject(action.data);
             break;
-        case ProjectConstants.UPDATE_PROJECT:
+        case AppConstants.UPDATE_PROJECT:
             updateProject(action.data.id, action.data.data);
             break;
     }

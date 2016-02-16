@@ -1,21 +1,21 @@
 import AppDispatcher from './../AppDispatcher.js';
-import CompanyConstants from './../constants/CompanyConstants.js';
+import AppConstants from './../constants/AppConstants.js';
 
 export default {
     getCompanies: () => {
         AppDispatcher.dispatch({
-            actionType: CompanyConstants.GET_COMPANIES
+            actionType: AppConstants.GET_COMPANIES
         });
     },
     createCompany: (data) => {
         AppDispatcher.dispatch({
-            actionType: CompanyConstants.CREATE_COMPANY,
+            actionType: AppConstants.CREATE_COMPANY,
             data: data
         })
     },
     updateCompany: (id, data) => {
         AppDispatcher.dispatch({
-            actionType: CompanyConstants.UPDATE_COMPANY,
+            actionType: AppConstants.UPDATE_COMPANY,
             data: data,
             id: id
         })

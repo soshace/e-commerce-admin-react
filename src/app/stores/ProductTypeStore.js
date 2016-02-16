@@ -1,4 +1,4 @@
-import MainPageConstants from './../constants/MainPageConstants.js';
+import AppConstants from './../constants/AppConstants.js';
 import AppDispatcher from './../AppDispatcher.js';
 import api from './../constants/APIRoutes.js';
 import BaseStore from './BaseStore.js';
@@ -108,25 +108,25 @@ var ProductTypeStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
-        case MainPageConstants.GET_PROJECT_PRODUCT_TYPES:
+        case AppConstants.GET_PROJECT_PRODUCT_TYPES:
             getProjectProductTypes(action.projectId);
             break;
-        case MainPageConstants.GET_PRODUCT_TYPE:
+        case AppConstants.GET_PRODUCT_TYPE:
             getProductType(action.productTypeId, action.withAttrs);
             break;
-        case MainPageConstants.GET_PRODUCT_TYPE_ATTRS:
+        case AppConstants.GET_PRODUCT_TYPE_ATTRS:
             getProductTypeAttributes(action.productTypeId);
             break;
-        case MainPageConstants.CREATE_PRODUCT_TYPE:
+        case AppConstants.CREATE_PRODUCT_TYPE:
             createProductType(action.productType);
             break;
-        case MainPageConstants.UPDATE_PRODUCT_TYPE:
+        case AppConstants.UPDATE_PRODUCT_TYPE:
             updateProductType(action.productType);
             break;
-        case MainPageConstants.ADD_ATTRIBUTE:
+        case AppConstants.ADD_ATTRIBUTE:
             addAttribute(action.newAttribute);
             break;
-        case MainPageConstants.REMOVE_ATTRIBUTE:
+        case AppConstants.REMOVE_ATTRIBUTE:
             removeAttribute(action.attrId);
             break;
     }

@@ -1,5 +1,5 @@
 import AppDispatcher from './../AppDispatcher.js';
-import MainPageConstants from './../constants/MainPageConstants.js';
+import AppConstants from './../constants/AppConstants.js';
 import api from './../constants/APIRoutes.js';
 import BaseStore from './BaseStore.js';
 import _ from 'underscore';
@@ -92,22 +92,22 @@ var ProductStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
-        case MainPageConstants.GET_PRODUCTS:
+        case AppConstants.GET_PRODUCTS:
             setTimeout(getProducts.bind(this, action.update), 0);
             break;
-        case MainPageConstants.GET_PRODUCT:
+        case AppConstants.GET_PRODUCT:
             setTimeout(getProduct.bind(this, action.productId), 0);
             break;
-        case MainPageConstants.UPDATE_PRODUCT:
+        case AppConstants.UPDATE_PRODUCT:
             setTimeout(updateProduct.bind(this, action.product), 0);
             break;
-        case MainPageConstants.UPDATE_PRODUCT_CATEGORY:
+        case AppConstants.UPDATE_PRODUCT_CATEGORY:
             setTimeout(updateProductCategory.bind(this, action.checked, action.productId, action.categoryId), 0);
             break;
-        case MainPageConstants.GET_PROJECT_PRODUCTS:
+        case AppConstants.GET_PROJECT_PRODUCTS:
             setTimeout(getProjectProducts.bind(this, action.update, action.projectId), 0);
             break;
-        case MainPageConstants.CREATE_PRODUCT:
+        case AppConstants.CREATE_PRODUCT:
             setTimeout(createProduct.bind(this, action.data), 0);
             break;
 

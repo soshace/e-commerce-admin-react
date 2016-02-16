@@ -1,48 +1,48 @@
 import AppDispatcher from './../AppDispatcher.js';
-import MainPageConstants from './../constants/MainPageConstants.js';
+import AppConstants from './../constants/AppConstants.js';
 
 
 export default {
     getProjectProductTypes: (projectId) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.GET_PROJECT_PRODUCT_TYPES,
+            actionType: AppConstants.GET_PROJECT_PRODUCT_TYPES,
             projectId: projectId
         });
     },
     getProductType: (productTypeId, withAttrs) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.GET_PRODUCT_TYPE,
+            actionType: AppConstants.GET_PRODUCT_TYPE,
             productTypeId: productTypeId,
             withAttrs: withAttrs
         });
     },
     getProductTypeAttributes: (productTypeId) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.GET_PRODUCT_TYPE_ATTRS,
+            actionType: AppConstants.GET_PRODUCT_TYPE_ATTRS,
             productTypeId: productTypeId
         });
     },
     createProductType: (productType) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.CREATE_PRODUCT_TYPE,
+            actionType: AppConstants.CREATE_PRODUCT_TYPE,
             productType: productType
         });
     },
     updateProductType: (productType) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.UPDATE_PRODUCT_TYPE,
+            actionType: AppConstants.UPDATE_PRODUCT_TYPE,
             productType: productType
         });
     },
     addAttribute: (newAttribute) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.ADD_ATTRIBUTE,
+            actionType: AppConstants.ADD_ATTRIBUTE,
             newAttribute: newAttribute
         });
     },
     removeAttribute: (id) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.REMOVE_ATTRIBUTE,
+            actionType: AppConstants.REMOVE_ATTRIBUTE,
             attrId: id
         });
     }

@@ -1,5 +1,5 @@
 import AppDispatcher from './../AppDispatcher.js';
-import MainPageConstants from './../constants/MainPageConstants.js';
+import AppConstants from './../constants/AppConstants.js';
 import ResponseCodes from './../constants/ResponseCodes.js';
 import api from './../constants/APIRoutes.js';
 import BaseStore from './BaseStore.js';
@@ -109,25 +109,25 @@ var TeamStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
-        case MainPageConstants.GET_TEAMS:
+        case AppConstants.GET_TEAMS:
             setTimeout(getTeams.bind(this, action.companyId), 0);
             break;
-        case MainPageConstants.CREATE_TEAM:
+        case AppConstants.CREATE_TEAM:
             setTimeout(createTeam.bind(this, action.team), 0);
             break;
-        case MainPageConstants.UPDATE_TEAM:
+        case AppConstants.UPDATE_TEAM:
             setTimeout(updateTeam.bind(this, action.team), 0);
             break;
-        case MainPageConstants.REMOVE_TEAM:
+        case AppConstants.REMOVE_TEAM:
             setTimeout(removeTeam.bind(this, action.teamId), 0);
             break;
-        case MainPageConstants.UPDATE_PERMISSION:
+        case AppConstants.UPDATE_PERMISSION:
             setTimeout(updatePermission.bind(this, action.permission), 0);
             break;
-        case MainPageConstants.SEND_INVITE:
+        case AppConstants.SEND_INVITE:
             setTimeout(sendInvite.bind(this, action.invite), 0);
             break;
-        case MainPageConstants.REMOVE_MEMBER:
+        case AppConstants.REMOVE_MEMBER:
             setTimeout(removeMember.bind(this, action.memberId, action.teamId), 0);
             break;
 

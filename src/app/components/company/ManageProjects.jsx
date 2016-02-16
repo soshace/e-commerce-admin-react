@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import {ProjectStore} from './../../stores';
 import {ProjectActions} from './../../actions';
-import ProjectConstants from './../../constants/ProjectConstants.js';
+import AppConstants from './../../constants/AppConstants.js';
 
 
 class ManageProjects extends React.Component {
@@ -11,8 +11,8 @@ class ManageProjects extends React.Component {
         this.state = {
             slug: '',
             name: '',
-            language: ProjectConstants.PROJECT_LANGUAGES[0].key,
-            currency: ProjectConstants.PROJECT_CURRENCIES[0].key,
+            language: AppConstants.PROJECT_LANGUAGES[0].key,
+            currency: AppConstants.PROJECT_CURRENCIES[0].key,
             projects: []
         };
 
@@ -103,14 +103,14 @@ class ManageProjects extends React.Component {
                                 <label className="col-sm-2 control-label">Currency</label>
 
                                 <div className="col-sm-10">
-                                    {this._generateSelect(ProjectConstants.PROJECT_CURRENCIES, 'currency')}
+                                    {this._generateSelect(AppConstants.PROJECT_CURRENCIES, 'currency')}
                                 </div>
                             </div>
                             <div className="form-group form-group">
                                 <label className="col-sm-2 control-label">Language</label>
 
                                 <div className="col-sm-10">
-                                    {this._generateSelect(ProjectConstants.PROJECT_LANGUAGES, 'language')}
+                                    {this._generateSelect(AppConstants.PROJECT_LANGUAGES, 'language')}
                                 </div>
                             </div>
                             <div className="form-group m-t">

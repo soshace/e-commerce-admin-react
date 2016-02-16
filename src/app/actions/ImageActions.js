@@ -1,34 +1,34 @@
 import AppDispatcher from './../AppDispatcher.js';
-import MainPageConstants from './../constants/MainPageConstants.js';
+import AppConstants from './../constants/AppConstants.js';
 
 
 export default {
     getProductImages: () => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.GET_PRODUCT_IMAGES
+            actionType: AppConstants.GET_PRODUCT_IMAGES
         });
     },
     getImage: (imageId) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.GET_IMAGE,
+            actionType: AppConstants.GET_IMAGE,
             imagesId: imageId
         });
     },
     addImage: (image) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.ADD_IMAGE,
+            actionType: AppConstants.ADD_IMAGE,
             image: image
         });
     },
     updateImage: (image) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.UPDATE_IMAGE,
+            actionType: AppConstants.UPDATE_IMAGE,
             image: image
         });
     },
     removeImage: (imageId) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.REMOVE_IMAGE,
+            actionType: AppConstants.REMOVE_IMAGE,
             imagesId: imageId
         });
     }

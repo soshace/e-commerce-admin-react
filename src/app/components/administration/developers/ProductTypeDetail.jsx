@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import {ProductTypeStore} from './../../../stores';
 import {ProductTypeActions} from './../../../actions';
-import { PRODUCT_ATTR_TYPES } from './../../../constants/MainPageConstants.js';
+import { PRODUCT_ATTR_TYPES } from './../../../constants/AppConstants.js';
 
 
 class ProductTypeDetail extends React.Component {

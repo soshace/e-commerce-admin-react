@@ -1,5 +1,5 @@
 import AppDispatcher from './../AppDispatcher.js';
-import MainPageConstants from './../constants/MainPageConstants.js';
+import AppConstants from './../constants/AppConstants.js';
 import api from './../constants/APIRoutes.js';
 import _ from 'underscore';
 import BaseStore from './BaseStore.js';
@@ -81,19 +81,19 @@ var CategoryStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
-        case MainPageConstants.GET_CATEGORIES:
+        case AppConstants.GET_CATEGORIES:
             setTimeout(getCategories.bind(this, action.update), 0);
             break;
-        case MainPageConstants.GET_PROJECT_CATEGORIES:
+        case AppConstants.GET_PROJECT_CATEGORIES:
             setTimeout(getProjectCategories.bind(this, action.update, action.projectId), 0);
             break;
-        case MainPageConstants.GET_CATEGORY:
+        case AppConstants.GET_CATEGORY:
             setTimeout(getCategory.bind(this, action.categoryId), 0);
             break;
-        case MainPageConstants.UPDATE_CATEGORY:
+        case AppConstants.UPDATE_CATEGORY:
             setTimeout(updateCategory.bind(this, action.category), 0);
             break;
-        case MainPageConstants.CREATE_CATEGORY:
+        case AppConstants.CREATE_CATEGORY:
             setTimeout(createCategory.bind(this, action.data), 0);
             break;
 

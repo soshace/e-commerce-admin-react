@@ -1,35 +1,35 @@
 import AppDispatcher from './../AppDispatcher.js';
-import MainPageConstants from './../constants/MainPageConstants.js';
+import AppConstants from './../constants/AppConstants.js';
 
 
 export default {
     getProductVariants: (productId) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.GET_PRODUCT_VARIANTS,
+            actionType: AppConstants.GET_PRODUCT_VARIANTS,
             productId: productId
         });
     },
     createVariant: (variant) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.CREATE_VARIANT,
+            actionType: AppConstants.CREATE_VARIANT,
             variant: variant
         });
     },
     updateVariant: (variant) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.UPDATE_VARIANT,
+            actionType: AppConstants.UPDATE_VARIANT,
             variant: variant
         });
     },
     removeVariant: (variantId) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.REMOVE_VARIANT,
+            actionType: AppConstants.REMOVE_VARIANT,
             variantId: variantId
         });
     },
     updateAttribute: (variantAttr) => {
         AppDispatcher.dispatch({
-            actionType: MainPageConstants.UPDATE_VARIANT_ATTRIBUTE,
+            actionType: AppConstants.UPDATE_VARIANT_ATTRIBUTE,
             variantAttr: variantAttr
         });
     }

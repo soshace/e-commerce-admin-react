@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import { TeamActions } from './../../actions';
 import { TeamStore, ProjectStore } from './../../stores';
-import { PERMISSIONS } from './../../constants/MainPageConstants.js';
+import { PERMISSIONS } from './../../constants/AppConstants.js';
 
 
 class TeamPermissions extends React.Component {
