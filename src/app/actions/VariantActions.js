@@ -43,6 +43,13 @@ export default {
             image: image
         });
     },
+    uploadImage: (image, variant) => {
+        AppDispatcher.dispatch({
+            actionType: AppConstants.UPLOAD_IMAGE,
+            image: image,
+            variant: variant
+        });
+    },
     updateImage: (image) => {
         AppDispatcher.dispatch({
             actionType: AppConstants.UPDATE_IMAGE,

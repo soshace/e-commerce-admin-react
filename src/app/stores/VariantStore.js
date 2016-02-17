@@ -71,7 +71,6 @@ function updateAttribute(variantAttr) {
     });
 }
 
-
 function addImage(image) {
     api.request({
         method: 'POST',
@@ -85,16 +84,32 @@ function addImage(image) {
     });
 }
 
+function uploadImage(image, variant) {
+    api.request({
+        method: 'POST',
+        url: `${api.IMAGES}/upload`,
+        data: image,
+        success: function (res) {
+            var image = {
+                uri: api.UPLOAD_BASE + res.image.uri,
+                variant: variant.id,
+                product: variant.product
+            };
+            addImage(image);
+        }
+    });
+}
+
 function updateImage(image) {
     api.request({
         method: 'PUT',
         url: `${api.IMAGES}/${image.id}`,
         data: image,
         success: function (res) {
-            var images = ImageStore.images,
-                img = _.findWhere(images, {id: res.image.id});
-            Object.assign(img, res.image);
-            ImageStore.emitChange();
+            //var images = ImageStore.images,
+            //    img = _.findWhere(images, {id: res.image.id});
+            //Object.assign(img, res.image);
+            //VariantStore.emitChange();
         }
     });
 }
@@ -104,8 +119,8 @@ function removeImage(id) {
         method: 'DELETE',
         url: `${api.IMAGES}/${id}`,
         success: function (res) {
-            ImageStore.images = _.reject(ImageStore.images, {id: res.image.id});
-            ImageStore.emitChange();
+            //VariantStore.images = _.reject(ImageStore.images, {id: res.image.id});
+            //VariantStore.emitChange();
         }
     });
 }
@@ -134,6 +149,9 @@ AppDispatcher.register(function (action) {
             break;
         case AppConstants.ADD_IMAGE:
             setTimeout(addImage.bind(this, action.image), 0);
+            break;
+        case AppConstants.UPLOAD_IMAGE:
+            setTimeout(uploadImage.bind(this, action.image, action.variant), 0);
             break;
         case AppConstants.UPDATE_IMAGE:
             setTimeout(updateImage.bind(this, action.image), 0);

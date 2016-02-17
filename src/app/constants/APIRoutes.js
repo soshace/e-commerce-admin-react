@@ -4,6 +4,8 @@ var BASE_URL = 'http://162.243.16.54:1337/';
 export default {
     BASE: BASE_URL,
 
+    UPLOAD_BASE: 'http://162.243.16.54:5000/uploaded',
+
     //Auth
     USERS: BASE_URL + 'users',
     LOGIN: BASE_URL + 'users/login',
@@ -27,15 +29,18 @@ export default {
     IMAGES: BASE_URL + 'images',
 
     request: function (options) {
-        return request(options.method, options.url)
-            .type('json')
+        var req = request(options.method, options.url);
+        if (!(options.data instanceof FormData)) {
+            req = req.type('json')
+        }
+        return req
             .withCredentials()
             .send(options.data || {})
-            .end(function(err, res){
+            .end(function (err, res) {
                 var errCb = options.error;
                 if (err) {
                     if (errCb) {
-                        errCb(err);
+                        errCb(res);
                     } else {
                         console.error(err);
                     }

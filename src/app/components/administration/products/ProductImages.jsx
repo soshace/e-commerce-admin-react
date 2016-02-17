@@ -3,6 +3,7 @@ import {VariantStore, ProductTypeStore} from './../../../stores';
 import {VariantActions} from './../../../actions';
 import _ from 'underscore';
 import classnames from 'classnames';
+import api from './../../../constants/APIRoutes.js';
 
 
 class ProductVariants extends React.Component {
@@ -96,6 +97,18 @@ class ProductVariants extends React.Component {
                                         </button>
                                     </form>
                                 </div>
+                                <div className="row">
+                                    <form encType="multipart/form-data">
+                                        <input
+                                            onChange={self._uploadImage.bind(self, variant)}
+                                            onDragOver={self._onFormDragOver}
+                                            onDragLeave={self._onFormDragLeave}
+                                            onDrop={self._onFormDrop}
+                                            className="dropzone"
+                                            type="file"
+                                            name="image"/>
+                                    </form>
+                                </div>
                             </div>
                             <div className="panel-body">
                                 {variant.images.map(function (img) {
@@ -127,6 +140,25 @@ class ProductVariants extends React.Component {
         image.variant = variant.id;
         image.product = variant.product;
         VariantActions.addImage(image);
+        e.preventDefault();
+    }
+
+    _uploadImage(variant, e) {
+        e.preventDefault();
+        var image = new FormData();
+        image.append('image', e.target.files[0]);
+        VariantActions.uploadImage(image, variant);
+    }
+
+    _onFormDragOver(e) {
+        e
+    }
+
+    _onFormDragLeave(e) {
+        e
+    }
+
+    _onFormDrop(e) {
         e.preventDefault();
     }
 }
