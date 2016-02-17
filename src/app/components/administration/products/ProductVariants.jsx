@@ -45,11 +45,6 @@ class ProductVariants extends React.Component {
             <div className="panel-body">
                 <button className="btn btn-default" onClick={this._addVariant}>Add Variant</button>
                 {variants.map(function (variant) {
-                    var removeIconClass = classnames("glyphicon glyphicon-remove col-sm-1 pull-right",
-                        {
-                            "col-sm-offset-6": variant.isMaster,
-                            "col-sm-offset-8": !variant.isMaster
-                        });
                     return (
                         <div key={variant.id} className="panel panel-default">
                             <div className="panel-heading bg-white">
@@ -68,7 +63,7 @@ class ProductVariants extends React.Component {
                                     <div
                                         className="label blue col-sm-2">{variant.isMaster ? 'Master variant' : false}</div>
 
-                                    <a className={removeIconClass}
+                                    <a className="glyphicon glyphicon-remove col-sm-1 pull-right"
                                        onClick={self._removeVariant.bind(self, variant.id)}></a>
                                 </div>
                             </div>

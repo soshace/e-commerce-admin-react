@@ -71,6 +71,45 @@ function updateAttribute(variantAttr) {
     });
 }
 
+
+function addImage(image) {
+    api.request({
+        method: 'POST',
+        url: api.IMAGES,
+        data: image,
+        success: function (res) {
+            var variant = _.findWhere(VariantStore.selectedVariants, {id: res.image.variant});
+            variant.images.push(res.image);
+            VariantStore.emitChange();
+        }
+    });
+}
+
+function updateImage(image) {
+    api.request({
+        method: 'PUT',
+        url: `${api.IMAGES}/${image.id}`,
+        data: image,
+        success: function (res) {
+            var images = ImageStore.images,
+                img = _.findWhere(images, {id: res.image.id});
+            Object.assign(img, res.image);
+            ImageStore.emitChange();
+        }
+    });
+}
+
+function removeImage(id) {
+    api.request({
+        method: 'DELETE',
+        url: `${api.IMAGES}/${id}`,
+        success: function (res) {
+            ImageStore.images = _.reject(ImageStore.images, {id: res.image.id});
+            ImageStore.emitChange();
+        }
+    });
+}
+
 var VariantStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
     variant: null,
     selectedVariants: []
@@ -92,6 +131,15 @@ AppDispatcher.register(function (action) {
             break;
         case AppConstants.UPDATE_VARIANT_ATTRIBUTE:
             updateAttribute(action.variantAttr);
+            break;
+        case AppConstants.ADD_IMAGE:
+            setTimeout(addImage.bind(this, action.image), 0);
+            break;
+        case AppConstants.UPDATE_IMAGE:
+            setTimeout(updateImage.bind(this, action.image), 0);
+            break;
+        case AppConstants.REMOVE_IMAGE:
+            setTimeout(removeImage.bind(this, action.imageId), 0);
             break;
     }
 });

@@ -27,10 +27,32 @@ export default {
             variantId: variantId
         });
     },
+
+    // Attributes
     updateAttribute: (variantAttr) => {
         AppDispatcher.dispatch({
             actionType: AppConstants.UPDATE_VARIANT_ATTRIBUTE,
             variantAttr: variantAttr
+        });
+    },
+
+    // Images
+    addImage: (image) => {
+        AppDispatcher.dispatch({
+            actionType: AppConstants.ADD_IMAGE,
+            image: image
+        });
+    },
+    updateImage: (image) => {
+        AppDispatcher.dispatch({
+            actionType: AppConstants.UPDATE_IMAGE,
+            image: image
+        });
+    },
+    removeImage: (imageId) => {
+        AppDispatcher.dispatch({
+            actionType: AppConstants.REMOVE_IMAGE,
+            imagesId: imageId
         });
     }
 }
