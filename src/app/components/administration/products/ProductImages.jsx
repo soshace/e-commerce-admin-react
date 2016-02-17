@@ -101,9 +101,7 @@ class ProductVariants extends React.Component {
                                     <form encType="multipart/form-data">
                                         <input
                                             onChange={self._uploadImage.bind(self, variant)}
-                                            onDragOver={self._onFormDragOver}
-                                            onDragLeave={self._onFormDragLeave}
-                                            onDrop={self._onFormDrop}
+                                            onDrop={self._uploadImage.bind(self, variant)}
                                             className="dropzone"
                                             type="file"
                                             name="image"/>
@@ -144,23 +142,18 @@ class ProductVariants extends React.Component {
     }
 
     _uploadImage(variant, e) {
-        e.preventDefault();
-        var image = new FormData();
-        image.append('image', e.target.files[0]);
+        var file,
+            image = new FormData();
+        if (e.dataTransfer) {
+            file = e.dataTransfer.files[0];
+        } else {
+            file = e.target.files[0];
+        }
+        image.append('image', file);
         VariantActions.uploadImage(image, variant);
-    }
-
-    _onFormDragOver(e) {
-        e
-    }
-
-    _onFormDragLeave(e) {
-        e
-    }
-
-    _onFormDrop(e) {
         e.preventDefault();
     }
+
 }
 
 export default ProductVariants
