@@ -37,9 +37,10 @@ function updateVariant(variant) {
         url: `${api.VARIANTS}/${variant.id}`,
         data: variant,
         success: function (res) {
-            //VariantStore.selectedVariants.push(res.variant);
-            //VariantStore.emitChange();
-            //getProductVariants(variant.product);
+            var selectedVariants = VariantStore.selectedVariants,
+                variant = _.findWhere(selectedVariants, {id: res.variant.id});
+            Object.assign(variant, res.variant);
+            VariantStore.emitChange();
         }
     });
 }
