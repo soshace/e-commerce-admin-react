@@ -110,8 +110,14 @@ class ProductVariants extends React.Component {
                             </div>
                             <div className="panel-body">
                                 {variant.images.map(function (img) {
-                                    return <img key={img.id} src={img.uri} className="b p-xs img-rounded" width="150"
-                                                height="110"/>
+                                    return (
+                                        <div key={img.id} className="inline well">
+                                            <img src={img.uri} className="b p-xs img-rounded" width="150"
+                                                 height="110"/>
+                                            <a onClick={self._removeImage.bind(self, img.id)}
+                                               className="glyphicon glyphicon-remove vtop"></a>
+                                        </div>
+                                    )
                                 })}
                             </div>
                         </div>
@@ -152,6 +158,10 @@ class ProductVariants extends React.Component {
         image.append('image', file);
         VariantActions.uploadImage(image, variant);
         e.preventDefault();
+    }
+
+    _removeImage(imageId) {
+        VariantActions.removeImage(imageId);
     }
 
 }

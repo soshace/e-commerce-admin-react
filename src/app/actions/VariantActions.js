@@ -59,7 +59,7 @@ export default {
     removeImage: (imageId) => {
         AppDispatcher.dispatch({
             actionType: AppConstants.REMOVE_IMAGE,
-            imagesId: imageId
+            imageId: imageId
         });
     }
 }

@@ -106,10 +106,7 @@ function updateImage(image) {
         url: `${api.IMAGES}/${image.id}`,
         data: image,
         success: function (res) {
-            //var images = ImageStore.images,
-            //    img = _.findWhere(images, {id: res.image.id});
-            //Object.assign(img, res.image);
-            //VariantStore.emitChange();
+
         }
     });
 }
@@ -119,8 +116,9 @@ function removeImage(id) {
         method: 'DELETE',
         url: `${api.IMAGES}/${id}`,
         success: function (res) {
-            //VariantStore.images = _.reject(ImageStore.images, {id: res.image.id});
-            //VariantStore.emitChange();
+            var variant = _.findWhere(VariantStore.selectedVariants, {id: res.image[0].variant});
+            variant.images = _.reject(variant.images, {id: id});
+            VariantStore.emitChange();
         }
     });
 }
