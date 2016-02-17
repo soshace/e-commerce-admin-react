@@ -10,16 +10,14 @@ class AccountMenu extends React.Component {
 
     render() {
         return (
-            <div className="col-md-3">
-                <ul className="nav nav-lists b-t" ui-nav>
-                    <li className="active">
-                        <Link to={`account/profile`}>Your profile</Link>
-                    </li>
-                    <li>
-                        <Link to={`account/companies`}>Companies</Link>
-                    </li>
-                </ul>
-            </div>
+            <ul className="nav nav-lists b-t">
+                <li className="active">
+                    <Link to={`/account/profile`}>Your profile</Link>
+                </li>
+                <li>
+                    <Link to={`/account/companies`}>Companies</Link>
+                </li>
+            </ul>
         )
     }
 }
