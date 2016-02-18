@@ -10,9 +10,12 @@ class ProductPrices extends React.Component {
         super(props);
 
         this.state = {
-            variants: []
+            variants: [],
+            project: null,
+            newPrices: {}
         };
 
+        this._onVariantsChange = this._onVariantsChange.bind(this);
     }
 
     componentDidMount() {
@@ -24,15 +27,16 @@ class ProductPrices extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
-        this.setState({variants: newProps.variants});
+        this.setState({variants: newProps.variants, project: newProps.project});
     }
 
     render() {
-        var { variants, newImages } = this.state,
+        var { variants, project, newPrices } = this.state,
             self = this;
         return (
             <div className="panel-body">
                 {variants.map(function (variant) {
+                    newPrices[variant.id] = newPrices[variant.id] || {};
                     return (
                         <div key={variant.id} className="panel panel-default">
                             <div className="panel-heading bg-white">
@@ -82,11 +86,35 @@ class ProductPrices extends React.Component {
                                                     {price.price}
                                                 </td>
                                                 <td>
-                                                    {price.country}
+                                                    country here (to be done)
+                                                </td>
+                                                <td>
+                                                    <a className="glyphicon glyphicon-remove"
+                                                       onClick={self._removePrice.bind(self, price.id)}></a>
                                                 </td>
                                             </tr>
                                         )
                                     })}
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            {self._generateSelect(project.currency, 'currency')}
+                                        </td>
+                                        <td>
+                                            <input type="text"
+                                                   value={newPrices[variant.id].price}
+                                                   onChange={self._onNewPriceChange.bind(self, 'price', variant.id)}
+                                                   className="form-control"
+                                                   placeholder="price"/>
+                                        </td>
+                                        <td>
+                                            country here (to be done)
+                                        </td>
+                                        <td>
+                                            <a className="glyphicon glyphicon-ok"
+                                               onClick={self._addPrice.bind(self, variant)}></a>
+                                        </td>
+                                    </tr>
 
                                     </tbody>
                                 </table>
@@ -98,41 +126,38 @@ class ProductPrices extends React.Component {
         )
     }
 
-    _onVariantsChange() {
-
+    _generateSelect(options, name) {
+        return (
+            <select name={name} className="form-control">
+                {options.map(function (item, index) {
+                    return (<option key={index} value={item}>{item}</option>)
+                })}
+            </select>
+        )
     }
 
-    //_onNewImageChange(field, variantId, e) {
-    //    var newImages = this.state.newImages;
-    //    newImages[variantId][field] = e.target.value;
-    //    this.setState({newImages: newImages});
-    //}
-    //
-    //_addImage(variant, e) {
-    //    var newImages = this.state.newImages,
-    //        image = newImages[variant.id];
-    //    image.variant = variant.id;
-    //    image.product = variant.product;
-    //    VariantActions.addImage(image);
-    //    e.preventDefault();
-    //}
-    //
-    //_uploadImage(variant, e) {
-    //    var file,
-    //        image = new FormData();
-    //    if (e.dataTransfer) {
-    //        file = e.dataTransfer.files[0];
-    //    } else {
-    //        file = e.target.files[0];
-    //    }
-    //    image.append('image', file);
-    //    VariantActions.uploadImage(image, variant);
-    //    e.preventDefault();
-    //}
-    //
-    //_removeImage(imageId) {
-    //    VariantActions.removeImage(imageId);
-    //}
+    _addPrice(variant) {
+        var { newPrices, project } = this.state,
+            price = newPrices[variant.id];
+        price.variant = variant.id;
+        price.product = variant.product;
+        price.currency = price.currency || project.currency[0];
+        VariantActions.addPrice(price);
+    }
+
+    _onVariantsChange() {
+        this.setState({newPrices: {}})
+    }
+
+    _removePrice(priceId) {
+        VariantActions.removePrice(priceId);
+    }
+
+    _onNewPriceChange(field, variantId, e) {
+        var { newPrices } = this.state;
+        newPrices[variantId][field] = e.target.value;
+        this.setState({newPrices: newPrices});
+    }
 
 }
 

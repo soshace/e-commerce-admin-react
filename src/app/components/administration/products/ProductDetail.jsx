@@ -82,7 +82,7 @@ class ProductDetail extends React.Component {
                         <ProductImages variants={variants}/>
                     </div>
                     <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_6">
-                        <ProductPrices variants={variants}/>
+                        <ProductPrices variants={variants} project={project} />
                     </div>
                 </div>
             </div>
