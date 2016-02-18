@@ -18,7 +18,7 @@ import {
 var Routes = (
     <Router history={browserHistory}>
         <Route path="/" component={App}>
-            <IndexRedirect to="logout"/>
+            <IndexRedirect to="signin"/>
             <Route path="signin" component={Login} meta={{requireAuth: false}}/>
             <Route path="signup" component={Register} meta={{requireAuth: false}}/>
             <Route path="logout" component={Logout} meta={{requireAuth: false}}/>

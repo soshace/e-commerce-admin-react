@@ -37,12 +37,17 @@ class App extends React.Component {
     }
 
     render() {
-        var { user, companies, projects, requiredAuth } = this.state,
-            children;
+        var { user, companies, projects } = this.state,
+            children,
+            requiredAuth = this.props.children && this.props.children.props.route.meta.requireAuth;
 
-        //if (user || !requiredAuth) {
+        if (!requiredAuth) {
+            children = this.props.children
+        }
+        if (user && companies && projects) {
             children = childrenWithProps(this, {user, companies, projects});
-        //}
+        }
+
         return <div>{children}</div>
     }
 
