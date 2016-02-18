@@ -123,6 +123,45 @@ function removeImage(id) {
     });
 }
 
+function addPrice(price) {
+    api.request({
+        method: 'POST',
+        url: api.PRICES,
+        data: price,
+        success: function (res) {
+            var variant = _.findWhere(VariantStore.selectedVariants, {id: res.price.variant});
+            variant.prices.push(res.price);
+            VariantStore.emitChange();
+        }
+    });
+}
+
+function updatePrice(price) {
+    api.request({
+        method: 'PUT',
+        url: `${api.PRICES}/${price.id}`,
+        data: price,
+        success: function (res) {
+            var variant = _.findWhere(VariantStore.selectedVariants, {id: res.price.variant}),
+                price = _.findWhere(variant.prices, {id: res.price.id});
+            Object.assign(price, res.price);
+            VariantStore.emitChange();
+        }
+    });
+}
+
+function removePrice(id) {
+    api.request({
+        method: 'DELETE',
+        url: `${api.PRICES}/${id}`,
+        success: function (res) {
+            var variant = _.findWhere(VariantStore.selectedVariants, {id: res.price[0].variant});
+            variant.prices = _.reject(variant.prices, {id: id});
+            VariantStore.emitChange();
+        }
+    });
+}
+
 var VariantStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
     variant: null,
     selectedVariants: []
@@ -156,6 +195,15 @@ AppDispatcher.register(function (action) {
             break;
         case AppConstants.REMOVE_IMAGE:
             setTimeout(removeImage.bind(this, action.imageId), 0);
+            break;
+        case AppConstants.ADD_PRICE:
+            setTimeout(addPrice.bind(this, action.price), 0);
+            break;
+        case AppConstants.UPDATE_PRICE:
+            setTimeout(updatePrice.bind(this, action.price), 0);
+            break;
+        case AppConstants.REMOVE_PRICE:
+            setTimeout(removePrice.bind(this, action.priceId), 0);
             break;
     }
 });

@@ -61,5 +61,27 @@ export default {
             actionType: AppConstants.REMOVE_IMAGE,
             imageId: imageId
         });
+    },
+
+    // Prices
+    addPrice: (price) => {
+        AppDispatcher.dispatch({
+            actionType: AppConstants.ADD_PRICE,
+            price: price
+        });
+    },
+
+    updatePrice: (price) => {
+        AppDispatcher.dispatch({
+            actionType: AppConstants.UPDATE_PRICE,
+            price: price
+        });
+    },
+    removePrice: (priceId) => {
+        AppDispatcher.dispatch({
+            actionType: AppConstants.REMOVE_PRICE,
+            priceId: priceId
+        });
     }
+
 }

@@ -44,35 +44,33 @@ class ProductTypeList extends React.Component {
                         <i className="fa fa-plus"></i>
                     </Link>
                 </div>
-                <div>
-                    <table className="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>
-                                Name
-                            </th>
-                            <th>
-                                Description
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {productTypes.map(function (type) {
-                            return (
-                                <tr key={type.id}>
-                                    <td>
-                                        <Link to={`/${projectKey}/developers/types/${type.id}`}>{type.name}</Link>
-                                    </td>
-                                    <td>
-                                        {type.description}
-                                    </td>
-                                </tr>
-                            )
-                        })}
+                <table className="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {productTypes.map(function (type) {
+                        return (
+                            <tr key={type.id}>
+                                <td>
+                                    <Link to={`/${projectKey}/developers/types/${type.id}`}>{type.name}</Link>
+                                </td>
+                                <td>
+                                    {type.description}
+                                </td>
+                            </tr>
+                        )
+                    })}
 
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
         )
     }

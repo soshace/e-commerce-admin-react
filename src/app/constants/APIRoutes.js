@@ -27,6 +27,7 @@ export default {
     VARIANT_ATTRIBUTES: BASE_URL + 'variant_attributes',
     CATEGORIES: BASE_URL + 'categories',
     IMAGES: BASE_URL + 'images',
+    PRICES: BASE_URL + 'prices',
 
     // Location
     LANGUAGES: BASE_URL + 'languages/en',

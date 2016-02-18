@@ -7,6 +7,7 @@ import ProductOverview from './ProductOverview.jsx';
 import ProductCategories from './ProductCategories.jsx';
 import ProductVariants from './ProductVariants.jsx';
 import ProductImages from './ProductImages.jsx';
+import ProductPrices from './ProductPrices.jsx';
 
 
 class ProductDetail extends React.Component {
@@ -59,22 +60,29 @@ class ProductDetail extends React.Component {
                     <li>
                         <a href data-toggle="tab" data-target="#tab_5">Images</a>
                     </li>
+                    <li>
+                        <a href data-toggle="tab" data-target="#tab_6">Prices</a>
+                    </li>
                 </ul>
                 <div className="tab-content p m-b-md b-t b-t-2x">
                     <div role="tabpanel" className="tab-pane animated fadeIn active" id="tab_1">
-                        <ProductOverview product={product} productTypes={productTypes} />
+                        <ProductOverview product={product} productTypes={productTypes}/>
                     </div>
                     <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_2">
-                        <ProductUpdate product={product} productTypes={productTypes} />
+                        <ProductUpdate product={product} productTypes={productTypes}/>
                     </div>
                     <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_3">
-                        <ProductCategories product={product} project={project} />
+                        <ProductCategories product={product} project={project}/>
                     </div>
                     <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_4">
-                        <ProductVariants variants={variants} product={product} project={project} productAttributes={productAttributes} />
+                        <ProductVariants variants={variants} product={product} project={project}
+                                         productAttributes={productAttributes}/>
                     </div>
                     <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_5">
-                        <ProductImages variants={variants} />
+                        <ProductImages variants={variants}/>
+                    </div>
+                    <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_6">
+                        <ProductPrices variants={variants}/>
                     </div>
                 </div>
             </div>
