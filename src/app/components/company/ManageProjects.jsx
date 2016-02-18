@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-import {ProjectStore} from './../../stores';
-import {ProjectActions} from './../../actions';
+import { ProjectStore, LocationStore } from './../../stores';
+import { ProjectActions, LocationActions } from './../../actions';
 import AppConstants from './../../constants/AppConstants.js';
 
 
@@ -11,29 +11,36 @@ class ManageProjects extends React.Component {
         this.state = {
             slug: '',
             name: '',
-            language: AppConstants.PROJECT_LANGUAGES[0].key,
-            currency: AppConstants.PROJECT_CURRENCIES[0].key,
-            projects: []
+            language: null,
+            currency: null,
+            projects: [],
+            languages: [],
+            currencies: []
         };
 
         this._onProjectsGet = this._onProjectsGet.bind(this);
         this._onSubmit = this._onSubmit.bind(this);
         this._onFieldUpdate = this._onFieldUpdate.bind(this);
         this._onNameKeyPress = this._onNameKeyPress.bind(this);
+        this._onLocationInfoGet = this._onLocationInfoGet.bind(this);
     }
 
     componentDidMount() {
         var companyId = this.props.params.companyId;
         ProjectStore.addChangeListener(this._onProjectsGet);
+        LocationStore.addChangeListener(this._onLocationInfoGet);
         ProjectActions.getCompanyProjects(companyId);
+        LocationActions.getLanguages();
+        LocationActions.getCurrencies();
     }
 
     componentWillUnmount() {
         ProjectStore.removeChangeListener(this._onProjectsGet);
+        LocationStore.removeChangeListener(this._onLocationInfoGet);
     }
 
     render() {
-        var projects = this.state.projects,
+        var { projects, languages, currencies } = this.state,
             self = this;
 
         return (
@@ -103,14 +110,14 @@ class ManageProjects extends React.Component {
                                 <label className="col-sm-2 control-label">Currency</label>
 
                                 <div className="col-sm-10">
-                                    {this._generateSelect(AppConstants.PROJECT_CURRENCIES, 'currency')}
+                                    {this._generateSelect(currencies, 'currency')}
                                 </div>
                             </div>
                             <div className="form-group form-group">
                                 <label className="col-sm-2 control-label">Language</label>
 
                                 <div className="col-sm-10">
-                                    {this._generateSelect(AppConstants.PROJECT_LANGUAGES, 'language')}
+                                    {this._generateSelect(languages, 'language')}
                                 </div>
                             </div>
                             <div className="form-group m-t">
@@ -135,17 +142,19 @@ class ManageProjects extends React.Component {
     }
 
     _onSubmit(e) {
-        var companyId = this.props.params.companyId;
-        var {name, slug, currency, language} = this.state;
-        e.preventDefault();
+        var companyId = this.props.params.companyId,
+            {name, slug, currency, currencies, language, languages} = this.state;
+        language = language || languages[0].isoCode;
+        currency = currency || currencies[0].isoCode;
         ProjectActions.createProject(name, slug, currency, language, companyId);
+        e.preventDefault();
     }
 
     _generateSelect(options, name) {
         return (
             <select name={name} className="form-control" onChange={this._onFieldUpdate(name)}>
-                {options.map(function (item) {
-                    return (<option key={item.key} value={item.key}>{item.text}</option>)
+                {options.map(function (item, index) {
+                    return (<option key={index} value={item.isoCode}>{item.name}</option>)
                 })}
             </select>
         )
@@ -164,6 +173,15 @@ class ManageProjects extends React.Component {
         this.setState({projects: projects});
         //var projectSlug = ProjectStore.projects[0].slug;
         //this.context.router.push(`${projectSlug}/dashboard`);
+    }
+
+    _onLocationInfoGet() {
+        var currencies = LocationStore.currencies,
+            languages = LocationStore.languages;
+
+        if (languages && currencies) {
+            this.setState({languages, currencies});
+        }
     }
 }
 

@@ -91,6 +91,11 @@ export default {
     UPDATE_IMAGE: 'UPDATE_IMAGE',
     REMOVE_IMAGE: 'REMOVE_IMAGE',
 
+    // Locales
+    GET_COUNTRIES: 'GET_COUNTRIES',
+    GET_LANGUAGES: 'GET_LANGUAGES',
+    GET_CURRENCIES: 'GET_CURRENCIES',
+
     PRODUCT_ATTR_TYPES: [
         'text', 'boolean', 'localizedText', 'enum', 'localizedEnum',
         'number', 'money', 'date', 'time', 'dateTime', 'set', 'reference'],

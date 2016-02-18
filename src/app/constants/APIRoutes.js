@@ -28,6 +28,11 @@ export default {
     CATEGORIES: BASE_URL + 'categories',
     IMAGES: BASE_URL + 'images',
 
+    // Location
+    LANGUAGES: BASE_URL + 'languages/en',
+    COUNTRIES: BASE_URL + 'countries/en',
+    CURRENCIES: BASE_URL + 'currencies/en',
+
     request: function (options) {
         var req = request(options.method, options.url);
         if (!(options.data instanceof FormData)) {
