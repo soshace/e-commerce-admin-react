@@ -142,7 +142,7 @@ function updatePrice(price) {
         url: `${api.PRICES}/${price.id}`,
         data: price,
         success: function (res) {
-            var variant = _.findWhere(VariantStore.selectedVariants, {id: res.price.variant}),
+            var variant = _.findWhere(VariantStore.selectedVariants, {id: res.price.variant.id}),
                 price = _.findWhere(variant.prices, {id: res.price.id});
             Object.assign(price, res.price);
             VariantStore.emitChange();

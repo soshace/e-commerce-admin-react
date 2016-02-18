@@ -83,10 +83,18 @@ class ProductPrices extends React.Component {
                                                     {price.currency}
                                                 </td>
                                                 <td>
-                                                    {price.price}
+                                                    <input type="text"
+                                                           value={price.price}
+                                                           onChange={self._onPriceChange.bind(self, price, 'price')}
+                                                           className="form-control"
+                                                           placeholder="price"/>
                                                 </td>
                                                 <td>
                                                     country here (to be done)
+                                                </td>
+                                                <td>
+                                                    <a className="glyphicon glyphicon-ok"
+                                                       onClick={self._updatePrice.bind(self, price)}></a>
                                                 </td>
                                                 <td>
                                                     <a className="glyphicon glyphicon-remove"
@@ -114,6 +122,7 @@ class ProductPrices extends React.Component {
                                             <a className="glyphicon glyphicon-ok"
                                                onClick={self._addPrice.bind(self, variant)}></a>
                                         </td>
+                                        <td></td>
                                     </tr>
 
                                     </tbody>
@@ -124,6 +133,12 @@ class ProductPrices extends React.Component {
                 })}
             </div>
         )
+    }
+
+    _onPriceChange(price, field, e) {
+        var { variants } = this.state;
+        price[field] = e.target.value;
+        this.setState({variants: variants});
     }
 
     _generateSelect(options, name) {
@@ -145,12 +160,16 @@ class ProductPrices extends React.Component {
         VariantActions.addPrice(price);
     }
 
-    _onVariantsChange() {
-        this.setState({newPrices: {}})
+    _updatePrice(price) {
+        VariantActions.updatePrice(price);
     }
 
     _removePrice(priceId) {
         VariantActions.removePrice(priceId);
+    }
+
+    _onVariantsChange() {
+        this.setState({newPrices: {}})
     }
 
     _onNewPriceChange(field, variantId, e) {
