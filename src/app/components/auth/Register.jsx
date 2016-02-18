@@ -32,6 +32,7 @@ class Register extends React.Component {
         this.getValidatorData = this.getValidatorData.bind(this);
         this.renderHelpText = this.renderHelpText.bind(this);
         this.getClasses = this.getClasses.bind(this);
+        this.getInputClasses = this.getInputClasses.bind(this);
         this._onSubmit = this._onSubmit.bind(this);
         this._onRegisterSuccess = this._onRegisterSuccess.bind(this);
         this._onRegisterFail = this._onRegisterFail.bind(this);
@@ -84,7 +85,7 @@ class Register extends React.Component {
                     <form name="form" onSubmit={this._onSubmit}>
                         <div className={this.getClasses('name')}>
                             <input type="text"
-                                   className="md-input form-control"
+                                   className={this.getInputClasses('name')}
                                    onChange={this._onChange('name')}
                                    onBlur={this.props.handleValidation('name')}
                                 />
@@ -94,7 +95,7 @@ class Register extends React.Component {
 
                         <div className={this.getClasses('email')}>
                             <input type="email"
-                                   className="md-input form-control"
+                                   className={this.getInputClasses('email')}
                                    onChange={this._onChange('email')}
                                    onBlur={this.props.handleValidation('email')}
                                 />
@@ -104,7 +105,7 @@ class Register extends React.Component {
 
                         <div className={this.getClasses('password')}>
                             <input type="password"
-                                   className="md-input form-control"
+                                   className={this.getInputClasses('password')}
                                    onChange={this._onChange('password')}
                                    onBlur={this.props.handleValidation('password')}
                                 />
@@ -130,6 +131,12 @@ class Register extends React.Component {
     getClasses(field) {
         return classnames("md-form-group float-label form-group", {
             'has-error': !this.props.isValid(field)
+        });
+    }
+
+    getInputClasses(field) {
+        return classnames("md-input form-control", {
+            'has-value': this.state[field].length
         });
     }
 

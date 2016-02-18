@@ -29,6 +29,7 @@ class Login extends Component {
         this.getValidatorData = this.getValidatorData.bind(this);
         this.renderHelpText = this.renderHelpText.bind(this);
         this.getClasses = this.getClasses.bind(this);
+        this.getInputClasses = this.getInputClasses.bind(this);
         this._onSubmit = this._onSubmit.bind(this);
         this._onLoginSuccess = this._onLoginSuccess.bind(this);
         this._onLoginFail = this._onLoginFail.bind(this);
@@ -76,7 +77,7 @@ class Login extends Component {
                     <form onSubmit={this._onSubmit}>
                         <div className={this.getClasses('email')}>
                             <input type="email"
-                                   className="md-input form-control"
+                                   className={this.getInputClasses('email')}
                                    onChange={this._onChange('email')}
                                    onBlur={this.props.handleValidation('email')}
                                 />
@@ -86,7 +87,7 @@ class Login extends Component {
 
                         <div className={this.getClasses('password')}>
                             <input type="password"
-                                   className="md-input form-control"
+                                   className={this.getInputClasses('password')}
                                    onChange={this._onChange('password')}
                                    onBlur={this.props.handleValidation('password')}
                                 />
@@ -115,6 +116,12 @@ class Login extends Component {
     getClasses(field) {
         return classnames("md-form-group float-label form-group", {
             'has-error': !this.props.isValid(field)
+        });
+    }
+
+    getInputClasses(field) {
+        return classnames("md-input form-control", {
+            'has-value': this.state[field].length
         });
     }
 
