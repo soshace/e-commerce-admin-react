@@ -9,27 +9,19 @@ import {
     NewCategory, CategoryList, Categories, CategoryDetail,
     Developers, ProductTypes, ProductTypeList, ProductTypeAdd, ProductTypeDetail,
     NotFound,
-    Login, Register,
+    Login, Register, Logout,
     Dashboard, AdminPanelPage,
     ManageProjects, TeamList, CompanyProfile, Company, NewCompany
 } from './../components';
 
 
-function requireAuth(nextState, replace) {
-    if (!UserStore.loggedIn()) {
-        replace({
-            pathname: '/signin',
-            state: {nextPathname: nextState.location.pathname}
-        })
-    }
-}
-
 var Routes = (
     <Router history={browserHistory}>
         <Route path="/" component={App}>
-            <IndexRedirect to="signin"/>
+            <IndexRedirect to="logout"/>
             <Route path="signin" component={Login} meta={{requireAuth: false}}/>
             <Route path="signup" component={Register} meta={{requireAuth: false}}/>
+            <Route path="logout" component={Logout} meta={{requireAuth: false}}/>
             <Route path="account" component={Account} meta={{requireAuth: true}}>
                 <IndexRedirect to="profile"/>
                 <Route path="profile" component={AccountSettings}/>

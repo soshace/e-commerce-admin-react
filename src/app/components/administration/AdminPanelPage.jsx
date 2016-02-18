@@ -12,8 +12,8 @@ class AdminPanelPage extends React.Component {
         super(props);
 
         this.state = {
-            projects: this.props.projects,
-            companies: this.props.companies,
+            projects: this.props.projects || [],
+            companies: this.props.companies || [],
             user: this.props.user,
             project: null
         };

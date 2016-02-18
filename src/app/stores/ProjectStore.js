@@ -11,9 +11,9 @@ var projectsRequestPending = false;
 
 function getProjects() {
     if (projectsRequestPending) return;
-    if (ProjectStore.projects) {
-        ProjectStore.emitChange();
-    } else {
+    //if (ProjectStore.projects) {
+    //    ProjectStore.emitChange();
+    //} else {
         projectsRequestPending = true;
         api.request({
             url: api.PROJECTS,
@@ -28,13 +28,13 @@ function getProjects() {
                 console.error(err);
             }
         });
-    }
+    //}
 }
 
 function getCompanyProjects(companyId) {
-    if (ProjectStore.companyProjects[companyId]) {
-        ProjectStore.emitChange(CHANGE_EVENT);
-    } else {
+    //if (ProjectStore.companyProjects[companyId]) {
+    //    ProjectStore.emitChange(CHANGE_EVENT);
+    //} else {
         api.request({
             method: 'GET',
             url: `${api.COMPANIES}/${companyId}/projects`,
@@ -43,7 +43,7 @@ function getCompanyProjects(companyId) {
                 ProjectStore.emitChange(CHANGE_EVENT);
             }
         });
-    }
+    //}
 }
 
 function createProject(data) {

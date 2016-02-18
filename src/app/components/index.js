@@ -21,6 +21,7 @@ import _CategoryDetail from './administration/categories/CategoryDetail.jsx';
 import _NotFound  from './NotFound.jsx';
 
 import _Login from './auth/Login.jsx';
+import _Logout from './auth/Logout.jsx';
 import _Register from './auth/Register.jsx';
 
 import _Dashboard  from './administration/Dashboard.jsx';
@@ -58,6 +59,7 @@ export default {
     NotFound: _NotFound,
 
     Login: _Login,
+    Logout: _Logout,
     Register: _Register,
 
     Dashboard: _Dashboard,

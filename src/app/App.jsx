@@ -10,9 +10,9 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            user: null
-        }
-        ;
+            user: null,
+            requiredAuth: this.props.children && this.props.children.props.route.meta.requireAuth
+        };
 
         this._onUserGet = this._onUserGet.bind(this);
         this._onPropertyGet = this._onPropertyGet.bind(this);
@@ -25,7 +25,9 @@ class App extends React.Component {
         CompanyStore.addChangeListener(this._onPropertyGet);
         UserStore.addChangeListener(this._onUserGet);
 
-        UserActions.getUser();
+        if (this.state.requiredAuth) {
+            UserActions.getUser();
+        }
     }
 
     componentWillUnmount() {
@@ -34,18 +36,13 @@ class App extends React.Component {
         UserStore.removeChangeListener(this._onUserGet);
     }
 
-    componentWillReceiveProps() {
-        this.setState({user: UserStore.user});
-    }
-
     render() {
-        var { user, companies, projects } = this.state,
-            children,
-            requiredAuth = this.props.children && this.props.children.props.route.meta.requireAuth;
+        var { user, companies, projects, requiredAuth } = this.state,
+            children;
 
-        if (user || !requiredAuth) {
-            children = childrenWithProps(this, { user, companies, projects });
-        }
+        //if (user || !requiredAuth) {
+            children = childrenWithProps(this, {user, companies, projects});
+        //}
         return <div>{children}</div>
     }
 
@@ -58,12 +55,12 @@ class App extends React.Component {
     _onUserGet() {
         var user = UserStore.user;
 
-        if (!user.email) {
+        if (user.email) {
+            CompanyActions.getCompanies();
+            ProjectActions.getProjects();
+        } else {
             this.context.router.push('/signin');
         }
-
-        CompanyActions.getCompanies();
-        ProjectActions.getProjects();
     }
 
     _onPropertyGet() {

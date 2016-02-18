@@ -13,8 +13,8 @@ class Company extends React.Component {
 
         this.state = {
             company: CompanyStore.getCompanyById(this.props.params.companyId),
-            projects: this.props.projects,
-            companies: this.props.companies,
+            projects: this.props.projects || [],
+            companies: this.props.companies || [],
             user: this.props.user,
             project: ProjectStore.getProjectByKey(this.props.params.projectKey)
         };

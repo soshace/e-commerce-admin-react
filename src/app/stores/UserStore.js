@@ -5,6 +5,7 @@ import api from './../constants/APIRoutes.js';
 
 var EventEmitter = require('events').EventEmitter;
 var LOGIN_SUCCESS = 'login_success';
+var LOGOUT_SUCCESS = 'logout_success';
 var LOGIN_ERROR = 'login_error';
 var USER_CHANGE = 'user_change';
 
@@ -31,16 +32,19 @@ function login(data) {
 
 function logout() {
     api.request({
-        method: 'POST',
-        url: api.LOGOUT
+        method: 'GET',
+        url: api.LOGOUT,
+        end: function (res) {
+            UserStore.user = {};
+            UserStore.emitChange(LOGOUT_SUCCESS);
+        }
     });
-    UserStore.user = {};
 }
 
 function getUser() {
-    if (UserStore.user.id) {
-        UserStore.emitChange(USER_CHANGE);
-    } else {
+    //if (UserStore.user.id) {
+    //    UserStore.emitChange(USER_CHANGE);
+    //} else {
         api.request({
             method: 'GET',
             url: api.PROFILE,
@@ -53,7 +57,7 @@ function getUser() {
                 UserStore.emitChange(USER_CHANGE);
             }
         });
-    }
+    //}
 }
 
 function updateUser(data) {
@@ -110,6 +114,14 @@ var UserStore = Object.assign({}, EventEmitter.prototype, {
         } else {
             this.removeListener(USER_CHANGE, successCb);
         }
+    },
+
+    addLogoutListener(cb) {
+        this.on(LOGOUT_SUCCESS, cb);
+    },
+
+    removeLogoutListener(cb) {
+        this.on(LOGOUT_SUCCESS, cb);
     }
 });
 

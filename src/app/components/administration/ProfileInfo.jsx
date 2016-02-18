@@ -7,7 +7,7 @@ class ProfileInfo extends React.Component {
         super(props);
 
         this.state = {
-            user: this.props.user
+            user: this.props.user || {}
         };
 
         this.props = {
@@ -18,7 +18,7 @@ class ProfileInfo extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
-        this.setState({name: newProps.name, email: newProps.email});
+        this.setState({user: newProps.user});
     }
 
     render() {

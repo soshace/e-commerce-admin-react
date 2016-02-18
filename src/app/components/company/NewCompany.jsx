@@ -13,8 +13,8 @@ class NewCompany extends React.Component {
         this.state = {
             name: '',
             created: false,
-            projects: this.props.projects,
-            companies: this.props.companies,
+            projects: this.props.projects  || [],
+            companies: this.props.companies  || [],
             user: this.props.user,
             project: ProjectStore.getProjectByKey(this.props.params.projectKey)
         };

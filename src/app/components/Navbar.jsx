@@ -11,8 +11,8 @@ class Navbar extends React.Component {
 
         this.state = {
             searchShown: false,
-            projects: this.props.projects,
-            companies: this.props.companies,
+            projects: this.props.projects || [],
+            companies: this.props.companies || [],
             user: this.props.user
         };
     }
