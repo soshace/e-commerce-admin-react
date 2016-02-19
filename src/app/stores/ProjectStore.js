@@ -72,7 +72,7 @@ function updateProject(id, data) {
                 userProject = _.findWhere(ProjectStore.projects, {id: project.id}),
                 companyProject = _.findWhere(ProjectStore.companyProjects[project.company], {id: project.id});
             Object.assign(userProject, project);
-            Object.assign(companyProject, project);
+            Object.assign(companyProject || {}, project);
             ProjectStore.emitChange();
         }
     });

@@ -22,6 +22,7 @@ export default {
     updateProject: (id, data) => {
         AppDispatcher.dispatch({
             actionType: AppConstants.UPDATE_PROJECT,
+            //TODO make only one arg
             data: {id, data}
         });
     }

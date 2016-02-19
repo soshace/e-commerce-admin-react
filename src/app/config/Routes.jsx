@@ -7,7 +7,9 @@ import {
     Account, AccountSettings, AccountCompanies,
     ProductAdd, ProductList, ProductDetail, Products,
     NewCategory, CategoryList, Categories, CategoryDetail,
-    Developers, ProductTypes, ProductTypeList, ProductTypeAdd, ProductTypeDetail,
+    Developers,
+    Settings, SettingsInternational, SettingsGeneral,
+    ProductTypes, ProductTypeList, ProductTypeAdd, ProductTypeDetail,
     NotFound,
     Login, Register, Logout,
     Dashboard, AdminPanelPage,
@@ -28,7 +30,7 @@ var Routes = (
                 <Route path="companies" component={AccountCompanies}/>
             </Route>
             <Route path="companies/new" component={NewCompany} meta={{requireAuth: true}}/>
-            <Route path="companies/:companyId" component={Company} meta={{requireAuth: true}} >
+            <Route path="companies/:companyId" component={Company} meta={{requireAuth: true}}>
                 <IndexRedirect to="profile"/>
                 <Route path="projects" component={ManageProjects}/>
                 <Route path="teams" component={TeamList}/>
@@ -41,13 +43,13 @@ var Routes = (
                     <IndexRedirect to="list"/>
                     <Route path="list" component={ProductList}/>
                     <Route path="add" component={ProductAdd}/>
-                    <Route path=":productId" component={ProductDetail} />
+                    <Route path=":productId" component={ProductDetail}/>
                 </Route>
                 <Route path="categories" component={Categories}>
                     <IndexRedirect to="list"/>
                     <Route path="list" component={CategoryList}/>
                     <Route path="add" component={NewCategory}/>
-                    <Route path=":categoryId" component={CategoryDetail} />
+                    <Route path=":categoryId" component={CategoryDetail}/>
                 </Route>
                 <Route path="developers" component={Developers}>
                     <IndexRedirect to="types"/>
@@ -59,6 +61,7 @@ var Routes = (
                     </Route>
 
                 </Route>
+                <Route path="settings" component={Settings} />
             </Route>
 
             <Route path="*" component={NotFound}/>

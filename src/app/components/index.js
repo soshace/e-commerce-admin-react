@@ -3,6 +3,11 @@ import _AccountSettings from './account/AccountSettings.jsx';
 import _AccountCompanies from './account/AccountCompanies.jsx';
 
 import _Developers from './administration/developers/Developers.jsx';
+
+import _Settings from './administration/settings/Settings.jsx';
+import _SettingsInternational from './administration/settings/SettingsInternational.jsx';
+import _SettingsGeneral from './administration/settings/SettingsGeneral.jsx';
+
 import _ProductTypes from './administration/developers/ProductTypes.jsx';
 import _ProductTypeList from './administration/developers/ProductTypeList.jsx';
 import _ProductTypeAdd from './administration/developers/ProductTypeAdd.jsx';
@@ -41,6 +46,10 @@ export default {
     AccountCompanies: _AccountCompanies,
 
     Developers: _Developers,
+    Settings: _Settings,
+    SettingsGeneral: _SettingsGeneral,
+    SettingsInternational: _SettingsInternational,
+
     ProductTypes: _ProductTypes,
     ProductTypeList: _ProductTypeList,
     ProductTypeAdd: _ProductTypeAdd,

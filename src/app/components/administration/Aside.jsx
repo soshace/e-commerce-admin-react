@@ -57,11 +57,12 @@ class Aside extends React.Component {
                                         <MenuItem link={`/${projectKey}/dashboard`} name="Dashboard" iconClass="mdi-action-dashboard" />
                                         <MenuItem link={`/${projectKey}/products`} name="Products" iconClass="mdi-action-label" />
                                         <MenuItem link={`/${projectKey}/categories`} name="Categories" iconClass="mdi-content-archive" />
-                                        <MenuItem link="/companyname/products" name="Orders" iconClass="mdi-action-shopping-cart" />
-                                        <MenuItem link="/companyname/products" name="Customers" iconClass="mdi-social-person" />
-                                        <MenuItem link="/companyname/products" name="Discounts" iconClass="mdi-action-perm-contact-cal" />
+                                        <MenuItem link={`/${projectKey}/dashboard`} name="Orders" iconClass="mdi-action-shopping-cart" />
+                                        <MenuItem link={`/${projectKey}/dashboard`} name="Customers" iconClass="mdi-social-person" />
+                                        <MenuItem link={`/${projectKey}/dashboard`} name="Discounts" iconClass="mdi-action-perm-contact-cal" />
+                                        <MenuItem link={`/${projectKey}/settings`} name="Settings" iconClass="mdi-action-settings" />
                                         <MenuItem link={`/${projectKey}/developers`} name="Developers" iconClass="mdi-action-settings" />
-                                        <MenuItem link="/companyname/products" name="Imports/Exports" iconClass="mdi-communication-import-export" />
+                                        <MenuItem link={`/${projectKey}/dashboard`} name="Imports/Exports" iconClass="mdi-communication-import-export" />
                                     </Menu>
                                     <Menu header="Cool Project" className={accountClass}>
                                         <MenuItem link="/account" name="My Profile" iconClass="mdi-action-assignment-ind"/>
