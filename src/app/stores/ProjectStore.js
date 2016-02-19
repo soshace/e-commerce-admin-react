@@ -62,6 +62,22 @@ function createProject(data) {
     });
 }
 
+function deleteProject(project) {
+    api.request({
+        method: 'DELETE',
+        url: `${api.PROJECTS}/${project.id}`,
+        success: function (res) {
+            var project = res.project[0],
+                companyProjects = ProjectStore.companyProjects[project.company];
+            companyProjects = companyProjects || [];
+            companyProjects = _.reject(companyProjects, {id: project.id});
+            ProjectStore.projects = _.reject(ProjectStore.projects, {id: project.id});
+
+            ProjectStore.emitChange();
+        }
+    });
+}
+
 function updateProject(id, data) {
     api.request({
         method: 'PUT',
@@ -101,6 +117,9 @@ AppDispatcher.register(function (action) {
             break;
         case AppConstants.ADD_PROJECT:
             createProject(action.data);
+            break;
+        case AppConstants.DELETE_PROJECT:
+            deleteProject(action.project);
             break;
         case AppConstants.UPDATE_PROJECT:
             updateProject(action.data.id, action.data.data);

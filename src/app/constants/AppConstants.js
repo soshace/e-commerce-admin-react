@@ -23,6 +23,7 @@ export default {
     GET_COMPANY_PROJECTS: 'GET_COMPANY_PROJECTS',
     ADD_PROJECT: 'ADD_PROJECT',
     UPDATE_PROJECT: 'UPDATE_PROJECT',
+    DELETE_PROJECT: 'DELETE_PROJECT',
     PROJECT_CURRENCIES: [
         { key: 'USD', text: 'USD'},
         { key: 'EUR', text: 'EUR'},

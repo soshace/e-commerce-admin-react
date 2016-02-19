@@ -25,5 +25,11 @@ export default {
             //TODO make only one arg
             data: {id, data}
         });
+    },
+    deleteProject: (project) => {
+        AppDispatcher.dispatch({
+            actionType: AppConstants.DELETE_PROJECT,
+            project: project
+        });
     }
 }

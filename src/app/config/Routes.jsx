@@ -7,7 +7,7 @@ import {
     Account, AccountSettings, AccountCompanies,
     ProductAdd, ProductList, ProductDetail, Products,
     NewCategory, CategoryList, Categories, CategoryDetail,
-    Developers,
+    Developers, DevelopersDanger,
     Settings, SettingsInternational, SettingsGeneral,
     ProductTypes, ProductTypeList, ProductTypeAdd, ProductTypeDetail,
     NotFound,
@@ -59,7 +59,7 @@ var Routes = (
                         <Route path="add" component={ProductTypeAdd}/>
                         <Route path=":productTypeId" component={ProductTypeDetail}/>
                     </Route>
-
+                    <Route path="danger" component={DevelopersDanger}/>
                 </Route>
                 <Route path="settings" component={Settings} />
             </Route>

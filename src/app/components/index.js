@@ -3,6 +3,7 @@ import _AccountSettings from './account/AccountSettings.jsx';
 import _AccountCompanies from './account/AccountCompanies.jsx';
 
 import _Developers from './administration/developers/Developers.jsx';
+import _DevelopersDanger from './administration/developers/DevelopersDanger.jsx';
 
 import _Settings from './administration/settings/Settings.jsx';
 import _SettingsInternational from './administration/settings/SettingsInternational.jsx';
@@ -46,6 +47,7 @@ export default {
     AccountCompanies: _AccountCompanies,
 
     Developers: _Developers,
+    DevelopersDanger: _DevelopersDanger,
     Settings: _Settings,
     SettingsGeneral: _SettingsGeneral,
     SettingsInternational: _SettingsInternational,
