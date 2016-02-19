@@ -37,7 +37,8 @@ class SettingsInternational extends React.Component {
     }
 
     render() {
-        var { project, countries, languages, currencies } = this.state;
+        var { project, countries, languages, currencies } = this.state,
+            self = this;
         return (
             <div>
                 <div className="panel panel-default">
@@ -49,14 +50,16 @@ class SettingsInternational extends React.Component {
                             return (
                                 <div key={currency} className="inline label green label-lg">
                                     <span>{currency}</span>
-                                    <a className="glyphicon glyphicon-remove"></a>
+                                    <a onClick={self._updateLocationInfo.bind(self, 'currency', true, currency)}
+                                       className="glyphicon glyphicon-remove"></a>
                                 </div>
                             )
                         })}
                         {this._generateSelect(currencies, 'currency')}
                         <button type="submit"
                                 onClick={this._updateLocationInfo.bind(this, 'currency', false)}
-                                className="btn btn-info m-t">Add</button>
+                                className="btn btn-info m-t">Add
+                        </button>
                     </div>
                 </div>
                 <div className="panel panel-default">
@@ -64,18 +67,20 @@ class SettingsInternational extends React.Component {
                         Languages
                     </div>
                     <div className="panel-body">
-                        {project.languages.map(function (currency) {
+                        {project.languages.map(function (lang) {
                             return (
-                                <div key={currency} className="inline label green label-lg">
-                                    <span>{currency}</span>
-                                    <a className="glyphicon glyphicon-remove"></a>
+                                <div key={lang} className="inline label green label-lg">
+                                    <span>{lang}</span>
+                                    <a onClick={self._updateLocationInfo.bind(self, 'language', true, lang)}
+                                       className="glyphicon glyphicon-remove"></a>
                                 </div>
                             )
                         })}
                         {this._generateSelect(languages, 'language')}
                         <button type="submit"
                                 onClick={this._updateLocationInfo.bind(this, 'language', false)}
-                                className="btn btn-info m-t">Add</button>
+                                className="btn btn-info m-t">Add
+                        </button>
                     </div>
                 </div>
                 <div className="panel panel-default">
@@ -83,18 +88,20 @@ class SettingsInternational extends React.Component {
                         Countries
                     </div>
                     <div className="panel-body">
-                        {project.countries.map(function (currency) {
+                        {project.countries.map(function (country) {
                             return (
-                                <div key={currency} className="inline label green label-lg">
-                                    <span>{currency}</span>
-                                    <a className="glyphicon glyphicon-remove"></a>
+                                <div key={country} className="inline label green label-lg">
+                                    <span>{country}</span>
+                                    <a onClick={self._updateLocationInfo.bind(self, 'country', true, country)}
+                                       className="glyphicon glyphicon-remove"></a>
                                 </div>
                             )
                         })}
                         {this._generateSelect(countries, 'country')}
                         <button type="submit"
                                 onClick={this._updateLocationInfo.bind(this, 'country', false)}
-                                className="btn btn-info m-t">Add</button>
+                                className="btn btn-info m-t">Add
+                        </button>
                     </div>
                 </div>
             </div>
@@ -118,11 +125,11 @@ class SettingsInternational extends React.Component {
         this.setState({selected: selected});
     }
 
-    _updateLocationInfo(field, remove) {
+    _updateLocationInfo(field, remove, item) {
         var { project, selected } = this.state,
-            arrName;
+            arrName, index;
 
-        switch(field) {
+        switch (field) {
             case 'country':
                 arrName = 'countries';
                 break;
@@ -135,7 +142,10 @@ class SettingsInternational extends React.Component {
         }
 
         if (remove) {
-
+            index = project[arrName].indexOf(item);
+            if (index > -1) {
+                project[arrName].splice(index, 1);
+            }
         } else {
             if (project[arrName].indexOf(selected[field]) < 0) {
                 project[arrName].push(selected[field]);
