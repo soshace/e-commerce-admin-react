@@ -15,14 +15,15 @@ class Aside extends React.Component {
         this.state = {
             navItemsShown: true,
             asideFolded: true,
-            user: this.props.user
+            user: this.props.user,
+            project: this.props.project
         };
 
     }
 
     componentWillReceiveProps(newProps) {
         var user = newProps.user;
-        this.setState({user: user});
+        this.setState({user: user, project: newProps.project});
     }
 
     render() {
@@ -30,8 +31,8 @@ class Aside extends React.Component {
             accountClass = classnames('m-v-xs', {hide: this.state.navItemsShown}),
             //asideClass = classnames('app-aside modal fade', {folded: this.state.asideFolded}),
             asideClass = classnames('app-aside modal fade'),
-            { user } = this.state,
-            projectKey = this.props.project.slug;
+            { user, project } = this.state,
+            projectKey = project.slug;
 
         return (
             <aside id="aside" className={asideClass} role="menu">

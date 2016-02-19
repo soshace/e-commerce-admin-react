@@ -106,7 +106,7 @@ class ProductPrices extends React.Component {
                                     <tr>
                                         <td></td>
                                         <td>
-                                            {self._generateSelect(project.currency, 'currency')}
+                                            {self._generateSelect(project.currencies, 'currency', variant.id)}
                                         </td>
                                         <td>
                                             <input type="text"
@@ -141,9 +141,11 @@ class ProductPrices extends React.Component {
         this.setState({variants: variants});
     }
 
-    _generateSelect(options, name) {
+    _generateSelect(options, name, variantId) {
+        var self = this;
         return (
-            <select name={name} className="form-control">
+            <select name={name} className="form-control"
+                    onChange={self._onNewPriceChange.bind(self, 'currency', variantId)}>
                 {options.map(function (item, index) {
                     return (<option key={index} value={item}>{item}</option>)
                 })}
@@ -156,7 +158,7 @@ class ProductPrices extends React.Component {
             price = newPrices[variant.id];
         price.variant = variant.id;
         price.product = variant.product;
-        price.currency = price.currency || project.currency[0];
+        price.currency = price.currency || project.currencies[0];
         VariantActions.addPrice(price);
     }
 

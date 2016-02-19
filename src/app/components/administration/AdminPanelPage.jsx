@@ -34,7 +34,8 @@ class AdminPanelPage extends React.Component {
         this.setState({
             projects: newProps.projects,
             companies: newProps.companies,
-            user: newProps.user
+            user: newProps.user,
+            project: ProjectStore.getProjectByKey(newProps.params.projectKey)
         });
     }
 

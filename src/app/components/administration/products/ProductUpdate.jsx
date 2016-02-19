@@ -14,7 +14,6 @@ class ProductUpdate extends React.Component {
         };
 
         this._onFieldUpdate = this._onFieldUpdate.bind(this);
-        this._onProductTypeChange = this._onProductTypeChange.bind(this);
         this._onSubmit = this._onSubmit.bind(this);
     }
 
@@ -56,26 +55,10 @@ class ProductUpdate extends React.Component {
                         </div>
                     </div>
 
-                    <div className="form-group">
-                        <label className="col-sm-2 control-label">Select</label>
-                        <div className="col-sm-10">
-                            <select className="form-control"
-                                    value={productTypeId}
-                                    onChange={this._onProductTypeChange}>
-                                {productTypes.map(function (type) {
-                                    return <option key={type.id} value={type.id}>{type.name}</option>
-                                })}
-                            </select>
-                        </div>
-                    </div>
                     <button type="submit" className="btn btn-info m-t">Save</button>
                 </form>
             </div>
         )
-    }
-
-    _onProductTypeChange(e) {
-        this.setState({productTypeId: e.target.value});
     }
 
     _onFieldUpdate(field) {
