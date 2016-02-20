@@ -40,6 +40,7 @@ function updateVariant(variant) {
             var selectedVariants = VariantStore.selectedVariants,
                 variant = _.findWhere(selectedVariants, {id: res.variant.id});
             Object.assign(variant, res.variant);
+            VariantStore.updatedVariant = variant;
             VariantStore.emitChange();
         }
     });
@@ -66,6 +67,7 @@ function updateAttribute(variantAttr) {
                 variant = _.findWhere(VariantStore.selectedVariants, {id: attr.variant}),
                 variantAttr = _.findWhere(variant.attributes, {id: attr.id});
             variantAttr.value = attr.value;
+            VariantStore.updatedAttribute = variantAttr;
             VariantStore.emitChange();
         }
     });
@@ -164,7 +166,13 @@ function removePrice(id) {
 
 var VariantStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
     variant: null,
-    selectedVariants: []
+    selectedVariants: [],
+    updatedAttribute: null,
+    updatedVariant: null,
+    clearUpdates() {
+        this.updatedAttribute = null;
+        this.updatedVariant = null;
+    }
 });
 
 AppDispatcher.register(function (action) {

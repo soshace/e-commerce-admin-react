@@ -3,6 +3,7 @@ import {VariantStore, ProductTypeStore} from './../../../stores';
 import {VariantActions} from './../../../actions';
 import _ from 'underscore';
 import classnames from 'classnames';
+import Input from './../../common/Input.jsx';
 
 
 class ProductVariants extends React.Component {
@@ -52,11 +53,13 @@ class ProductVariants extends React.Component {
                                     <div className="col-sm-3">
                                         <div className="input-group m-b">
                                             <span className="input-group-addon">SKU</span>
-                                            <input type="text"
+                                            <Input type="text"
                                                    className="form-control"
                                                    value={variant.sku}
+                                                   ref={`variant__name-${variant.id}`}
                                                    onChange={self._updateVariant.bind(self, variant.id, 'sku')}
                                                    onKeyPress={self._updateVariant.bind(self, variant.id, 'sku')}
+                                                   onBlur={self._updateVariant.bind(self, variant.id, 'sku')}
                                                    placeholder="SKU"/>
                                         </div>
                                     </div>
@@ -74,10 +77,12 @@ class ProductVariants extends React.Component {
                                         return (
                                             <div key={attr.id} className="form-group">
                                                 <div className="col-sm-10">
-                                                    <input type="text"
+                                                    <Input type="text"
+                                                           ref={`attr-${varAttr.id}`}
                                                            value={varAttr.value}
                                                            onKeyPress={self._onAttrChange.bind(self, varAttr)}
                                                            onChange={self._onAttrChange.bind(self, varAttr)}
+                                                           onBlur={self._updateAttr.bind(self, varAttr)}
                                                            className="form-control"
                                                            placeholder={attr.name}/>
                                                 </div>
@@ -108,8 +113,22 @@ class ProductVariants extends React.Component {
     }
 
     _onVariantsChange() {
-        var variants = VariantStore.selectedVariants;
+        var variants = VariantStore.selectedVariants,
+            updatedAttr = VariantStore.updatedAttribute,
+            updatedVariant = VariantStore.updatedVariant,
+            input;
         this.setState({variants: variants});
+        if (updatedAttr) {
+            input = this.refs[`attr-${updatedAttr.id}`];
+        }
+        if (updatedVariant) {
+            input = this.refs[`variant__name-${updatedVariant.id}`];
+        }
+        if (input) {
+            input.showSuccess();
+            VariantStore.clearUpdates();
+        }
+
     }
 
     _onAttrChange(variantAttr, e) {
@@ -130,7 +149,7 @@ class ProductVariants extends React.Component {
         var variants = this.state.variants,
             variant = _.findWhere(variants, {id: variantId});
 
-        if (e.key == 'Enter') {
+        if (e.key == 'Enter' || e.type == 'blur') {
             VariantActions.updateVariant(variant);
         } else {
             variant[field] = e.target.value;
