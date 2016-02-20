@@ -42,7 +42,7 @@ class TeamList extends React.Component {
     render() {
         var { teams, newTeam } = this.state;
         return (
-            <div className="panel-body">
+            <div className="col-md-9 b-l bg-white bg-auto">
                 {teams.map(function (team) {
                     return (
                         <TeamItem key={team.id} team={team} />
