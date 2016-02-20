@@ -74,7 +74,7 @@ class ManageProjects extends React.Component {
                                             onKeyPress={self._onNameKeyPress.bind(self, project.id)}
                                             placeholder="Project name"/>
                                     </td>
-                                    <td><Link to={`${project.slug}/dashboard`}>{project.slug}</Link></td>
+                                    <td><Link to={`/${project.slug}/dashboard`}>{project.slug}</Link></td>
                                 </tr>
                             )
                         })}
