@@ -74,7 +74,7 @@ class AdminPanelPage extends React.Component {
                 <div id="content" className="app-content" role="main">
                     <div className="box">
                         <div className="box-row">
-                            <div className="box-cell padding">
+                            <div className="padding">
                                 <div className="row">
                                     <div className="col-lg-12 col-md-12 col-sm-12">
                                         {children}

@@ -57,19 +57,17 @@ function getProducts(update) {
     }
 }
 
-function getProjectProducts(update, projectId) {
-    if (ProductStore.selectedProducts && !update) {
-        ProductStore.emitChange();
-    } else {
-        api.request({
-            method: 'GET',
-            url: `${api.PROJECTS}/${projectId}/products`,
-            success: function (res) {
-                ProductStore.selectedProducts = res.products;
-                ProductStore.emitChange();
-            }
-        });
-    }
+function getProjectProducts(projectId, options) {
+    api.request({
+        method: 'GET',
+        url: `${api.PROJECTS}/${projectId}/products`,
+        query: options,
+        success: function (res) {
+            ProductStore.selectedProducts = res.products;
+            ProductStore.emitChange();
+        }
+    });
+
 }
 
 function getCategoryProducts(categoryId) {
@@ -120,7 +118,7 @@ AppDispatcher.register(function (action) {
             setTimeout(updateProductCategory.bind(this, action.checked, action.productId, action.categoryId), 0);
             break;
         case AppConstants.GET_PROJECT_PRODUCTS:
-            setTimeout(getProjectProducts.bind(this, action.update, action.projectId), 0);
+            setTimeout(getProjectProducts.bind(this, action.projectId, action.options), 0);
             break;
         case AppConstants.CREATE_PRODUCT:
             setTimeout(createProduct.bind(this, action.data), 0);

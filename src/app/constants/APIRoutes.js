@@ -37,7 +37,10 @@ export default {
     request: function (options) {
         var req = request(options.method, options.url);
         if (!(options.data instanceof FormData)) {
-            req = req.type('json')
+            req = req.type('json');
+        }
+        if (options.query) {
+            req = req.query(options.query);
         }
         return req
             .withCredentials()

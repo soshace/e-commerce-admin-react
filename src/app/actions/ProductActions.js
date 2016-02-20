@@ -34,11 +34,11 @@ export default {
             categoryId: categoryId
         });
     },
-    getProjectProducts: (update, projectId) => {
+    getProjectProducts: (projectId, options) => {
         AppDispatcher.dispatch({
             actionType: AppConstants.GET_PROJECT_PRODUCTS,
-            update: update,
-            projectId: projectId
+            projectId: projectId,
+            options: options
         });
     },
     createProduct: (product) => {
