@@ -90,7 +90,7 @@ class ProductPrices extends React.Component {
                                                            placeholder="price"/>
                                                 </td>
                                                 <td>
-                                                    country here (to be done)
+                                                    {price.country}
                                                 </td>
                                                 <td>
                                                     <a className="glyphicon glyphicon-ok"
@@ -116,7 +116,7 @@ class ProductPrices extends React.Component {
                                                    placeholder="price"/>
                                         </td>
                                         <td>
-                                            country here (to be done)
+                                            {self._generateSelect(project.countries, 'country', variant.id)}
                                         </td>
                                         <td>
                                             <a className="glyphicon glyphicon-ok"
@@ -145,7 +145,7 @@ class ProductPrices extends React.Component {
         var self = this;
         return (
             <select name={name} className="form-control"
-                    onChange={self._onNewPriceChange.bind(self, 'currency', variantId)}>
+                    onChange={self._onNewPriceChange.bind(self, name, variantId)}>
                 {options.map(function (item, index) {
                     return (<option key={index} value={item}>{item}</option>)
                 })}
@@ -159,6 +159,7 @@ class ProductPrices extends React.Component {
         price.variant = variant.id;
         price.product = variant.product;
         price.currency = price.currency || project.currencies[0];
+        price.country = price.country || project.countries[0];
         VariantActions.addPrice(price);
     }
 
