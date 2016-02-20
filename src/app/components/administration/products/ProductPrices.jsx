@@ -58,30 +58,18 @@ class ProductPrices extends React.Component {
                                 <table className="table table-striped">
                                     <thead>
                                     <tr>
-                                        <th>
-                                            #
-                                        </th>
-                                        <th>
-                                            Currency
-                                        </th>
-                                        <th>
-                                            Price
-                                        </th>
-                                        <th>
-                                            Country
-                                        </th>
+                                        <th>#</th>
+                                        <th>Currency</th>
+                                        <th>Price</th>
+                                        <th>Country</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {variant.prices.map(function (price, index) {
                                         return (
                                             <tr key={price.id}>
-                                                <td>
-                                                    {index + 1}
-                                                </td>
-                                                <td>
-                                                    {price.currency}
-                                                </td>
+                                                <td>{index + 1}</td>
+                                                <td>{price.currency}</td>
                                                 <td>
                                                     <input type="text"
                                                            value={price.price}
@@ -89,9 +77,7 @@ class ProductPrices extends React.Component {
                                                            className="form-control"
                                                            placeholder="price"/>
                                                 </td>
-                                                <td>
-                                                    {price.country}
-                                                </td>
+                                                <td>{price.country}</td>
                                                 <td>
                                                     <a className="glyphicon glyphicon-ok"
                                                        onClick={self._updatePrice.bind(self, price)}></a>
@@ -115,9 +101,7 @@ class ProductPrices extends React.Component {
                                                    className="form-control"
                                                    placeholder="price"/>
                                         </td>
-                                        <td>
-                                            {self._generateSelect(project.countries, 'country', variant.id)}
-                                        </td>
+                                        <td>{self._generateSelect(project.countries, 'country', variant.id)}</td>
                                         <td>
                                             <a className="glyphicon glyphicon-ok"
                                                onClick={self._addPrice.bind(self, variant)}></a>

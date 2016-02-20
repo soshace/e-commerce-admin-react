@@ -30,7 +30,7 @@ class Account extends React.Component {
 
     render() {
         var { companies, projects, project, user } = this.state,
-            children = childrenWithProps(this, {user});
+            children = childrenWithProps(this, { companies, projects, project, user });
         return (
             <div>
                 <Navbar project={project}

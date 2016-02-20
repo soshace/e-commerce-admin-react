@@ -4,10 +4,6 @@ import classnames from 'classnames';
 
 
 class AccountMenu extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <ul className="nav nav-lists b-t">
