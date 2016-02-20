@@ -8,6 +8,12 @@ export default {
             update: update
         });
     },
+    getCategoryProducts: (categoryId) => {
+        AppDispatcher.dispatch({
+            actionType: AppConstants.GET_CATEGORY_PRODUCTS,
+            categoryId: categoryId
+        });
+    },
     getProduct: (id) => {
         AppDispatcher.dispatch({
             actionType: AppConstants.GET_PRODUCT,

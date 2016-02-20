@@ -18,7 +18,6 @@ class CategoryDetail extends React.Component {
 
         this._onProductsGet = this._onProductsGet.bind(this);
         this._onCategoryGet = this._onCategoryGet.bind(this);
-        this._onProductsTabClick = this._onProductsTabClick.bind(this);
     }
 
     componentDidMount() {
@@ -46,7 +45,7 @@ class CategoryDetail extends React.Component {
                         <a href data-toggle="tab" data-target="#tab_2">Update Category</a>
                     </li>
                     <li>
-                        <a href data-toggle="tab" data-target="#tab_3" onClick={this._onProductsTabClick}>Products</a>
+                        <a href data-toggle="tab" data-target="#tab_3">Products</a>
                     </li>
                 </ul>
                 <div className="tab-content p m-b-md b-t b-t-2x">
@@ -57,25 +56,22 @@ class CategoryDetail extends React.Component {
                         <CategoryUpdate category={category} />
                     </div>
                     <div role="tabpanel" className="tab-pane animated fadeIn" id="tab_3">
-
+                        <CategoryProducts category={category} products={products} />
                     </div>
                 </div>
             </div>
         )
     }
 
-    //<CategoryProducts products={products} />
-
     _onProductsGet() {
-        this.setState({products: ProductStore.products});
-    }
-
-    _onProductsTabClick() {
-        ProductActions.getProducts(true);
+        this.setState({products: ProductStore.categoryProducts});
     }
 
     _onCategoryGet() {
-        this.setState({category: CategoryStore.selected});
+        var category = CategoryStore.selected;
+        this.setState({category: category});
+
+        ProductActions.getCategoryProducts(category.id);
     }
 }
 

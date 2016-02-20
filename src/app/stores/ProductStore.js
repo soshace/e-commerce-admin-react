@@ -36,7 +36,7 @@ function updateProductCategory(checked, productId, categoryId) {
         method: method,
         url: `${api.CATEGORIES}/${categoryId}/products/${productId}`,
         success: function (res) {
-            //ProductStore.selectedProduct = res.product;
+            ProductStore.categoryProducts = res.category.products;
             ProductStore.emitChange();
         }
     });
@@ -72,6 +72,17 @@ function getProjectProducts(update, projectId) {
     }
 }
 
+function getCategoryProducts(categoryId) {
+    api.request({
+        method: 'GET',
+        url: `${api.CATEGORIES}/${categoryId}/products`,
+        success: function (res) {
+            ProductStore.categoryProducts = res.products;
+            ProductStore.emitChange();
+        }
+    });
+}
+
 function createProduct(data) {
     api.request({
         method: 'POST',
@@ -87,13 +98,17 @@ function createProduct(data) {
 var ProductStore = Object.assign({}, BaseStore, EventEmitter.prototype, {
     products: null,
     selectedProduct: null,
-    selectedProducts: null
+    selectedProducts: null,
+    categoryProducts: null
 });
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case AppConstants.GET_PRODUCTS:
             setTimeout(getProducts.bind(this, action.update), 0);
+            break;
+        case AppConstants.GET_CATEGORY_PRODUCTS:
+            setTimeout(getCategoryProducts.bind(this, action.categoryId), 0);
             break;
         case AppConstants.GET_PRODUCT:
             setTimeout(getProduct.bind(this, action.productId), 0);
