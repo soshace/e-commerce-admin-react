@@ -107,7 +107,7 @@ class NewCompany extends React.Component {
         var company = CompanyStore.lastCreatedCompany,
             created = this.state.created;
         if (created) {
-            this.context.router.push(`companies/${company.id}/projects`);
+            this.context.router.push(`/companies/${company.id}/projects`);
         }
     }
 }
