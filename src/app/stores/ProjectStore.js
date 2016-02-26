@@ -67,8 +67,7 @@ function deleteProject(project) {
         method: 'DELETE',
         url: `${api.PROJECTS}/${project.id}`,
         success: function (res) {
-            var project = res.project[0],
-                companyProjects = ProjectStore.companyProjects[project.company];
+            var companyProjects = ProjectStore.companyProjects[project.company];
             companyProjects = companyProjects || [];
             companyProjects = _.reject(companyProjects, {id: project.id});
             ProjectStore.projects = _.reject(ProjectStore.projects, {id: project.id});
