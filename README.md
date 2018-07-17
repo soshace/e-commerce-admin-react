@@ -5,3 +5,5 @@
 * `./install.sh`
 * `node app.js`
 * go to http://localhost:8000/ 
+
+Network for professionals *https://soshace.com*
